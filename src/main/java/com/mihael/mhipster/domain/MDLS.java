@@ -24,6 +24,7 @@ public class MDLS implements Serializable {
     @Column(name = "base_config")
     private String baseConfig;
 
+    @Lob
     @Column(name = "content")
     private String content;
 

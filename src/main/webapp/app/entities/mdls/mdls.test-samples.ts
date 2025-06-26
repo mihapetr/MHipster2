@@ -12,7 +12,7 @@ export const sampleWithPartialData: IMDLS = {
 export const sampleWithFullData: IMDLS = {
   id: 10304,
   baseConfig: 'pricey ick',
-  content: 'always',
+  content: '../fake-data/blob/hipster.txt',
 };
 
 export const sampleWithNewData: NewMDLS = {

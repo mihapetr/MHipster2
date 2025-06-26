@@ -7,13 +7,13 @@ export const sampleWithRequiredData: IFeature = {
 export const sampleWithPartialData: IFeature = {
   id: 19648,
   name: 'since',
-  content: 'drat prejudge',
+  content: '../fake-data/blob/hipster.txt',
 };
 
 export const sampleWithFullData: IFeature = {
   id: 31204,
   name: 'breakable',
-  content: 'oh how',
+  content: '../fake-data/blob/hipster.txt',
 };
 
 export const sampleWithNewData: NewFeature = {

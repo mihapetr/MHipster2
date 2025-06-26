@@ -26,6 +26,7 @@ public class Feature implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Lob
     @Column(name = "content")
     private String content;
 

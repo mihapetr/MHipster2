@@ -7,6 +7,7 @@ import SharedModule from 'app/shared/shared.module';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
 import { FormsModule } from '@angular/forms';
 import { DEFAULT_SORT_DATA, ITEM_DELETED_EVENT, SORT } from 'app/config/navigation.constants';
+import { DataUtils } from 'app/core/util/data-util.service';
 import { IFeature } from '../feature.model';
 import { EntityArrayResponseType, FeatureService } from '../service/feature.service';
 import { FeatureDeleteDialogComponent } from '../delete/feature-delete-dialog.component';
@@ -27,6 +28,7 @@ export class FeatureComponent implements OnInit {
   protected readonly featureService = inject(FeatureService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly sortService = inject(SortService);
+  protected dataUtils = inject(DataUtils);
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
 
@@ -45,6 +47,14 @@ export class FeatureComponent implements OnInit {
         }),
       )
       .subscribe();
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(base64String: string, contentType: string | null | undefined): void {
+    return this.dataUtils.openFile(base64String, contentType);
   }
 
   delete(feature: IFeature): void {

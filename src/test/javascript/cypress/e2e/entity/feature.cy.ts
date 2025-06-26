@@ -225,8 +225,8 @@ describe('Feature e2e test', () => {
       cy.get(`[data-cy="name"]`).type('fine apropos violently');
       cy.get(`[data-cy="name"]`).should('have.value', 'fine apropos violently');
 
-      cy.get(`[data-cy="content"]`).type('although the ah');
-      cy.get(`[data-cy="content"]`).should('have.value', 'although the ah');
+      cy.get(`[data-cy="content"]`).type('../fake-data/blob/hipster.txt');
+      cy.get(`[data-cy="content"]`).invoke('val').should('match', new RegExp('../fake-data/blob/hipster.txt'));
 
       cy.get(`[data-cy="user"]`).select(1);
 

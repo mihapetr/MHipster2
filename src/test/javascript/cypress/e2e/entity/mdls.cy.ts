@@ -220,8 +220,8 @@ describe('MDLS e2e test', () => {
       cy.get(`[data-cy="baseConfig"]`).type('sun whose');
       cy.get(`[data-cy="baseConfig"]`).should('have.value', 'sun whose');
 
-      cy.get(`[data-cy="content"]`).type('aha promptly unearth');
-      cy.get(`[data-cy="content"]`).should('have.value', 'aha promptly unearth');
+      cy.get(`[data-cy="content"]`).type('../fake-data/blob/hipster.txt');
+      cy.get(`[data-cy="content"]`).invoke('val').should('match', new RegExp('../fake-data/blob/hipster.txt'));
 
       cy.get(`[data-cy="user"]`).select(1);
 

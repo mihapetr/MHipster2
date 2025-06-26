@@ -10,7 +10,7 @@
     },
     {
       "fieldName": "content",
-      "fieldType": "String"
+      "fieldType": "TextBlob"
     }
   ],
   "name": "MDLS",

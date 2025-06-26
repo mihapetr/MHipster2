@@ -7,10 +7,13 @@ import { finalize, map } from 'rxjs/operators';
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { AlertError } from 'app/shared/alert/alert-error.model';
+import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
+import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/service/user.service';
-import { IMDLS } from '../mdls.model';
 import { MDLSService } from '../service/mdls.service';
+import { IMDLS } from '../mdls.model';
 import { MDLSFormGroup, MDLSFormService } from './mdls-form.service';
 
 @Component({
@@ -24,6 +27,8 @@ export class MDLSUpdateComponent implements OnInit {
 
   usersSharedCollection: IUser[] = [];
 
+  protected dataUtils = inject(DataUtils);
+  protected eventManager = inject(EventManager);
   protected mDLSService = inject(MDLSService);
   protected mDLSFormService = inject(MDLSFormService);
   protected userService = inject(UserService);
@@ -42,6 +47,21 @@ export class MDLSUpdateComponent implements OnInit {
       }
 
       this.loadRelationshipsOptions();
+    });
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(base64String: string, contentType: string | null | undefined): void {
+    this.dataUtils.openFile(base64String, contentType);
+  }
+
+  setFileData(event: Event, field: string, isImage: boolean): void {
+    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe({
+      error: (err: FileLoadError) =>
+        this.eventManager.broadcast(new EventWithContent<AlertError>('mHipsterApp.error', { message: err.message })),
     });
   }
 

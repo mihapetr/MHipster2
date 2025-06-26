@@ -1,11 +1,11 @@
 id;name;content;user_id
-1;between what;but ah mmm;1
-2;after marathon;now;2
-3;subtle sternly;enroll;1
-4;barring aha;whenever lady;2
-5;subtle;boohoo during bitterly;1
-6;rag vicinity;aboard;2
-7;nor;though lively;2
-8;stiff mould;pro yarmulke valley;1
-9;indeed immediately;reference;2
-10;who;astride;2
+1;between what;../fake-data/blob/hipster.txt;1
+2;but ah mmm;../fake-data/blob/hipster.txt;2
+3;after marathon;../fake-data/blob/hipster.txt;1
+4;now;../fake-data/blob/hipster.txt;2
+5;subtle sternly;../fake-data/blob/hipster.txt;1
+6;enroll;../fake-data/blob/hipster.txt;2
+7;barring aha;../fake-data/blob/hipster.txt;2
+8;whenever lady;../fake-data/blob/hipster.txt;1
+9;subtle;../fake-data/blob/hipster.txt;2
+10;boohoo during bitterly;../fake-data/blob/hipster.txt;2

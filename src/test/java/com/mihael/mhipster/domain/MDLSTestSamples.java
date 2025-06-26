@@ -10,14 +10,14 @@ public class MDLSTestSamples {
     private static final AtomicLong longCount = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
     public static MDLS getMDLSSample1() {
-        return new MDLS().id(1L).baseConfig("baseConfig1").content("content1");
+        return new MDLS().id(1L).baseConfig("baseConfig1");
     }
 
     public static MDLS getMDLSSample2() {
-        return new MDLS().id(2L).baseConfig("baseConfig2").content("content2");
+        return new MDLS().id(2L).baseConfig("baseConfig2");
     }
 
     public static MDLS getMDLSRandomSampleGenerator() {
-        return new MDLS().id(longCount.incrementAndGet()).baseConfig(UUID.randomUUID().toString()).content(UUID.randomUUID().toString());
+        return new MDLS().id(longCount.incrementAndGet()).baseConfig(UUID.randomUUID().toString());
     }
 }
