@@ -1,0 +1,1333 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< com.mihael.mhipster:m-hipster >--------------------
+[INFO] Building M Hipster 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-versions) @ m-hipster ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-dependencyConvergence) @ m-hipster ---
+[WARNING] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence failed with message:
+Failed while enforcing releasability.
+
+Dependency convergence error for org.checkerframework:checker-qual:jar:3.37.0 paths to dependency are:
++-com.mihael.mhipster:m-hipster:jar:0.0.1-SNAPSHOT
+  +-org.mariadb.jdbc:mariadb-java-client:jar:3.4.1:compile
+    +-com.github.waffle:waffle-jna:jar:3.3.0:compile
+      +-com.github.ben-manes.caffeine:caffeine:jar:3.1.8:compile
+        +-org.checkerframework:checker-qual:jar:3.37.0:compile
+and
++-com.mihael.mhipster:m-hipster:jar:0.0.1-SNAPSHOT
+  +-org.mariadb.jdbc:mariadb-java-client:jar:3.4.1:compile
+    +-com.github.waffle:waffle-jna:jar:3.3.0:compile
+      +-org.checkerframework:checker-qual:jar:3.32.0:compile
+
+
+Dependency convergence error for javax.xml.bind:jaxb-api:jar:2.2.12 paths to dependency are:
++-com.mihael.mhipster:m-hipster:jar:0.0.1-SNAPSHOT
+  +-com.fasterxml.jackson.module:jackson-module-jaxb-annotations:jar:2.18.2:compile
+    +-javax.xml.bind:jaxb-api:jar:2.2.12:compile
+and
++-com.mihael.mhipster:m-hipster:jar:0.0.1-SNAPSHOT
+  +-org.liquibase:liquibase-core:jar:4.29.2:compile
+    +-javax.xml.bind:jaxb-api:jar:2.3.1:compile
+
+
+Dependency convergence error for org.apache.commons:commons-text:jar:1.11.0 paths to dependency are:
++-com.mihael.mhipster:m-hipster:jar:0.0.1-SNAPSHOT
+  +-org.liquibase:liquibase-core:jar:4.29.2:compile
+    +-com.opencsv:opencsv:jar:5.9:compile
+      +-org.apache.commons:commons-text:jar:1.11.0:compile
+and
++-com.mihael.mhipster:m-hipster:jar:0.0.1-SNAPSHOT
+  +-org.liquibase:liquibase-core:jar:4.29.2:compile
+    +-org.apache.commons:commons-text:jar:1.12.0:compile
+
+[INFO] 
+[INFO] --- properties:1.2.1:read-project-properties (default) @ m-hipster ---
+[INFO] Loading 32 properties from File: /home/mihael/Projects/MHipster2/sonar-project.properties
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (pre-unit-tests) @ m-hipster ---
+[INFO] argLine set to -javaagent:/home/mihael/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/home/mihael/Projects/MHipster2/target/jacoco.exec -Djava.security.egd=file:/dev/./urandom -Xmx1G
+[INFO] 
+[INFO] --- spotless:2.43.0:apply (spotless) @ m-hipster ---
+[INFO] File stored in the index does not exist: src/test/java/com/mihael/mhipster/cucumber/stepdefs/AccountStepDefs.java
+[INFO] File stored in the index does not exist: src/test/java/com/mihael/mhipster/cucumber/stepdefs/Feature_testingStepDefs.java
+[INFO] File stored in the index does not exist: src/test/java/com/mihael/mhipster/cucumber/stepdefs/Generating_projectsStepDefs.java
+[INFO] File stored in the index does not exist: src/test/java/com/mihael/mhipster/cucumber/stepdefs/Overview_of_personal_projectsStepDefs.java
+[INFO] File stored in the index does not exist: src/test/java/com/mihael/mhipster/cucumber/stepdefs/Platform_statistics_overviewStepDefs.java
+[INFO] Spotless.Java is keeping 167 files clean - 0 were changed to be clean, 0 were already clean, 167 were skipped because caching determined they were already clean
+[INFO] 
+[INFO] --- spring-boot:3.4.1:build-info (build-info) @ m-hipster ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ m-hipster ---
+[INFO] Copying 4 resources from src/main/resources to target/classes
+[INFO] Copying 35 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ m-hipster ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ m-hipster ---
+[INFO] Copying 18 resources from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ m-hipster ---
+[INFO] Recompiling the module because of added or removed source files.
+[INFO] Compiling 71 source files with javac [debug parameters release 17] to target/test-classes
+[INFO] Hibernate compile-time tooling 6.6.4.Final
+[INFO] /home/mihael/Projects/MHipster2/src/test/java/com/mihael/mhipster/config/SqlTestContainersSpringContextCustomizerFactory.java: /home/mihael/Projects/MHipster2/src/test/java/com/mihael/mhipster/config/SqlTestContainersSpringContextCustomizerFactory.java uses unchecked or unsafe operations.
+[INFO] /home/mihael/Projects/MHipster2/src/test/java/com/mihael/mhipster/config/SqlTestContainersSpringContextCustomizerFactory.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ m-hipster ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jacoco:0.8.12:report (post-unit-test) @ m-hipster ---
+[INFO] Loading execution data file /home/mihael/Projects/MHipster2/target/jacoco.exec
+[INFO] Analyzed bundle 'M Hipster' with 82 classes
+[WARNING] Classes in bundle 'M Hipster' do not match with execution data. For report generation the same class files must be used as at runtime.
+[WARNING] Execution data for class com/mihael/mhipster/domain/Feature does not match.
+[WARNING] Execution data for class com/mihael/mhipster/domain/MDLS does not match.
+[INFO] 
+[INFO] --- jar:3.4.2:jar (default-jar) @ m-hipster ---
+[INFO] Building jar: /home/mihael/Projects/MHipster2/target/m-hipster-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:3.4.1:repackage (repackage) @ m-hipster ---
+[INFO] Replacing main artifact /home/mihael/Projects/MHipster2/target/m-hipster-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /home/mihael/Projects/MHipster2/target/m-hipster-0.0.1-SNAPSHOT.jar.original
+[INFO] 
+[INFO] --- modernizer:2.9.0:modernizer (modernizer) @ m-hipster ---
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent-integration (pre-integration-tests) @ m-hipster ---
+[INFO] argLine set to -javaagent:/home/mihael/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/home/mihael/Projects/MHipster2/target/jacoco-it.exec -Djava.security.egd=file:/dev/./urandom -Xmx1G
+[INFO] 
+[INFO] --- failsafe:3.5.2:integration-test (default) @ m-hipster ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.mihael.mhipster.cucumber.CucumberIT
+
+        ██╗ ██╗   ██╗ ████████╗ ███████╗   ██████╗ ████████╗ ████████╗ ███████╗
+        ██║ ██║   ██║ ╚══██╔══╝ ██╔═══██╗ ██╔════╝ ╚══██╔══╝ ██╔═════╝ ██╔═══██╗
+        ██║ ████████║    ██║    ███████╔╝ ╚█████╗     ██║    ██████╗   ███████╔╝
+  ██╗   ██║ ██╔═══██║    ██║    ██╔════╝   ╚═══██╗    ██║    ██╔═══╝   ██╔══██║
+  ╚██████╔╝ ██║   ██║ ████████╗ ██║       ██████╔╝    ██║    ████████╗ ██║  ╚██╗
+   ╚═════╝  ╚═╝   ╚═╝ ╚═══════╝ ╚═╝       ╚═════╝     ╚═╝    ╚═══════╝ ╚═╝   ╚═╝
+
+:: JHipster 🤓  :: Running Spring Boot 3.4.1 :: Startup profile(s)  ::
+:: https://www.jhipster.tech ::
+
+2025-06-26T20:03:38.017+02:00  INFO 2388716 --- [MHipster] [           main] ContainersSpringContextCustomizerFactory : Warming up the sql database
+2025-06-26T20:03:38.109+02:00  INFO 2388716 --- [MHipster] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2025-06-26T20:03:38.115+02:00  INFO 2388716 --- [MHipster] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-06-26T20:03:38.128+02:00  INFO 2388716 --- [MHipster] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 1.20.4
+2025-06-26T20:03:38.521+02:00  INFO 2388716 --- [MHipster] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.UnixSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-06-26T20:03:39.201+02:00  INFO 2388716 --- [MHipster] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Unix socket (unix:///var/run/docker.sock)
+2025-06-26T20:03:39.203+02:00  INFO 2388716 --- [MHipster] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2025-06-26T20:03:39.231+02:00  INFO 2388716 --- [MHipster] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 28.0.4
+  API Version: 1.48
+  Operating System: Linux Mint 22
+  Total Memory: 15873 MB
+2025-06-26T20:03:39.275+02:00  INFO 2388716 --- [MHipster] [           main] tc.testcontainers/ryuk:0.11.0            : Creating container for image: testcontainers/ryuk:0.11.0
+2025-06-26T20:03:39.285+02:00  INFO 2388716 --- [MHipster] [           main] o.t.utility.RegistryAuthLocator          : Failure when attempting to lookup auth config. Please ignore if you don't have images in an authenticated registry. Details: (dockerImageName: testcontainers/ryuk:0.11.0, configFile: /home/mihael/.docker/config.json, configEnv: DOCKER_AUTH_CONFIG). Falling back to docker-java default behaviour. Exception message: Status 404: No config supplied. Checked in order: /home/mihael/.docker/config.json (file not found), DOCKER_AUTH_CONFIG (not set)
+2025-06-26T20:03:39.529+02:00  INFO 2388716 --- [MHipster] [           main] tc.testcontainers/ryuk:0.11.0            : Container testcontainers/ryuk:0.11.0 is starting: bb7b78901f6e914ec7ed4e2b2ebafd1f1654f958b7d2c95265c25c705c9d6660
+2025-06-26T20:03:39.956+02:00  INFO 2388716 --- [MHipster] [           main] tc.testcontainers/ryuk:0.11.0            : Container testcontainers/ryuk:0.11.0 started in PT0.681289939S
+2025-06-26T20:03:39.962+02:00  INFO 2388716 --- [MHipster] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-06-26T20:03:39.963+02:00  INFO 2388716 --- [MHipster] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2025-06-26T20:03:39.964+02:00  INFO 2388716 --- [MHipster] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2025-06-26T20:03:39.967+02:00  INFO 2388716 --- [MHipster] [           main] tc.mariadb:11.6.2                        : Creating container for image: mariadb:11.6.2
+2025-06-26T20:03:39.969+02:00  WARN 2388716 --- [MHipster] [           main] tc.mariadb:11.6.2                        : Reuse was requested but the environment does not support the reuse of containers
+To enable reuse of containers, you must set 'testcontainers.reuse.enable=true' in a file located at /home/mihael/.testcontainers.properties
+2025-06-26T20:03:40.036+02:00  INFO 2388716 --- [MHipster] [           main] tc.mariadb:11.6.2                        : Container mariadb:11.6.2 is starting: 8a5212aa319d6d8e3b5cfb24ca1b985e5cade343637b1f04e9044efb12c88a62
+2025-06-26T20:03:40.221+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:40+00:00 [Note] [Entrypoint]: Entrypoint script for MariaDB Server 1:11.6.2+maria~ubu2404 started.
+2025-06-26T20:03:40.235+02:00  INFO 2388716 --- [MHipster] [           main] tc.mariadb:11.6.2                        : Waiting for database connection to become available at jdbc:mariadb://localhost:32801/MHipster using query 'SELECT 1'
+2025-06-26T20:03:40.431+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:40+00:00 [Warn] [Entrypoint]: /sys/fs/cgroup///memory.pressure not writable, functionality unavailable to MariaDB
+2025-06-26T20:03:40.435+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:40+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2025-06-26T20:03:40.443+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:40+00:00 [Note] [Entrypoint]: Entrypoint script for MariaDB Server 1:11.6.2+maria~ubu2404 started.
+2025-06-26T20:03:40.647+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:40+00:00 [Note] [Entrypoint]: Initializing database files
+2025-06-26T20:03:40.686+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:40 0 [Warning] option 'table_open_cache': unsigned value 4 adjusted to 10
+2025-06-26T20:03:40.737+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:40 0 [Warning] mariadbd: io_uring_queue_init() failed with errno 95
+2025-06-26T20:03:40.737+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:40 0 [Warning] InnoDB: liburing disabled: falling back to innodb_use_native_aio=OFF
+2025-06-26T20:03:43.116+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:43+00:00 [Note] [Entrypoint]: Database files initialized
+2025-06-26T20:03:43.120+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:43+00:00 [Note] [Entrypoint]: Starting temporary server
+2025-06-26T20:03:43.123+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:43+00:00 [Note] [Entrypoint]: Waiting for server startup
+2025-06-26T20:03:43.145+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Warning] option 'table_open_cache': unsigned value 4 adjusted to 10
+2025-06-26T20:03:43.160+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] Starting MariaDB 11.6.2-MariaDB-ubu2404 source revision d8dad8c3b54cd09fefce7bc3b9749f427eed9709 server_uid KrNXUcnYlBybyl8Hrdd3pHYB9Aw= as process 98
+2025-06-26T20:03:43.177+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] InnoDB: Compressed tables use zlib 1.3
+2025-06-26T20:03:43.180+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] InnoDB: Number of transaction pools: 1
+2025-06-26T20:03:43.181+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+2025-06-26T20:03:43.182+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] mariadbd: O_TMPFILE is not supported on /tmp (disabling future attempts)
+2025-06-26T20:03:43.182+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Warning] mariadbd: io_uring_queue_init() failed with errno 95
+2025-06-26T20:03:43.182+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Warning] InnoDB: liburing disabled: falling back to innodb_use_native_aio=OFF
+2025-06-26T20:03:43.183+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] InnoDB: Initializing buffer pool, total size = 16.000MiB, chunk size = 1.000MiB
+2025-06-26T20:03:43.183+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-06-26T20:03:43.183+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] InnoDB: File system buffers for log disabled (block size=512 bytes)
+2025-06-26T20:03:43.189+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] InnoDB: End of log at LSN=47779
+2025-06-26T20:03:43.212+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] InnoDB: Opened 3 undo tablespaces
+2025-06-26T20:03:43.213+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] InnoDB: 128 rollback segments in 3 undo tablespaces are active.
+2025-06-26T20:03:43.213+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+2025-06-26T20:03:43.214+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+2025-06-26T20:03:43.215+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] InnoDB: log sequence number 47779; transaction id 14
+2025-06-26T20:03:43.216+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] Plugin 'FEEDBACK' is disabled.
+2025-06-26T20:03:43.216+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:43 0 [Note] Plugin 'wsrep-provider' is disabled.
+2025-06-26T20:03:44.641+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:44 0 [Note] mariadbd: Event Scheduler: Loaded 0 events
+2025-06-26T20:03:44.648+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:44 0 [Note] mariadbd: ready for connections.
+2025-06-26T20:03:44.648+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: Version: '11.6.2-MariaDB-ubu2404'  socket: '/run/mysqld/mysqld.sock'  port: 0  mariadb.org binary distribution
+2025-06-26T20:03:45.179+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:45+00:00 [Note] [Entrypoint]: Temporary server started.
+2025-06-26T20:03:45.871+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:45+00:00 [Note] [Entrypoint]: Creating database MHipster
+2025-06-26T20:03:45.877+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:45+00:00 [Note] [Entrypoint]: Creating user test
+2025-06-26T20:03:45.886+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:45+00:00 [Note] [Entrypoint]: Giving user test access to schema MHipster
+2025-06-26T20:03:45.893+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:45+00:00 [Note] [Entrypoint]: Securing system users (equivalent to running mysql_secure_installation)
+2025-06-26T20:03:46.001+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 
+2025-06-26T20:03:46.004+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:46+00:00 [Note] [Entrypoint]: Stopping temporary server
+2025-06-26T20:03:46.004+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] mariadbd (initiated by: unknown): Normal shutdown
+2025-06-26T20:03:46.004+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: FTS optimize thread exiting.
+2025-06-26T20:03:46.045+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: Starting shutdown...
+2025-06-26T20:03:46.046+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: Dumping buffer pool(s) to /var/lib/mysql/ib_buffer_pool
+2025-06-26T20:03:46.046+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: Buffer pool(s) dump completed at 250626 18:03:46
+2025-06-26T20:03:46.251+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: Removed temporary tablespace data file: "./ibtmp1"
+2025-06-26T20:03:46.252+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: Shutdown completed; log sequence number 47779; transaction id 15
+2025-06-26T20:03:46.265+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] mariadbd: Shutdown complete
+2025-06-26T20:03:46.265+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 
+2025-06-26T20:03:46.285+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:46+00:00 [Note] [Entrypoint]: Temporary server stopped
+2025-06-26T20:03:46.286+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 
+2025-06-26T20:03:46.290+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 2025-06-26 18:03:46+00:00 [Note] [Entrypoint]: MariaDB init process done. Ready for start up.
+2025-06-26T20:03:46.290+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDOUT: 
+2025-06-26T20:03:46.320+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Warning] option 'table_open_cache': unsigned value 4 adjusted to 10
+2025-06-26T20:03:46.338+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] Starting MariaDB 11.6.2-MariaDB-ubu2404 source revision d8dad8c3b54cd09fefce7bc3b9749f427eed9709 server_uid gPAvsJwp78LM6zh1GSatsLGbGrQ= as process 1
+2025-06-26T20:03:46.363+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: Compressed tables use zlib 1.3
+2025-06-26T20:03:46.366+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: Number of transaction pools: 1
+2025-06-26T20:03:46.366+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+2025-06-26T20:03:46.366+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] mariadbd: O_TMPFILE is not supported on /tmp (disabling future attempts)
+2025-06-26T20:03:46.367+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Warning] mariadbd: io_uring_queue_init() failed with errno 95
+2025-06-26T20:03:46.367+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Warning] InnoDB: liburing disabled: falling back to innodb_use_native_aio=OFF
+2025-06-26T20:03:46.367+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: Initializing buffer pool, total size = 16.000MiB, chunk size = 1.000MiB
+2025-06-26T20:03:46.367+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-06-26T20:03:46.368+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: File system buffers for log disabled (block size=512 bytes)
+2025-06-26T20:03:46.374+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: End of log at LSN=47779
+2025-06-26T20:03:46.397+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: Opened 3 undo tablespaces
+2025-06-26T20:03:46.397+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: 128 rollback segments in 3 undo tablespaces are active.
+2025-06-26T20:03:46.398+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+2025-06-26T20:03:46.398+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+2025-06-26T20:03:46.399+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: log sequence number 47779; transaction id 14
+2025-06-26T20:03:46.400+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] Plugin 'FEEDBACK' is disabled.
+2025-06-26T20:03:46.400+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] Plugin 'wsrep-provider' is disabled.
+2025-06-26T20:03:46.400+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+2025-06-26T20:03:46.410+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:46 0 [Note] InnoDB: Buffer pool(s) load completed at 250626 18:03:46
+2025-06-26T20:03:49.441+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:49 0 [Note] Server socket created on IP: '0.0.0.0'.
+2025-06-26T20:03:49.442+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:49 0 [Note] Server socket created on IP: '::'.
+2025-06-26T20:03:49.510+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:49 0 [Note] mariadbd: Event Scheduler: Loaded 0 events
+2025-06-26T20:03:49.512+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: 2025-06-26 18:03:49 0 [Note] mariadbd: ready for connections.
+2025-06-26T20:03:49.513+02:00  INFO 2388716 --- [MHipster] [stream-76152964] c.m.m.config.MariadbTestContainer        : STDERR: Version: '11.6.2-MariaDB-ubu2404'  socket: '/run/mysqld/mysqld.sock'  port: 3306  mariadb.org binary distribution
+2025-06-26T20:03:49.538+02:00  INFO 2388716 --- [MHipster] [           main] tc.mariadb:11.6.2                        : Container mariadb:11.6.2 started in PT9.570793887S
+2025-06-26T20:03:49.539+02:00  INFO 2388716 --- [MHipster] [           main] tc.mariadb:11.6.2                        : Container is started (JDBC URL: jdbc:mariadb://localhost:32801/MHipster)
+2025-06-26T20:03:49.566+02:00  INFO 2388716 --- [MHipster] [           main] c.m.m.c.CucumberTestContextConfiguration : Starting CucumberTestContextConfiguration using Java 21.0.6 with PID 2388716 (started by mihael in /home/mihael/Projects/MHipster2)
+2025-06-26T20:03:49.567+02:00  INFO 2388716 --- [MHipster] [           main] c.m.m.c.CucumberTestContextConfiguration : No active profile set, falling back to 1 default profile: "default"
+2025-06-26T20:03:54.111+02:00  WARN 2388716 --- [MHipster] [           main] o.m.jdbc.message.server.ErrorPacket      : Error: 1146-42S02: Table 'MHipster.DATABASECHANGELOGLOCK' doesn't exist
+2025-06-26T20:03:54.269+02:00  WARN 2388716 --- [MHipster] [           main] liquibase.changelog                      : Due to mariadb SQL limitations, setNullable will lose primary key/autoincrement/not null/comment settings explicitly redefined in the change. Use <sql> or <modifySql> to re-specify all configuration if this is the case
+2025-06-26T20:03:54.301+02:00  WARN 2388716 --- [MHipster] [           main] liquibase.changelog                      : Due to mariadb SQL limitations, setNullable will lose primary key/autoincrement/not null/comment settings explicitly redefined in the change. Use <sql> or <modifySql> to re-specify all configuration if this is the case
+2025-06-26T20:04:01.689+02:00  WARN 2388716 --- [MHipster] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-26T20:04:03.682+02:00  INFO 2388716 --- [MHipster] [           main] c.m.m.c.CucumberTestContextConfiguration : Started CucumberTestContextConfiguration in 26.663 seconds (process running for 30.583)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (/home/mihael/.m2/repository/net/bytebuddy/byte-buddy-agent/1.15.11/byte-buddy-agent-1.15.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+
+Scenario: Successful registration     # features/account.feature:3
+  Given user does not have account
+  When user submits registration form
+  Then user profile is created
+  And user is notified about success
+
+Scenario: Successful login         # features/account.feature:9
+  Given credentials are valid
+  When user submits login form
+  Then user is logged in : account
+
+Scenario: Unsuccessful login          # features/account.feature:14
+  Given credentials are invalid
+  When user submits login form
+  Then login is rejected
+  Then user is notified about failure
+
+Scenario: Automatically generate step definition stubs for undefined steps # features/feature_testing.feature:3
+  Given user is positioned in MHipster directory in local project files
+  When user runs generate step definitions script
+  Then step definition stubs are created
+
+Scenario: Automatically run feature testing                             # features/feature_testing.feature:8
+  Given user is positioned in MHipster directory in local project files
+  And user specifies which features to test
+  When user runs test script
+  Then integration testing based on feature files should start
+
+Scenario: Automatically post test report       # features/feature_testing.feature:14
+  Given automatic feature testing was executed
+  When all selected feature tests have passed
+  Then test result is posted to the platform
+
+Scenario: Generate feature              # features/generating_projects.feature:6
+  Given user is logged in : generating
+  Given user navigates to features view
+  And user selects new feature option
+  And user fills the form
+  When user selects create feature
+  Then feature is created
+  And user is feature owner
+
+Scenario: Generate JDL specification             # features/generating_projects.feature:14
+  Given user is logged in : generating
+  Given user navigates to JDL specification view
+  And user selects new JDL specification option
+  And user fills the form
+  When user selects create JDL specification
+  Then JDL specification is created
+  And user is JDL specification owner
+
+Scenario: Generate the project                                    # features/generating_projects.feature:22
+  Given user is logged in : generating
+  Given user navigates to projects view : generating
+  And user selects new project option
+  And user selects JDL specification to use from the list he owns
+  And user selects feature files to use from the list he owns
+  When user clicks generate project
+  Then project is generated using JHipster
+  And project is configured to use Cucumber and JaCoCo
+  And user is project owner
+
+Scenario: Download the project                # features/generating_projects.feature:32
+  Given user is logged in : generating
+  Given user navigates to their projects view
+  And user selects project details
+  When user clicks the download button
+  Then user receives project files
+
+Scenario: Owned projects list                     # features/personal_projects_overview.feature:6
+  Given user is logged in : personal
+  When user navigates to projects view : personal
+  Then user can see all projects they own
+
+Scenario: Feature test                                       # features/personal_projects_overview.feature:10
+  Given user is logged in : personal
+  Given user selects a project they own
+  When user selects project statistics of projects from list
+  Then user can see project code statistics
+
+Scenario: Generate overview                    # features/platform_overview.feature:6
+  Given administrator is logged in
+  Given admin navigates to overview section
+  And admin selects create overview option
+  Then platform statistics overview is created
+  And admin is overview owner
+
+Scenario: Inspect platform statistics                # features/platform_overview.feature:12
+  Given administrator is logged in
+  Given admin navigates to overview section
+  When admin selects details of one of the overviews
+  Then admin can see overview details
+┌──────────────────────────────────────────────────────────────────────────┐
+│ View your Cucumber Report at:                                            │
+│ https://reports.cucumber.io/reports/ba5e88c1-12ef-45b1-ac0b-7d5a6195b776 │
+│                                                                          │
+│ This report will self-destruct in 24h.                                   │
+└──────────────────────────────────────────────────────────────────────────┘[ERROR] Tests run: 14, Failures: 0, Errors: 14, Skipped: 0, Time elapsed: 31.66 s <<< FAILURE! -- in com.mihael.mhipster.cucumber.CucumberIT
+[ERROR] Account.Successful registration -- Time elapsed: 28.22 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'user does not have account' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user does not have account")
+public void user_does_not_have_account() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user submits registration form")
+public void user_submits_registration_form() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user profile is created")
+public void user_profile_is_created() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user is notified about success")
+public void user_is_notified_about_success() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] Account.Successful login -- Time elapsed: 0.030 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'credentials are valid' and 2 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("credentials are valid")
+public void credentials_are_valid() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user submits login form")
+public void user_submits_login_form() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user is logged in : account")
+public void user_is_logged_in_account() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] Account.Unsuccessful login -- Time elapsed: 0.031 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'credentials are invalid' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("credentials are invalid")
+public void credentials_are_invalid() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user submits login form")
+public void user_submits_login_form() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("login is rejected")
+public void login_is_rejected() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user is notified about failure")
+public void user_is_notified_about_failure() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] Feature testing.Automatically generate step definition stubs for undefined steps -- Time elapsed: 0.029 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'user is positioned in MHipster directory in local project files' and 2 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is positioned in MHipster directory in local project files")
+public void user_is_positioned_in_m_hipster_directory_in_local_project_files() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user runs generate step definitions script")
+public void user_runs_generate_step_definitions_script() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("step definition stubs are created")
+public void step_definition_stubs_are_created() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] Feature testing.Automatically run feature testing -- Time elapsed: 0.028 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'user is positioned in MHipster directory in local project files' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is positioned in MHipster directory in local project files")
+public void user_is_positioned_in_m_hipster_directory_in_local_project_files() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user specifies which features to test")
+public void user_specifies_which_features_to_test() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user runs test script")
+public void user_runs_test_script() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("integration testing based on feature files should start")
+public void integration_testing_based_on_feature_files_should_start() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] Feature testing.Automatically post test report -- Time elapsed: 0.028 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'automatic feature testing was executed' and 2 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("automatic feature testing was executed")
+public void automatic_feature_testing_was_executed() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("all selected feature tests have passed")
+public void all_selected_feature_tests_have_passed() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("test result is posted to the platform")
+public void test_result_is_posted_to_the_platform() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] Generating projects.Generate feature -- Time elapsed: 0.029 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'user is logged in : generating' and 6 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is logged in : generating")
+public void user_is_logged_in_generating() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user navigates to features view")
+public void user_navigates_to_features_view() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user selects new feature option")
+public void user_selects_new_feature_option() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user fills the form")
+public void user_fills_the_form() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user selects create feature")
+public void user_selects_create_feature() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("feature is created")
+public void feature_is_created() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user is feature owner")
+public void user_is_feature_owner() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] Generating projects.Generate JDL specification -- Time elapsed: 0.029 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'user is logged in : generating' and 6 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is logged in : generating")
+public void user_is_logged_in_generating() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user navigates to JDL specification view")
+public void user_navigates_to_jdl_specification_view() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user selects new JDL specification option")
+public void user_selects_new_jdl_specification_option() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user fills the form")
+public void user_fills_the_form() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user selects create JDL specification")
+public void user_selects_create_jdl_specification() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("JDL specification is created")
+public void jdl_specification_is_created() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user is JDL specification owner")
+public void user_is_jdl_specification_owner() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] Generating projects.Generate the project -- Time elapsed: 0.030 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'user is logged in : generating' and 8 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is logged in : generating")
+public void user_is_logged_in_generating() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user navigates to projects view : generating")
+public void user_navigates_to_projects_view_generating() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user selects new project option")
+public void user_selects_new_project_option() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user selects JDL specification to use from the list he owns")
+public void user_selects_jdl_specification_to_use_from_the_list_he_owns() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user selects feature files to use from the list he owns")
+public void user_selects_feature_files_to_use_from_the_list_he_owns() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user clicks generate project")
+public void user_clicks_generate_project() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("project is generated using JHipster")
+public void project_is_generated_using_j_hipster() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("project is configured to use Cucumber and JaCoCo")
+public void project_is_configured_to_use_cucumber_and_ja_co_co() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user is project owner")
+public void user_is_project_owner() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] Generating projects.Download the project -- Time elapsed: 0.028 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'user is logged in : generating' and 4 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is logged in : generating")
+public void user_is_logged_in_generating() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user navigates to their projects view")
+public void user_navigates_to_their_projects_view() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user selects project details")
+public void user_selects_project_details() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user clicks the download button")
+public void user_clicks_the_download_button() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user receives project files")
+public void user_receives_project_files() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] Overview of personal projects.Owned projects list -- Time elapsed: 0.024 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'user is logged in : personal' and 2 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is logged in : personal")
+public void user_is_logged_in_personal() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user navigates to projects view : personal")
+public void user_navigates_to_projects_view_personal() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user can see all projects they own")
+public void user_can_see_all_projects_they_own() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] Overview of personal projects.Feature test -- Time elapsed: 0.031 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'user is logged in : personal' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is logged in : personal")
+public void user_is_logged_in_personal() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user selects a project they own")
+public void user_selects_a_project_they_own() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user selects project statistics of projects from list")
+public void user_selects_project_statistics_of_projects_from_list() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user can see project code statistics")
+public void user_can_see_project_code_statistics() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] Platform statistics overview.Generate overview -- Time elapsed: 0.027 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'administrator is logged in' and 4 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("administrator is logged in")
+public void administrator_is_logged_in() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("admin navigates to overview section")
+public void admin_navigates_to_overview_section() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("admin selects create overview option")
+public void admin_selects_create_overview_option() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("platform statistics overview is created")
+public void platform_statistics_overview_is_created() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("admin is overview owner")
+public void admin_is_overview_owner() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] Platform statistics overview.Inspect platform statistics -- Time elapsed: 0.024 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'administrator is logged in' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("administrator is logged in")
+public void administrator_is_logged_in() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("admin navigates to overview section")
+public void admin_navigates_to_overview_section() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("admin selects details of one of the overviews")
+public void admin_selects_details_of_one_of_the_overviews() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("admin can see overview details")
+public void admin_can_see_overview_details() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Errors: 
+[ERROR]   The step 'credentials are valid' and 2 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("credentials are valid")
+public void credentials_are_valid() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user submits login form")
+public void user_submits_login_form() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user is logged in : account")
+public void user_is_logged_in_account() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+[ERROR]   The step 'user does not have account' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user does not have account")
+public void user_does_not_have_account() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user submits registration form")
+public void user_submits_registration_form() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user profile is created")
+public void user_profile_is_created() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user is notified about success")
+public void user_is_notified_about_success() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+[ERROR]   The step 'credentials are invalid' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("credentials are invalid")
+public void credentials_are_invalid() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user submits login form")
+public void user_submits_login_form() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("login is rejected")
+public void login_is_rejected() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user is notified about failure")
+public void user_is_notified_about_failure() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+[ERROR]   The step 'user is positioned in MHipster directory in local project files' and 2 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is positioned in MHipster directory in local project files")
+public void user_is_positioned_in_m_hipster_directory_in_local_project_files() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user runs generate step definitions script")
+public void user_runs_generate_step_definitions_script() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("step definition stubs are created")
+public void step_definition_stubs_are_created() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+[ERROR]   The step 'automatic feature testing was executed' and 2 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("automatic feature testing was executed")
+public void automatic_feature_testing_was_executed() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("all selected feature tests have passed")
+public void all_selected_feature_tests_have_passed() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("test result is posted to the platform")
+public void test_result_is_posted_to_the_platform() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+[ERROR]   The step 'user is positioned in MHipster directory in local project files' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is positioned in MHipster directory in local project files")
+public void user_is_positioned_in_m_hipster_directory_in_local_project_files() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user specifies which features to test")
+public void user_specifies_which_features_to_test() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user runs test script")
+public void user_runs_test_script() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("integration testing based on feature files should start")
+public void integration_testing_based_on_feature_files_should_start() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+[ERROR]   The step 'user is logged in : generating' and 4 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is logged in : generating")
+public void user_is_logged_in_generating() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user navigates to their projects view")
+public void user_navigates_to_their_projects_view() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user selects project details")
+public void user_selects_project_details() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user clicks the download button")
+public void user_clicks_the_download_button() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user receives project files")
+public void user_receives_project_files() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+[ERROR]   The step 'user is logged in : generating' and 6 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is logged in : generating")
+public void user_is_logged_in_generating() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user navigates to JDL specification view")
+public void user_navigates_to_jdl_specification_view() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user selects new JDL specification option")
+public void user_selects_new_jdl_specification_option() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user fills the form")
+public void user_fills_the_form() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user selects create JDL specification")
+public void user_selects_create_jdl_specification() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("JDL specification is created")
+public void jdl_specification_is_created() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user is JDL specification owner")
+public void user_is_jdl_specification_owner() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+[ERROR]   The step 'user is logged in : generating' and 6 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is logged in : generating")
+public void user_is_logged_in_generating() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user navigates to features view")
+public void user_navigates_to_features_view() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user selects new feature option")
+public void user_selects_new_feature_option() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user fills the form")
+public void user_fills_the_form() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user selects create feature")
+public void user_selects_create_feature() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("feature is created")
+public void feature_is_created() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user is feature owner")
+public void user_is_feature_owner() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+[ERROR]   The step 'user is logged in : generating' and 8 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is logged in : generating")
+public void user_is_logged_in_generating() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user navigates to projects view : generating")
+public void user_navigates_to_projects_view_generating() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user selects new project option")
+public void user_selects_new_project_option() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user selects JDL specification to use from the list he owns")
+public void user_selects_jdl_specification_to_use_from_the_list_he_owns() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user selects feature files to use from the list he owns")
+public void user_selects_feature_files_to_use_from_the_list_he_owns() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user clicks generate project")
+public void user_clicks_generate_project() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("project is generated using JHipster")
+public void project_is_generated_using_j_hipster() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("project is configured to use Cucumber and JaCoCo")
+public void project_is_configured_to_use_cucumber_and_ja_co_co() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user is project owner")
+public void user_is_project_owner() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+[ERROR]   The step 'user is logged in : personal' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is logged in : personal")
+public void user_is_logged_in_personal() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("user selects a project they own")
+public void user_selects_a_project_they_own() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user selects project statistics of projects from list")
+public void user_selects_project_statistics_of_projects_from_list() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user can see project code statistics")
+public void user_can_see_project_code_statistics() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+[ERROR]   The step 'user is logged in : personal' and 2 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("user is logged in : personal")
+public void user_is_logged_in_personal() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("user navigates to projects view : personal")
+public void user_navigates_to_projects_view_personal() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("user can see all projects they own")
+public void user_can_see_all_projects_they_own() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+[ERROR]   The step 'administrator is logged in' and 4 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("administrator is logged in")
+public void administrator_is_logged_in() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("admin navigates to overview section")
+public void admin_navigates_to_overview_section() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("admin selects create overview option")
+public void admin_selects_create_overview_option() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("platform statistics overview is created")
+public void platform_statistics_overview_is_created() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("admin is overview owner")
+public void admin_is_overview_owner() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+[ERROR]   The step 'administrator is logged in' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("administrator is logged in")
+public void administrator_is_logged_in() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("admin navigates to overview section")
+public void admin_navigates_to_overview_section() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("admin selects details of one of the overviews")
+public void admin_selects_details_of_one_of_the_overviews() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("admin can see overview details")
+public void admin_can_see_overview_details() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+[INFO] 
+[ERROR] Tests run: 14, Failures: 0, Errors: 14, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- failsafe:3.5.2:integration-test (integration-test) @ m-hipster ---
+[INFO] Skipping execution of surefire because it has already been run for this configuration
+[INFO] 
+[INFO] --- jacoco:0.8.12:report-integration (post-integration-tests) @ m-hipster ---
+[INFO] Loading execution data file /home/mihael/Projects/MHipster2/target/jacoco-it.exec
+[INFO] Analyzed bundle 'M Hipster' with 82 classes
+[INFO] 
+[INFO] --- checkstyle:3.6.0:check (default) @ m-hipster ---
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- failsafe:3.5.2:verify (default) @ m-hipster ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  46.216 s
+[INFO] Finished at: 2025-06-26T20:04:09+02:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-failsafe-plugin:3.5.2:verify (default) on project m-hipster: 
+[ERROR] 
+[ERROR] See /home/mihael/Projects/MHipster2/target/failsafe-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

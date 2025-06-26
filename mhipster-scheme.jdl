@@ -24,7 +24,7 @@ application {
 }
 entity MDLS {
   baseConfig String
-  content String
+  content TextBlob
   /* methods
   */
 }
@@ -39,7 +39,7 @@ entity Project {
 }
 entity Feature {
   name String
-  content String
+  content TextBlob
   /* methods
   */
 }

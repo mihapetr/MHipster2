@@ -1,6 +1,12 @@
 package com.mihael.mhipster.cucumber;
 
-import com.mihael.mhipster.IntegrationTest;
+import static io.cucumber.junit.platform.engine.Constants.*;
 
-@IntegrationTest
+import com.mihael.mhipster.IntegrationTest;
+import org.junit.platform.suite.api.*;
+
+@Suite
+@IncludeEngines("cucumber")
+@SelectClasspathResource("features") // Path to feature files
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.mihael.mhipster.cucumber, com.mihael.mhipster.cucumber.stepdefs")
 class CucumberIT {}

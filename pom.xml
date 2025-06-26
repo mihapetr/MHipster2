@@ -311,6 +311,12 @@
             <version>${testng.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+          <groupId>org.junit.platform</groupId>
+          <artifactId>junit-platform-suite</artifactId>
+          <version>1.9.3</version>
+          <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -1201,5 +1207,97 @@
                 </plugins>
             </build>
         </profile>
+
+      <!-- ============================================================== -->
+
+      <!-- Generate skeleton -->
+      <profile>
+        <id>skeleton</id>
+        <build>
+          <plugins>
+            <!-- Disable unit tests -->
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <configuration>
+                <skipTests>true</skipTests>
+              </configuration>
+            </plugin>
+            <!-- Cucumber -->
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-failsafe-plugin</artifactId>
+              <configuration>
+                <includes>
+                  <include>**/CucumberIT.java</include>
+                </includes>
+              </configuration>
+            </plugin>
+          </plugins>
+        </build>
+      </profile>
+
+      <!-- Testing profile -->
+      <profile>
+        <id>mhipster-runtime</id>
+        <build>
+          <plugins>
+
+            <!-- 1. Change @MGenerated's retention policy to RUNTIME -->
+
+            <!-- 2. Disable unit tests for this test flow -->
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <configuration>
+                <skipTests>true</skipTests>
+              </configuration>
+            </plugin>
+
+            <plugin>
+              <groupId>org.jacoco</groupId>
+              <artifactId>jacoco-maven-plugin</artifactId>
+              <executions>
+
+                <!-- 3. Prepare JaCoCo for integration test -->
+                <execution>
+                  <id>prepare-agent-integration-source</id>
+                  <goals><goal>prepare-agent-integration</goal></goals>
+                  <configuration>
+                    <destFile>${project.build.directory}/jacoco-mit-runtime/jacoco-it.exec</destFile>
+                  </configuration>
+                </execution>
+
+                <!-- (4.) -->
+
+                <!-- 5. Generate report -->
+                <execution> <id>report-integration-source</id>
+                  <phase>post-integration-test</phase>
+                  <goals><goal>report-integration</goal></goals>
+                  <configuration>
+                    <dataFile>${project.build.directory}/jacoco-mit-runtime/jacoco-it.exec</dataFile>
+                    <outputDirectory>${project.reporting.outputDirectory}/jacoco-mit-runtime</outputDirectory>
+                  </configuration>
+                </execution>
+
+              </executions>
+            </plugin>
+
+            <!-- 4. Run the Cucumber integration test -->
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-failsafe-plugin</artifactId>
+              <configuration>
+                <includes>
+                  <include>**/CucumberIT.java</include>
+                </includes>
+              </configuration>
+            </plugin>
+
+            <!-- 6. Post the JaCoCo report to the server after it is generated -->
+
+          </plugins>
+        </build>
+      </profile>
     </profiles>
 </project>

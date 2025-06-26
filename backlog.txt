@@ -1,0 +1,10 @@
+* create MGenerated class : DO NOT FORGET TO USE IT
+* configure Cucumber
+
+* configure JaCoCo
+* add Groovy
+* add mvn profile
+* change UI to suit your needs
+* configure User access to entities
+* create an endpoint for posting report data
+* implement business logic

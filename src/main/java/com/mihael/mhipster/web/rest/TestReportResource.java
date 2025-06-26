@@ -1,5 +1,6 @@
 package com.mihael.mhipster.web.rest;
 
+import com.mihael.mhipster.MGenerated;
 import com.mihael.mhipster.domain.TestReport;
 import com.mihael.mhipster.repository.TestReportRepository;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
@@ -57,6 +58,14 @@ public class TestReportResource {
         return ResponseEntity.created(new URI("/api/test-reports/" + testReport.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, testReport.getId().toString()))
             .body(testReport);
+    }
+
+    @MGenerated
+    public void modCreateTestReport() {
+        // todo : this section
+        // finish the POST groovy script
+        // implement saving logic here
+        // write a test in stepdefs
     }
 
     /**
