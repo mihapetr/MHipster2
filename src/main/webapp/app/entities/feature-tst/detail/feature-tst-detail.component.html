@@ -1,0 +1,59 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (featureTst(); as featureTstRef) {
+      <div>
+        <h2 data-cy="featureTstDetailsHeading"><span>Feature Tst</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ featureTstRef.id }}</span>
+          </dd>
+          <dt><span>Date</span></dt>
+          <dd>
+            <span>{{ featureTstRef.date | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Parent</span></dt>
+          <dd>
+            @if (featureTst()!.parent) {
+              <div>
+                <a [routerLink]="['/code-stats', featureTst()!.parent?.id, 'view']">{{ featureTstRef.parent?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>Feature</span></dt>
+          <dd>
+            @for (feature of featureTstRef.features; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/feature', feature.id, 'view']">{{ feature?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+          <dt><span>Project</span></dt>
+          <dd>
+            @if (featureTst()!.project) {
+              <div>
+                <a [routerLink]="['/project', featureTst()!.project?.id, 'view']">{{ featureTstRef.project?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/feature-tst', featureTstRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (project(); as projectRef) {
+      <div>
+        <h2 data-cy="projectDetailsHeading"><span>Project</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ projectRef.id }}</span>
+          </dd>
+          <dt><span>Name</span></dt>
+          <dd>
+            <span>{{ projectRef.name }}</span>
+          </dd>
+          <dt><span>Description</span></dt>
+          <dd>
+            <span>{{ projectRef.description }}</span>
+          </dd>
+          <dt><span>Creation Time Stamp</span></dt>
+          <dd>
+            <span>{{ projectRef.creationTimeStamp | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Location</span></dt>
+          <dd>
+            <span>{{ projectRef.location }}</span>
+          </dd>
+          <dt><span>Mdls</span></dt>
+          <dd>
+            @if (project()!.mdls) {
+              <div>
+                <a [routerLink]="['/mdls', project()!.mdls?.id, 'view']">{{ projectRef.mdls?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>User</span></dt>
+          <dd>
+            <span>{{ projectRef.user?.id }}</span>
+          </dd>
+          <dt><span>Feature</span></dt>
+          <dd>
+            @for (feature of projectRef.features; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/feature', feature.id, 'view']">{{ feature?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+          <dt><span>Overview</span></dt>
+          <dd>
+            @for (overview of projectRef.overviews; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/overview', overview.id, 'view']">{{ overview?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/project', projectRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

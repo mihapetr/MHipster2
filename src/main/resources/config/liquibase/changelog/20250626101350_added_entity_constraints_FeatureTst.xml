@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity FeatureTst.
+    -->
+    <changeSet id="20250626101350-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="parent_id"
+                                 baseTableName="feature_tst"
+                                 constraintName="fk_feature_tst__parent_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="code_stats"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="feature_tst_id"
+                                 baseTableName="rel_feature_tst__feature"
+                                 constraintName="fk_rel_feature_tst__feature__feature_tst_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="feature_tst"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="feature_id"
+                                 baseTableName="rel_feature_tst__feature"
+                                 constraintName="fk_rel_feature_tst__feature__feature_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="feature"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="project_id"
+                                 baseTableName="feature_tst"
+                                 constraintName="fk_feature_tst__project_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="project"
+                                 onDelete="CASCADE"
+                                 />
+    </changeSet>
+</databaseChangeLog>

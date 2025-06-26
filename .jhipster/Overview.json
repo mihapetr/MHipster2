@@ -1,0 +1,39 @@
+{
+  "annotations": {
+    "changelogDate": "20250626101450"
+  },
+  "applications": ["MHipster"],
+  "fields": [
+    {
+      "fieldName": "dateGenerated",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "name": "Overview",
+  "relationships": [
+    {
+      "otherEntityName": "codeStats",
+      "otherEntityRelationshipName": "overview",
+      "relationshipName": "parent",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required",
+      "relationshipWithBuiltInEntity": true
+    },
+    {
+      "otherEntityName": "project",
+      "otherEntityRelationshipName": "overview",
+      "relationshipName": "project",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

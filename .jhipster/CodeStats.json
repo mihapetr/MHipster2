@@ -1,0 +1,52 @@
+{
+  "annotations": {
+    "changelogDate": "20250626101550"
+  },
+  "applications": ["MHipster"],
+  "fields": [
+    {
+      "fieldName": "instructions",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "branches",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "lines",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "methods",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "classes",
+      "fieldType": "Double"
+    }
+  ],
+  "name": "CodeStats",
+  "relationships": [
+    {
+      "options": {
+        "onDelete": "CASCADE"
+      },
+      "otherEntityName": "overview",
+      "otherEntityRelationshipName": "parent",
+      "relationshipName": "overview",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "options": {
+        "onDelete": "CASCADE"
+      },
+      "otherEntityName": "featureTst",
+      "otherEntityRelationshipName": "parent",
+      "relationshipName": "featureTst",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

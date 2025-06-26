@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (mDLS(); as mDLSRef) {
+      <div>
+        <h2 data-cy="mDLSDetailsHeading"><span>MDLS</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ mDLSRef.id }}</span>
+          </dd>
+          <dt><span>Base Config</span></dt>
+          <dd>
+            <span>{{ mDLSRef.baseConfig }}</span>
+          </dd>
+          <dt><span>Content</span></dt>
+          <dd>
+            <span>{{ mDLSRef.content }}</span>
+          </dd>
+          <dt><span>User</span></dt>
+          <dd>
+            <span>{{ mDLSRef.user?.id }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/mdls', mDLSRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

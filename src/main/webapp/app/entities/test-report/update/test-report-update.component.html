@@ -1,0 +1,169 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-test-report-heading" data-cy="TestReportCreateUpdateHeading">Create or edit a Test Report</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_html">Html</label>
+          <input type="text" class="form-control" name="html" id="field_html" data-cy="html" formControlName="html" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_runtimeRetention">Runtime Retention</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="runtimeRetention"
+            id="field_runtimeRetention"
+            data-cy="runtimeRetention"
+            formControlName="runtimeRetention"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_missedInstructions">Missed Instructions</label>
+          <input
+            type="number"
+            class="form-control"
+            name="missedInstructions"
+            id="field_missedInstructions"
+            data-cy="missedInstructions"
+            formControlName="missedInstructions"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_instructions">Instructions</label>
+          <input
+            type="number"
+            class="form-control"
+            name="instructions"
+            id="field_instructions"
+            data-cy="instructions"
+            formControlName="instructions"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_missedBranches">Missed Branches</label>
+          <input
+            type="number"
+            class="form-control"
+            name="missedBranches"
+            id="field_missedBranches"
+            data-cy="missedBranches"
+            formControlName="missedBranches"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_branches">Branches</label>
+          <input type="number" class="form-control" name="branches" id="field_branches" data-cy="branches" formControlName="branches" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_missedLines">Missed Lines</label>
+          <input
+            type="number"
+            class="form-control"
+            name="missedLines"
+            id="field_missedLines"
+            data-cy="missedLines"
+            formControlName="missedLines"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_lines">Lines</label>
+          <input type="number" class="form-control" name="lines" id="field_lines" data-cy="lines" formControlName="lines" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_missedMethods">Missed Methods</label>
+          <input
+            type="number"
+            class="form-control"
+            name="missedMethods"
+            id="field_missedMethods"
+            data-cy="missedMethods"
+            formControlName="missedMethods"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_methods">Methods</label>
+          <input type="number" class="form-control" name="methods" id="field_methods" data-cy="methods" formControlName="methods" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_missedClasses">Missed Classes</label>
+          <input
+            type="number"
+            class="form-control"
+            name="missedClasses"
+            id="field_missedClasses"
+            data-cy="missedClasses"
+            formControlName="missedClasses"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_classes">Classes</label>
+          <input type="number" class="form-control" name="classes" id="field_classes" data-cy="classes" formControlName="classes" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_featureTst">Feature Tst</label>
+          <select
+            class="form-control"
+            id="field_featureTst"
+            data-cy="featureTst"
+            name="featureTst"
+            formControlName="featureTst"
+            [compareWith]="compareFeatureTst"
+          >
+            @if (editForm.get(['featureTst'])!.value == null) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (featureTstOption of featureTstsSharedCollection; track $index) {
+              <option [ngValue]="featureTstOption">{{ featureTstOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['featureTst'])!.invalid && (editForm.get(['featureTst'])!.dirty || editForm.get(['featureTst'])!.touched)) {
+          <div>
+            @if (editForm.get(['featureTst'])?.errors?.required) {
+              <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

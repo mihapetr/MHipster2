@@ -1,0 +1,35 @@
+{
+  "annotations": {
+    "changelogDate": "20250626101050"
+  },
+  "applications": ["MHipster"],
+  "fields": [
+    {
+      "fieldName": "baseConfig",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "content",
+      "fieldType": "String"
+    }
+  ],
+  "name": "MDLS",
+  "relationships": [
+    {
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required",
+      "relationshipWithBuiltInEntity": true
+    },
+    {
+      "otherEntityName": "project",
+      "otherEntityRelationshipName": "mdls",
+      "relationshipName": "project",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

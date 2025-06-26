@@ -1,0 +1,42 @@
+{
+  "annotations": {
+    "changelogDate": "20250626101250"
+  },
+  "applications": ["MHipster"],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "content",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Feature",
+  "relationships": [
+    {
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required",
+      "relationshipWithBuiltInEntity": true
+    },
+    {
+      "otherEntityName": "project",
+      "otherEntityRelationshipName": "feature",
+      "relationshipName": "project",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "featureTst",
+      "otherEntityRelationshipName": "feature",
+      "relationshipName": "featureTst",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

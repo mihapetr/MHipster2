@@ -1,0 +1,71 @@
+{
+  "annotations": {
+    "changelogDate": "20250626101650"
+  },
+  "applications": ["MHipster"],
+  "fields": [
+    {
+      "fieldName": "html",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "runtimeRetention",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "missedInstructions",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "instructions",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "missedBranches",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "branches",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "missedLines",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "lines",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "missedMethods",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "methods",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "missedClasses",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "classes",
+      "fieldType": "Integer"
+    }
+  ],
+  "name": "TestReport",
+  "relationships": [
+    {
+      "options": {
+        "onDelete": "CASCADE"
+      },
+      "otherEntityName": "featureTst",
+      "otherEntityRelationshipName": "testReport",
+      "relationshipName": "featureTst",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no"
+}

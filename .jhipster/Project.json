@@ -1,0 +1,64 @@
+{
+  "annotations": {
+    "changelogDate": "20250626101150"
+  },
+  "applications": ["MHipster"],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "creationTimeStamp",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "location",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Project",
+  "relationships": [
+    {
+      "otherEntityName": "mDLS",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "mdls",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "featureTst",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "featureTst",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required",
+      "relationshipWithBuiltInEntity": true
+    },
+    {
+      "otherEntityName": "feature",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "feature",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "overview",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "overview",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

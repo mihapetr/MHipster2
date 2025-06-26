@@ -1,0 +1,55 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (overview(); as overviewRef) {
+      <div>
+        <h2 data-cy="overviewDetailsHeading"><span>Overview</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ overviewRef.id }}</span>
+          </dd>
+          <dt><span>Date Generated</span></dt>
+          <dd>
+            <span>{{ overviewRef.dateGenerated | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Parent</span></dt>
+          <dd>
+            @if (overview()!.parent) {
+              <div>
+                <a [routerLink]="['/code-stats', overview()!.parent?.id, 'view']">{{ overviewRef.parent?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>User</span></dt>
+          <dd>
+            <span>{{ overviewRef.user?.id }}</span>
+          </dd>
+          <dt><span>Project</span></dt>
+          <dd>
+            @for (project of overviewRef.projects; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/project', project.id, 'view']">{{ project?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/overview', overviewRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

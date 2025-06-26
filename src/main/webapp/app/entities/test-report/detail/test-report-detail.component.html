@@ -1,0 +1,86 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (testReport(); as testReportRef) {
+      <div>
+        <h2 data-cy="testReportDetailsHeading"><span>Test Report</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ testReportRef.id }}</span>
+          </dd>
+          <dt><span>Html</span></dt>
+          <dd>
+            <span>{{ testReportRef.html }}</span>
+          </dd>
+          <dt><span>Runtime Retention</span></dt>
+          <dd>
+            <span>{{ testReportRef.runtimeRetention }}</span>
+          </dd>
+          <dt><span>Missed Instructions</span></dt>
+          <dd>
+            <span>{{ testReportRef.missedInstructions }}</span>
+          </dd>
+          <dt><span>Instructions</span></dt>
+          <dd>
+            <span>{{ testReportRef.instructions }}</span>
+          </dd>
+          <dt><span>Missed Branches</span></dt>
+          <dd>
+            <span>{{ testReportRef.missedBranches }}</span>
+          </dd>
+          <dt><span>Branches</span></dt>
+          <dd>
+            <span>{{ testReportRef.branches }}</span>
+          </dd>
+          <dt><span>Missed Lines</span></dt>
+          <dd>
+            <span>{{ testReportRef.missedLines }}</span>
+          </dd>
+          <dt><span>Lines</span></dt>
+          <dd>
+            <span>{{ testReportRef.lines }}</span>
+          </dd>
+          <dt><span>Missed Methods</span></dt>
+          <dd>
+            <span>{{ testReportRef.missedMethods }}</span>
+          </dd>
+          <dt><span>Methods</span></dt>
+          <dd>
+            <span>{{ testReportRef.methods }}</span>
+          </dd>
+          <dt><span>Missed Classes</span></dt>
+          <dd>
+            <span>{{ testReportRef.missedClasses }}</span>
+          </dd>
+          <dt><span>Classes</span></dt>
+          <dd>
+            <span>{{ testReportRef.classes }}</span>
+          </dd>
+          <dt><span>Feature Tst</span></dt>
+          <dd>
+            @if (testReport()!.featureTst) {
+              <div>
+                <a [routerLink]="['/feature-tst', testReport()!.featureTst?.id, 'view']">{{ testReportRef.featureTst?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/test-report', testReportRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,25 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "MHipster",
+    "buildTool": "maven",
+    "cacheProvider": "no",
+    "clientFramework": "angular",
+    "clientTheme": "none",
+    "databaseType": "sql",
+    "devDatabaseType": "mariadb",
+    "enableTranslation": false,
+    "entities": ["MDLS", "Project", "Feature", "FeatureTst", "Overview", "CodeStats", "TestReport"],
+    "jhipsterVersion": "8.8.0",
+    "jwtSecretKey": "MmJiMWU3YmQxNDU0YjQ4OWI2MmMwYWFkNWQ3NTJhNDdlNmM3Nzk5M2JjYjRjMjM4MjU3YjM5ZGRkZjgyNzE3NDgzMDUzYzg0MWMyMjZkZmYxOTkyYjZlODg1MDk3OGZiNDk2OGM2MzhhN2U1NzlmNTg5ZGNmMzdhOGJiNTcxMjU=",
+    "lastLiquibaseTimestamp": 1750933010000,
+    "microfrontends": [],
+    "nativeLanguage": "en",
+    "packageName": "com.mihael.mhipster",
+    "prodDatabaseType": "mariadb",
+    "reactive": false,
+    "testFrameworks": ["cucumber", "cypress"],
+    "withAdminUi": true
+  }
+}
