@@ -1264,7 +1264,7 @@
                   <id>prepare-agent-integration-source</id>
                   <goals><goal>prepare-agent-integration</goal></goals>
                   <configuration>
-                    <destFile>${project.build.directory}/jacoco-mit-runtime/jacoco-it.exec</destFile>
+                    <destFile>${project.build.directory}/jacoco-mhipster/jacoco-it.exec</destFile>
                   </configuration>
                 </execution>
 
@@ -1275,8 +1275,8 @@
                   <phase>post-integration-test</phase>
                   <goals><goal>report-integration</goal></goals>
                   <configuration>
-                    <dataFile>${project.build.directory}/jacoco-mit-runtime/jacoco-it.exec</dataFile>
-                    <outputDirectory>${project.reporting.outputDirectory}/jacoco-mit-runtime</outputDirectory>
+                    <dataFile>${project.build.directory}/jacoco-mhipster/jacoco-it.exec</dataFile>
+                    <outputDirectory>${project.reporting.outputDirectory}/jacoco-mhipster</outputDirectory>
                   </configuration>
                 </execution>
 

@@ -1,6 +1,7 @@
 package com.mihael.mhipster.web.rest;
 
 import com.mihael.mhipster.MGenerated;
+import com.mihael.mhipster.domain.FeatureTst;
 import com.mihael.mhipster.domain.TestReport;
 import com.mihael.mhipster.repository.TestReportRepository;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
@@ -8,6 +9,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -37,8 +40,11 @@ public class TestReportResource {
 
     private final TestReportRepository testReportRepository;
 
-    public TestReportResource(TestReportRepository testReportRepository) {
+    private final FeatureTstResource featureTstResource;
+
+    public TestReportResource(TestReportRepository testReportRepository, FeatureTstResource featureTstResource) {
         this.testReportRepository = testReportRepository;
+        this.featureTstResource = featureTstResource;
     }
 
     /**
@@ -58,6 +64,44 @@ public class TestReportResource {
         return ResponseEntity.created(new URI("/api/test-reports/" + testReport.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, testReport.getId().toString()))
             .body(testReport);
+    }
+
+    /**
+     * Create a new FeatureTest. Attach it to the Project with given id. Check if user owns the Project.
+     * Create a new TestReport and attach it to the new FeatureTest.
+     *
+     * @param id id of the Project the FeatureTest belongs to
+     * @param testReport the report to create
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new testReport, or with status {@code 400 (Bad Request)} if the testReport has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @MGenerated
+    @PostMapping("/of-project/{id}")
+    public ResponseEntity<TestReport> createTestReportOfProject(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody TestReport testReport
+    ) throws URISyntaxException {
+        FeatureTst featureTst = new FeatureTst().date(ZonedDateTime.now(ZoneId.systemDefault()).withNano(0));
+        featureTstResource.createFeatureTst(featureTst);
+
+        return createTestReport(testReport);
+    }
+
+    /**
+     * Create a new TestReport. Attach it to the feature test with given id.
+     *
+     * @param id id of the FeatureTest this TestReport belongs to.
+     * @param testReport the report to create
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new testReport, or with status {@code 400 (Bad Request)} if the testReport has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @MGenerated
+    @PostMapping("/of-feature-test/{id}")
+    public ResponseEntity<TestReport> createTestReportOfFeatureTest(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody TestReport testReport
+    ) throws URISyntaxException {
+        return createTestReport(testReport);
     }
 
     @MGenerated
