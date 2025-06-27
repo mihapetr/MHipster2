@@ -2,9 +2,9 @@ import java.nio.file.*
 import java.util.regex.*
 import groovy.transform.Field
 
-//@Field JAVA_BASE_PATH = "../../src/main/java/com/mihael/jhip/domain"
+//@Field JAVA_BASE_PATH = "../src/main/java/com/mihael/jhip/domain"
 @Field JAVA_BASE_PATH = "fake-domain"
-@Field FIELD_PREFIXES = ['part', 'whole', 'assoc', 'parent', 'child']
+
 @Field CASCADE_REMOVE = 'CascadeType.REMOVE'
 @Field CASCADE_PERSIST = 'CascadeType.PERSIST'
 
@@ -52,18 +52,19 @@ def processCascades(List<Map<String, Boolean>> cascadeList, String cascadeType) 
 
 def processJavaFileForCascade(File javaFile, String target, String cascadeType) {
     if (!javaFile.exists()) {
-        println "❌ File not found: $javaFile"
+        println "File not found: $javaFile"
         return
     }
 
     def lines = javaFile.readLines()
     def modified = false
-    def targetFieldNames = FIELD_PREFIXES.collect { it + target }
+    //def targetFieldNames = FIELD_PREFIXES.collect { it + target }
+    println javaFile.getName() + ":" + target + ";"
 
     def jpaPattern = ~/@(OneToOne|OneToMany|ManyToOne|ManyToMany)\s*(\(([^)]*)\))?/
 
     lines.eachWithIndex { line, idx ->
-        if (targetFieldNames.any { line.contains(it) } && (line.contains(";") || line.contains("="))) {
+        if ( line.contains(target)  && (line.contains(";") || line.contains("="))) {
             def i = idx - 1
             while (i >= 0 && lines[i].trim().startsWith("@")) {
                 def annLine = lines[i]
@@ -91,9 +92,9 @@ def processJavaFileForCascade(File javaFile, String target, String cascadeType) 
 
     if (modified) {
         javaFile.text = lines.join("\n")
-        println "✅ Modified $javaFile"
+        println "Modified $javaFile"
     } else {
-        println "⚠️ No applicable field updated in $javaFile"
+        println "No applicable field updated in $javaFile"
     }
 }
 
@@ -119,7 +120,7 @@ def parseEntityMethods(File jdlFile) {
 
 def insertMethodStubs(File javaFile, List<String> methodLines) {
     if (!javaFile.exists()) {
-        println "⚠️ Java file not found: $javaFile"
+        println "Java file not found: $javaFile"
         return
     }
 
@@ -131,7 +132,7 @@ def insertMethodStubs(File javaFile, List<String> methodLines) {
         def stubs = methodLines.collect { indent + it.replaceAll(/;$/, "") + " {}\n" }
         lines.addAll(insertIndex, stubs + ["\n"])
         javaFile.text = lines.join("\n")
-        println "✅ Updated $javaFile with ${methodLines.size()} method(s)."
+        println "Updated $javaFile with ${methodLines.size()} method(s)."
     }
 }
 
@@ -151,13 +152,11 @@ if (!jdlFile.exists()) {
 try {
     def relLines = getLinesAfterRelationship(jdlFile)
     def (deletes, persists) = extractEntitiesWithCascades(relLines)
-    println "deletes" + deletes
-    println "persists" + persists
 
-    println "🔁 Processing deletes..."
+    println "Processing deletes..."
     processCascades(deletes, CASCADE_REMOVE)
 
-    println "🔁 Processing persists..."
+    println "Processing persists..."
     processCascades(persists, CASCADE_PERSIST)
 
     def entityMethodMap = parseEntityMethods(jdlFile)
@@ -166,7 +165,7 @@ try {
         insertMethodStubs(javaFile, methods)
     }
 } catch (Exception e) {
-    println "❌ Error: ${e.message}"
+    println "Error: ${e.message}"
     e.printStackTrace()
     System.exit(1)
 }
