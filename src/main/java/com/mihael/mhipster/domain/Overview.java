@@ -28,7 +28,7 @@ public class Overview implements Serializable {
     private ZonedDateTime dateGenerated;
 
     @JsonIgnoreProperties(value = { "overview", "featureTst" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
     @NotNull
     @JoinColumn(unique = true)
     private CodeStats parent;
@@ -150,4 +150,6 @@ public class Overview implements Serializable {
             ", dateGenerated='" + getDateGenerated() + "'" +
             "}";
     }
+
+    void update() {}
 }

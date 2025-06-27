@@ -34,7 +34,7 @@ entity Project {
   creationTimeStamp ZonedDateTime
   location String
   /* methods
-  string generate()
+  String generate()
   */
 }
 entity Feature {
@@ -78,7 +78,6 @@ entity TestReport {
   missedClasses Integer
   classes Integer
   /* methods
-  void parse()
   */
 }
 relationship OneToOne {

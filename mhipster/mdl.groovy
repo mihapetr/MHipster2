@@ -2,8 +2,8 @@ import java.nio.file.*
 import java.util.regex.*
 import groovy.transform.Field
 
-//@Field JAVA_BASE_PATH = "../src/main/java/com/mihael/jhip/domain"
-@Field JAVA_BASE_PATH = "fake-domain"
+@Field JAVA_BASE_PATH = "../src/main/java/com/mihael/mhipster/domain"
+//@Field JAVA_BASE_PATH = "fake-domain"
 
 @Field CASCADE_REMOVE = 'CascadeType.REMOVE'
 @Field CASCADE_PERSIST = 'CascadeType.PERSIST'

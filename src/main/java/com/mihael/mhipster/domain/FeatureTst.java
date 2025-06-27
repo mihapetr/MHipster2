@@ -28,12 +28,12 @@ public class FeatureTst implements Serializable {
     private ZonedDateTime date;
 
     @JsonIgnoreProperties(value = { "overview", "featureTst" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
     @NotNull
     @JoinColumn(unique = true)
     private CodeStats parent;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "featureTst")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "featureTst", cascade = { CascadeType.REMOVE })
     @JsonIgnoreProperties(value = { "featureTst" }, allowSetters = true)
     private Set<TestReport> testReports = new HashSet<>();
 
@@ -186,4 +186,6 @@ public class FeatureTst implements Serializable {
             ", date='" + getDate() + "'" +
             "}";
     }
+
+    void generateStats() {}
 }

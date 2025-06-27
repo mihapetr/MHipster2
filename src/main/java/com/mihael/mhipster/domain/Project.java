@@ -41,7 +41,7 @@ public class Project implements Serializable {
     @JoinColumn(unique = true)
     private MDLS mdls;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project", cascade = { CascadeType.REMOVE })
     @JsonIgnoreProperties(value = { "parent", "testReports", "features", "project" }, allowSetters = true)
     private Set<FeatureTst> featureTsts = new HashSet<>();
 
@@ -270,4 +270,6 @@ public class Project implements Serializable {
             ", location='" + getLocation() + "'" +
             "}";
     }
+
+    String generate() {}
 }
