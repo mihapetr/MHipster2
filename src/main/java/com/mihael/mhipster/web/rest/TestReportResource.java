@@ -1,9 +1,10 @@
 package com.mihael.mhipster.web.rest;
 
 import com.mihael.mhipster.MGenerated;
-import com.mihael.mhipster.domain.FeatureTst;
-import com.mihael.mhipster.domain.TestReport;
+import com.mihael.mhipster.domain.*;
 import com.mihael.mhipster.repository.TestReportRepository;
+import com.mihael.mhipster.repository.UserRepository;
+import com.mihael.mhipster.security.SecurityUtils;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -41,10 +42,19 @@ public class TestReportResource {
     private final TestReportRepository testReportRepository;
 
     private final FeatureTstResource featureTstResource;
+    private final ProjectResource projectResource;
+    private final UserRepository userRepository;
 
-    public TestReportResource(TestReportRepository testReportRepository, FeatureTstResource featureTstResource) {
+    public TestReportResource(
+        TestReportRepository testReportRepository,
+        FeatureTstResource featureTstResource,
+        ProjectResource projectResource,
+        UserRepository userRepository
+    ) {
         this.testReportRepository = testReportRepository;
         this.featureTstResource = featureTstResource;
+        this.projectResource = projectResource;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -78,13 +88,40 @@ public class TestReportResource {
     @MGenerated
     @PostMapping("/of-project/{id}")
     public ResponseEntity<TestReport> createTestReportOfProject(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = true) final Long id,
         @Valid @RequestBody TestReport testReport
     ) throws URISyntaxException {
-        FeatureTst featureTst = new FeatureTst().date(ZonedDateTime.now(ZoneId.systemDefault()).withNano(0));
-        featureTstResource.createFeatureTst(featureTst);
+        // get referenced project
+        Project project = projectResource.getProject(id).getBody();
+
+        if (!currentUserIsOwner(project.getUser().getId())) throw new BadRequestAlertException(
+            "Unauthorized access.",
+            ENTITY_NAME,
+            "notowner"
+        );
+
+        // make empty CodeStats parent
+        CodeStats codeStats = new CodeStats(); // cascade ensured
+
+        // generate date
+        // attach empty CodeStats : cascade ensured
+        // link to project referenced in uri
+        FeatureTst featureTst = new FeatureTst()
+            .date(ZonedDateTime.now(ZoneId.systemDefault()).withNano(0))
+            .parent(codeStats)
+            .project(project);
+
+        // link new report to new FeatureTst
+        testReport.featureTst(featureTstResource.createFeatureTst(featureTst).getBody());
 
         return createTestReport(testReport);
+    }
+
+    boolean currentUserIsOwner(Long userId) {
+        // get user
+        String login = SecurityUtils.getCurrentUserLogin().orElseThrow();
+        User user = userRepository.findOneByLogin(login).orElseThrow();
+        return user.getId().equals(userId);
     }
 
     /**
@@ -102,14 +139,6 @@ public class TestReportResource {
         @Valid @RequestBody TestReport testReport
     ) throws URISyntaxException {
         return createTestReport(testReport);
-    }
-
-    @MGenerated
-    public void modCreateTestReport() {
-        // todo : this section
-        // finish the POST groovy script
-        // implement saving logic here
-        // write a test in stepdefs
     }
 
     /**

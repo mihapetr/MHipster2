@@ -33,7 +33,7 @@ public class FeatureTst implements Serializable {
     @JoinColumn(unique = true)
     private CodeStats parent;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "featureTst", cascade = { CascadeType.REMOVE })
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "featureTst", cascade = { CascadeType.REMOVE })
     @JsonIgnoreProperties(value = { "featureTst" }, allowSetters = true)
     private Set<TestReport> testReports = new HashSet<>();
 
@@ -49,6 +49,7 @@ public class FeatureTst implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "mdls", "featureTsts", "user", "features", "overviews" }, allowSetters = true)
+    @JoinColumn(name = "project_id")
     private Project project;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -184,6 +185,8 @@ public class FeatureTst implements Serializable {
         return "FeatureTst{" +
             "id=" + getId() +
             ", date='" + getDate() + "'" +
+            ", testReports=" + getTestReports() +
+            ", project=" + getProject().getId() +
             "}";
     }
 

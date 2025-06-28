@@ -1239,7 +1239,7 @@
 
       <!-- Testing profile -->
       <profile>
-        <id>mhipster-runtime</id>
+        <id>mhipster-it</id>
         <build>
           <plugins>
 
