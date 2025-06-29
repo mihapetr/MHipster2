@@ -41,7 +41,7 @@ public class Project implements Serializable {
     @JoinColumn(unique = true)
     private MDLS mdls;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "project", cascade = { CascadeType.REMOVE })
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project", cascade = { CascadeType.REMOVE })
     @JsonIgnoreProperties(value = { "parent", "testReports", "features", "project" }, allowSetters = true)
     private Set<FeatureTst> featureTsts = new HashSet<>();
 

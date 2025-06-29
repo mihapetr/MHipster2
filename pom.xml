@@ -1243,7 +1243,7 @@
         <build>
           <plugins>
 
-            <!-- 1. Change @MGenerated's retention policy to RUNTIME -->
+            <!-- 1. Change @MGenerated's retention policy -->
 
             <!-- 2. Disable unit tests for this test flow -->
             <plugin>

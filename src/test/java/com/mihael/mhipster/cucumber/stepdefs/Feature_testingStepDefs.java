@@ -21,6 +21,8 @@ import io.cucumber.java.en.*;
 import jakarta.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -75,12 +77,12 @@ public class Feature_testingStepDefs {
         requiresSetup = false;
 
         MvcResult userResult = mockMvc.perform(get("/api/admin/users/admin")).andExpect(status().isOk()).andReturn();
-        System.out.println("users: " + userResult.getResponse().getContentAsString());
+        //System.out.println("users: " + userResult.getResponse().getContentAsString());
 
         AdminUserDTO userDTO = objectMapper.readValue(userResult.getResponse().getContentAsString(), AdminUserDTO.class);
         User user = userMapper.userDTOToUser(userDTO);
 
-        Project project = new Project().name("test_name").user(user);
+        Project project = new Project().name("test_name").user(user); // because mock user in tests is admin
         String project_JSON = objectMapper.writeValueAsString(project);
 
         MvcResult result = mockMvc
@@ -155,44 +157,44 @@ public class Feature_testingStepDefs {
     @Transactional
     @Then("test result is posted to the platform")
     public void test_result_is_posted_to_the_platform() throws Exception {
-        FeatureTst featureTst = new FeatureTst();
-
-        TestReport testReport = new TestReport().featureTst(featureTst).runtimeRetention(false);
-        String testReport_JSON = objectMapper.writeValueAsString(testReport);
+        TestReport testReportSource = new TestReport().runtimeRetention(false); // do not forget to sync with the retention modifier logic
+        String testReportSource_JSON = objectMapper.writeValueAsString(testReportSource);
+        // post the first report
         MvcResult result = mockMvc
-            .perform(post("/api/test-reports/of-project/" + projectId).contentType(MediaType.APPLICATION_JSON).content(testReport_JSON))
+            .perform(
+                post("/api/test-reports/of-project/" + projectId).contentType(MediaType.APPLICATION_JSON).content(testReportSource_JSON)
+            )
             .andExpect(status().isCreated())
             .andReturn();
-        System.out.println(result.getResponse().getContentAsString());
+        String result_JSON = result.getResponse().getContentAsString();
+        //System.out.println("new report source = " + result_JSON);
+        TestReport generatedReport = objectMapper.readValue(result_JSON, TestReport.class);
+        Long generatedFeatureTstId = generatedReport.getFeatureTst().getId();
 
-        /*result = mockMvc.perform(
-                get("/api/projects/" + projectId)
-            )
-            //.andExpect(status().isOk())
+        TestReport testReportRuntime = new TestReport().runtimeRetention(true).featureTst(generatedReport.getFeatureTst());
+        String testReportRuntime_JSON = objectMapper.writeValueAsString(testReportRuntime);
+        // post the second report
+        result = mockMvc
+            .perform(post("/api/test-reports").contentType(MediaType.APPLICATION_JSON).content(testReportRuntime_JSON))
+            .andExpect(status().isCreated())
             .andReturn();
-        System.out.println("whole project = " + result.getResponse().getContentAsString());
+        result_JSON = result.getResponse().getContentAsString();
+        //System.out.println("new report runtime = " + result_JSON);
 
-        Project project = projectResource.getProject(projectId).getBody();
-        System.out.println("project id = " + project.getId());
-        System.out.println("project user = " + project.getUser().getLogin());
-
-        FeatureTst featureTst1 = featureTstResource.getFeatureTst(projectId).getBody();
-
-        System.out.println("featureTst project id = " + featureTst1.getProject().getId());*/
-
-        //List<Project> projects =
-        //for (Project project : projects) {project.getFeatureTsts().size();}
-
-        //List<FeatureTst> featureTsts =
-        //for (FeatureTst fts : featureTsts) {fts.getTestReports().size();}
-
+        // force the entity manager to look at DB for entity state before writing validation tests
         testEntityManager.flush();
         testEntityManager.clear();
 
-        List<TestReport> testReports = testReportResource.getAllTestReports();
+        //System.out.println("projects = " + projectRepository.findAll());
+        FeatureTst featureTst = featureTstRepository.findOneWithEagerRelationships(generatedFeatureTstId).orElseThrow();
+        //System.out.println("featureTsts = " + featureTst);
 
-        System.out.println("projects = " + projectRepository.findAllWithEagerRelationships());
-        System.out.println("featureTsts = " + featureTstRepository.findAllWithEagerRelationships());
-        System.out.println("testReports = " + testReports);
+        Set<Boolean> runtimes = featureTst.getTestReports().stream().map(TestReport::getRuntimeRetention).collect(Collectors.toSet());
+
+        assert runtimes.size() == 2 &&
+        runtimes.contains(true) &&
+        runtimes.contains(false) : "one report has to be runtime and the other has to be source, but was: " + runtimes;
+
+        assert featureTst.getProject().getId().equals(projectId) : "FeatureTst does not belong to the project from the setup";
     }
 }

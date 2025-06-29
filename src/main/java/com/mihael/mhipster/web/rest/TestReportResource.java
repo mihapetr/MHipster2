@@ -89,7 +89,7 @@ public class TestReportResource {
     @PostMapping("/of-project/{id}")
     public ResponseEntity<TestReport> createTestReportOfProject(
         @PathVariable(value = "id", required = true) final Long id,
-        @Valid @RequestBody TestReport testReport
+        @RequestBody TestReport testReport
     ) throws URISyntaxException {
         // get referenced project
         Project project = projectResource.getProject(id).getBody();
@@ -132,14 +132,14 @@ public class TestReportResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new testReport, or with status {@code 400 (Bad Request)} if the testReport has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @MGenerated
+    /*@MGenerated
     @PostMapping("/of-feature-test/{id}")
     public ResponseEntity<TestReport> createTestReportOfFeatureTest(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody TestReport testReport
+        @RequestBody TestReport testReport
     ) throws URISyntaxException {
         return createTestReport(testReport);
-    }
+    }*/
 
     /**
      * {@code PUT  /test-reports/:id} : Updates an existing testReport.

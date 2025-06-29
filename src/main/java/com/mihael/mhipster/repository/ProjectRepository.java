@@ -20,22 +20,21 @@ public interface ProjectRepository extends ProjectRepositoryWithBagRelationships
     @Query("select project from Project project where project.user.login = ?#{authentication.name}")
     List<Project> findByUserIsCurrentUser();
 
-    /*default Optional<Project> findOneWithEagerRelationships(Long id) {
+    default Optional<Project> findOneWithEagerRelationships(Long id) {
         return this.fetchBagRelationships(this.findById(id));
     }
 
-    @EntityGraph(attributePaths = "featureTsts")
     default List<Project> findAllWithEagerRelationships() {
         return this.fetchBagRelationships(this.findAll());
-    }*/
+    }
 
-    @EntityGraph(attributePaths = "featureTsts")
+    /*@EntityGraph(attributePaths = "featureTsts")
     @Query("select p from Project p where p.id = :id")
     Optional<Project> findOneWithEagerRelationships(Long id);
 
     @EntityGraph(attributePaths = "featureTsts")
     @Query("select p from Project p LEFT JOIN FETCH p.featureTsts")
-    List<Project> findAllWithEagerRelationships();
+    List<Project> findAllWithEagerRelationships();*/
 
     default Page<Project> findAllWithEagerRelationships(Pageable pageable) {
         return this.fetchBagRelationships(this.findAll(pageable));
