@@ -23,6 +23,11 @@ type CodeStatsFormGroupContent = {
   lines: FormControl<ICodeStats['lines']>;
   methods: FormControl<ICodeStats['methods']>;
   classes: FormControl<ICodeStats['classes']>;
+  deadInstructions: FormControl<ICodeStats['deadInstructions']>;
+  deadBranches: FormControl<ICodeStats['deadBranches']>;
+  deadLines: FormControl<ICodeStats['deadLines']>;
+  deadMethods: FormControl<ICodeStats['deadMethods']>;
+  deadClasses: FormControl<ICodeStats['deadClasses']>;
 };
 
 export type CodeStatsFormGroup = FormGroup<CodeStatsFormGroupContent>;
@@ -47,6 +52,11 @@ export class CodeStatsFormService {
       lines: new FormControl(codeStatsRawValue.lines),
       methods: new FormControl(codeStatsRawValue.methods),
       classes: new FormControl(codeStatsRawValue.classes),
+      deadInstructions: new FormControl(codeStatsRawValue.deadInstructions),
+      deadBranches: new FormControl(codeStatsRawValue.deadBranches),
+      deadLines: new FormControl(codeStatsRawValue.deadLines),
+      deadMethods: new FormControl(codeStatsRawValue.deadMethods),
+      deadClasses: new FormControl(codeStatsRawValue.deadClasses),
     });
   }
 

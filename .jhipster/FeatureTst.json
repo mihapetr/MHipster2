@@ -34,9 +34,6 @@
       "relationshipType": "many-to-many"
     },
     {
-      "options": {
-        "onDelete": "CASCADE"
-      },
       "otherEntityName": "project",
       "otherEntityRelationshipName": "featureTst",
       "relationshipName": "project",

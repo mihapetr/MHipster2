@@ -1,0 +1,103 @@
+application {
+  config {
+    applicationType monolith
+    authenticationType jwt
+    baseName MHipster
+    buildTool maven
+    cacheProvider no
+    clientFramework angular
+    clientTheme none
+    creationTimestamp 1750936017503
+    databaseType sql
+    devDatabaseType mariadb
+    enableTranslation false
+    jhipsterVersion "8.8.0"
+    jwtSecretKey "MmJiMWU3YmQxNDU0YjQ4OWI2MmMwYWFkNWQ3NTJhNDdlNmM3Nzk5M2JjYjRjMjM4MjU3YjM5ZGRkZjgyNzE3NDgzMDUzYzg0MWMyMjZkZmYxOTkyYjZlODg1MDk3OGZiNDk2OGM2MzhhN2U1NzlmNTg5ZGNmMzdhOGJiNTcxMjU="
+    microfrontends []
+    nativeLanguage en
+    packageName com.mihael.mhipster
+    prodDatabaseType mariadb
+    reactive false
+    testFrameworks [cucumber, cypress]
+    withAdminUi true
+  }
+
+  entities CodeStats, Feature, FeatureTst, MDLS, Overview, Project, TestReport
+}
+
+@ChangelogDate("20250626101550")
+entity CodeStats {
+  instructions Double
+  branches Double
+  lines Double
+  methods Double
+  classes Double
+  deadInstructions Double
+  deadBranches Double
+  deadLines Double
+  deadMethods Double
+  deadClasses Double
+}
+@ChangelogDate("20250626101250")
+entity Feature {
+  name String
+  content TextBlob
+}
+@ChangelogDate("20250626101350")
+entity FeatureTst {
+  date ZonedDateTime
+}
+@ChangelogDate("20250626101050")
+entity MDLS {
+  baseConfig String
+  content TextBlob
+}
+@ChangelogDate("20250626101450")
+entity Overview {
+  dateGenerated ZonedDateTime
+}
+@ChangelogDate("20250626101150")
+entity Project {
+  name String
+  description String
+  creationTimeStamp ZonedDateTime
+  location String
+}
+@ChangelogDate("20250626101650")
+entity TestReport {
+  html String
+  runtimeRetention Boolean
+  missedInstructions Integer
+  instructions Integer
+  missedBranches Integer
+  branches Integer
+  missedLines Integer
+  lines Integer
+  missedMethods Integer
+  methods Integer
+  missedClasses Integer
+  classes Integer
+}
+
+relationship OneToOne {
+  FeatureTst{parent required} to CodeStats{featureTst}
+  Overview{parent required} to CodeStats{overview}
+  Project{mdls} to MDLS{project}
+}
+relationship OneToMany {
+  FeatureTst{testReport} to TestReport{featureTst required}
+  Project{featureTst} to FeatureTst{project required}
+}
+relationship ManyToOne {
+  Feature{user required} to User with builtInEntity
+  MDLS{user required} to User with builtInEntity
+  Overview{user required} to User with builtInEntity
+  Project{user required} to User with builtInEntity
+}
+relationship ManyToMany {
+  FeatureTst{feature} to Feature{featureTst}
+  Overview{project} to Project{overview}
+  Project{feature} to Feature{project}
+}
+
+search CodeStats, Feature, FeatureTst, MDLS, Overview, Project, TestReport with no

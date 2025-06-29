@@ -35,6 +35,26 @@
           <dd>
             <span>{{ codeStatsRef.classes }}</span>
           </dd>
+          <dt><span>Dead Instructions</span></dt>
+          <dd>
+            <span>{{ codeStatsRef.deadInstructions }}</span>
+          </dd>
+          <dt><span>Dead Branches</span></dt>
+          <dd>
+            <span>{{ codeStatsRef.deadBranches }}</span>
+          </dd>
+          <dt><span>Dead Lines</span></dt>
+          <dd>
+            <span>{{ codeStatsRef.deadLines }}</span>
+          </dd>
+          <dt><span>Dead Methods</span></dt>
+          <dd>
+            <span>{{ codeStatsRef.deadMethods }}</span>
+          </dd>
+          <dt><span>Dead Classes</span></dt>
+          <dd>
+            <span>{{ codeStatsRef.deadClasses }}</span>
+          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

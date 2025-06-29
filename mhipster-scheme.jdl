@@ -61,6 +61,11 @@ entity CodeStats {
   lines Double
   methods Double
   classes Double
+  deadInstructions Double
+  deadBranches Double
+  deadLines Double
+  deadMethods Double
+  deadClasses Double
   /* methods
   */
 }

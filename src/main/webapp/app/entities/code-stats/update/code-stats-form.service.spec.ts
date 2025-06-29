@@ -25,6 +25,11 @@ describe('CodeStats Form Service', () => {
             lines: expect.any(Object),
             methods: expect.any(Object),
             classes: expect.any(Object),
+            deadInstructions: expect.any(Object),
+            deadBranches: expect.any(Object),
+            deadLines: expect.any(Object),
+            deadMethods: expect.any(Object),
+            deadClasses: expect.any(Object),
           }),
         );
       });
@@ -40,6 +45,11 @@ describe('CodeStats Form Service', () => {
             lines: expect.any(Object),
             methods: expect.any(Object),
             classes: expect.any(Object),
+            deadInstructions: expect.any(Object),
+            deadBranches: expect.any(Object),
+            deadLines: expect.any(Object),
+            deadMethods: expect.any(Object),
+            deadClasses: expect.any(Object),
           }),
         );
       });

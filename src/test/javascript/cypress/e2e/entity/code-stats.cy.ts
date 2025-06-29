@@ -157,20 +157,35 @@ describe('CodeStats e2e test', () => {
     });
 
     it('should create an instance of CodeStats', () => {
-      cy.get(`[data-cy="instructions"]`).type('1589.24');
-      cy.get(`[data-cy="instructions"]`).should('have.value', '1589.24');
+      cy.get(`[data-cy="instructions"]`).type('18226.73');
+      cy.get(`[data-cy="instructions"]`).should('have.value', '18226.73');
 
-      cy.get(`[data-cy="branches"]`).type('2747.93');
-      cy.get(`[data-cy="branches"]`).should('have.value', '2747.93');
+      cy.get(`[data-cy="branches"]`).type('32006.71');
+      cy.get(`[data-cy="branches"]`).should('have.value', '32006.71');
 
-      cy.get(`[data-cy="lines"]`).type('5503.1');
-      cy.get(`[data-cy="lines"]`).should('have.value', '5503.1');
+      cy.get(`[data-cy="lines"]`).type('31813.25');
+      cy.get(`[data-cy="lines"]`).should('have.value', '31813.25');
 
-      cy.get(`[data-cy="methods"]`).type('24950.51');
-      cy.get(`[data-cy="methods"]`).should('have.value', '24950.51');
+      cy.get(`[data-cy="methods"]`).type('32162.25');
+      cy.get(`[data-cy="methods"]`).should('have.value', '32162.25');
 
-      cy.get(`[data-cy="classes"]`).type('25568.97');
-      cy.get(`[data-cy="classes"]`).should('have.value', '25568.97');
+      cy.get(`[data-cy="classes"]`).type('3909.07');
+      cy.get(`[data-cy="classes"]`).should('have.value', '3909.07');
+
+      cy.get(`[data-cy="deadInstructions"]`).type('10539.66');
+      cy.get(`[data-cy="deadInstructions"]`).should('have.value', '10539.66');
+
+      cy.get(`[data-cy="deadBranches"]`).type('2933.79');
+      cy.get(`[data-cy="deadBranches"]`).should('have.value', '2933.79');
+
+      cy.get(`[data-cy="deadLines"]`).type('32126.4');
+      cy.get(`[data-cy="deadLines"]`).should('have.value', '32126.4');
+
+      cy.get(`[data-cy="deadMethods"]`).type('21825.11');
+      cy.get(`[data-cy="deadMethods"]`).should('have.value', '21825.11');
+
+      cy.get(`[data-cy="deadClasses"]`).type('31097.09');
+      cy.get(`[data-cy="deadClasses"]`).should('have.value', '31097.09');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

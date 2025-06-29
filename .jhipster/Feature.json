@@ -24,16 +24,16 @@
       "relationshipWithBuiltInEntity": true
     },
     {
-      "otherEntityName": "project",
+      "otherEntityName": "featureTst",
       "otherEntityRelationshipName": "feature",
-      "relationshipName": "project",
+      "relationshipName": "featureTst",
       "relationshipSide": "right",
       "relationshipType": "many-to-many"
     },
     {
-      "otherEntityName": "featureTst",
+      "otherEntityName": "project",
       "otherEntityRelationshipName": "feature",
-      "relationshipName": "featureTst",
+      "relationshipName": "project",
       "relationshipSide": "right",
       "relationshipType": "many-to-many"
     }

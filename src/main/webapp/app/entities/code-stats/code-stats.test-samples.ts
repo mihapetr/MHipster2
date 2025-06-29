@@ -5,9 +5,11 @@ export const sampleWithRequiredData: ICodeStats = {
 };
 
 export const sampleWithPartialData: ICodeStats = {
-  id: 13472,
-  instructions: 20693.9,
-  methods: 15119.08,
+  id: 9587,
+  instructions: 4982.77,
+  methods: 11314.7,
+  deadInstructions: 623.78,
+  deadLines: 12151.64,
 };
 
 export const sampleWithFullData: ICodeStats = {
@@ -17,6 +19,11 @@ export const sampleWithFullData: ICodeStats = {
   lines: 14527.02,
   methods: 6776.42,
   classes: 23987.67,
+  deadInstructions: 8894.92,
+  deadBranches: 2394.33,
+  deadLines: 14263.9,
+  deadMethods: 17866.05,
+  deadClasses: 5136.94,
 };
 
 export const sampleWithNewData: NewCodeStats = {

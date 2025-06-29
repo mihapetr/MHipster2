@@ -23,27 +23,41 @@
     {
       "fieldName": "classes",
       "fieldType": "Double"
+    },
+    {
+      "fieldName": "deadInstructions",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "deadBranches",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "deadLines",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "deadMethods",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "deadClasses",
+      "fieldType": "Double"
     }
   ],
   "name": "CodeStats",
   "relationships": [
     {
-      "options": {
-        "onDelete": "CASCADE"
-      },
-      "otherEntityName": "overview",
+      "otherEntityName": "featureTst",
       "otherEntityRelationshipName": "parent",
-      "relationshipName": "overview",
+      "relationshipName": "featureTst",
       "relationshipSide": "right",
       "relationshipType": "one-to-one"
     },
     {
-      "options": {
-        "onDelete": "CASCADE"
-      },
-      "otherEntityName": "featureTst",
+      "otherEntityName": "overview",
       "otherEntityRelationshipName": "parent",
-      "relationshipName": "featureTst",
+      "relationshipName": "overview",
       "relationshipSide": "right",
       "relationshipType": "one-to-one"
     }

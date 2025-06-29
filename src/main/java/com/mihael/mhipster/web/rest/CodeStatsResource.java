@@ -137,6 +137,21 @@ public class CodeStatsResource {
                 if (codeStats.getClasses() != null) {
                     existingCodeStats.setClasses(codeStats.getClasses());
                 }
+                if (codeStats.getDeadInstructions() != null) {
+                    existingCodeStats.setDeadInstructions(codeStats.getDeadInstructions());
+                }
+                if (codeStats.getDeadBranches() != null) {
+                    existingCodeStats.setDeadBranches(codeStats.getDeadBranches());
+                }
+                if (codeStats.getDeadLines() != null) {
+                    existingCodeStats.setDeadLines(codeStats.getDeadLines());
+                }
+                if (codeStats.getDeadMethods() != null) {
+                    existingCodeStats.setDeadMethods(codeStats.getDeadMethods());
+                }
+                if (codeStats.getDeadClasses() != null) {
+                    existingCodeStats.setDeadClasses(codeStats.getDeadClasses());
+                }
 
                 return existingCodeStats;
             })
@@ -156,17 +171,17 @@ public class CodeStatsResource {
      */
     @GetMapping("")
     public List<CodeStats> getAllCodeStats(@RequestParam(name = "filter", required = false) String filter) {
-        if ("overview-is-null".equals(filter)) {
-            LOG.debug("REST request to get all CodeStatss where overview is null");
-            return StreamSupport.stream(codeStatsRepository.findAll().spliterator(), false)
-                .filter(codeStats -> codeStats.getOverview() == null)
-                .toList();
-        }
-
         if ("featuretst-is-null".equals(filter)) {
             LOG.debug("REST request to get all CodeStatss where featureTst is null");
             return StreamSupport.stream(codeStatsRepository.findAll().spliterator(), false)
                 .filter(codeStats -> codeStats.getFeatureTst() == null)
+                .toList();
+        }
+
+        if ("overview-is-null".equals(filter)) {
+            LOG.debug("REST request to get all CodeStatss where overview is null");
+            return StreamSupport.stream(codeStatsRepository.findAll().spliterator(), false)
+                .filter(codeStats -> codeStats.getOverview() == null)
                 .toList();
         }
         LOG.debug("REST request to get all CodeStats");

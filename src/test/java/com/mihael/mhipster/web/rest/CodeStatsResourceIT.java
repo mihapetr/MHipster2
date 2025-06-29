@@ -47,6 +47,21 @@ class CodeStatsResourceIT {
     private static final Double DEFAULT_CLASSES = 1D;
     private static final Double UPDATED_CLASSES = 2D;
 
+    private static final Double DEFAULT_DEAD_INSTRUCTIONS = 1D;
+    private static final Double UPDATED_DEAD_INSTRUCTIONS = 2D;
+
+    private static final Double DEFAULT_DEAD_BRANCHES = 1D;
+    private static final Double UPDATED_DEAD_BRANCHES = 2D;
+
+    private static final Double DEFAULT_DEAD_LINES = 1D;
+    private static final Double UPDATED_DEAD_LINES = 2D;
+
+    private static final Double DEFAULT_DEAD_METHODS = 1D;
+    private static final Double UPDATED_DEAD_METHODS = 2D;
+
+    private static final Double DEFAULT_DEAD_CLASSES = 1D;
+    private static final Double UPDATED_DEAD_CLASSES = 2D;
+
     private static final String ENTITY_API_URL = "/api/code-stats";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -81,7 +96,12 @@ class CodeStatsResourceIT {
             .branches(DEFAULT_BRANCHES)
             .lines(DEFAULT_LINES)
             .methods(DEFAULT_METHODS)
-            .classes(DEFAULT_CLASSES);
+            .classes(DEFAULT_CLASSES)
+            .deadInstructions(DEFAULT_DEAD_INSTRUCTIONS)
+            .deadBranches(DEFAULT_DEAD_BRANCHES)
+            .deadLines(DEFAULT_DEAD_LINES)
+            .deadMethods(DEFAULT_DEAD_METHODS)
+            .deadClasses(DEFAULT_DEAD_CLASSES);
     }
 
     /**
@@ -96,7 +116,12 @@ class CodeStatsResourceIT {
             .branches(UPDATED_BRANCHES)
             .lines(UPDATED_LINES)
             .methods(UPDATED_METHODS)
-            .classes(UPDATED_CLASSES);
+            .classes(UPDATED_CLASSES)
+            .deadInstructions(UPDATED_DEAD_INSTRUCTIONS)
+            .deadBranches(UPDATED_DEAD_BRANCHES)
+            .deadLines(UPDATED_DEAD_LINES)
+            .deadMethods(UPDATED_DEAD_METHODS)
+            .deadClasses(UPDATED_DEAD_CLASSES);
     }
 
     @BeforeEach
@@ -167,7 +192,12 @@ class CodeStatsResourceIT {
             .andExpect(jsonPath("$.[*].branches").value(hasItem(DEFAULT_BRANCHES)))
             .andExpect(jsonPath("$.[*].lines").value(hasItem(DEFAULT_LINES)))
             .andExpect(jsonPath("$.[*].methods").value(hasItem(DEFAULT_METHODS)))
-            .andExpect(jsonPath("$.[*].classes").value(hasItem(DEFAULT_CLASSES)));
+            .andExpect(jsonPath("$.[*].classes").value(hasItem(DEFAULT_CLASSES)))
+            .andExpect(jsonPath("$.[*].deadInstructions").value(hasItem(DEFAULT_DEAD_INSTRUCTIONS)))
+            .andExpect(jsonPath("$.[*].deadBranches").value(hasItem(DEFAULT_DEAD_BRANCHES)))
+            .andExpect(jsonPath("$.[*].deadLines").value(hasItem(DEFAULT_DEAD_LINES)))
+            .andExpect(jsonPath("$.[*].deadMethods").value(hasItem(DEFAULT_DEAD_METHODS)))
+            .andExpect(jsonPath("$.[*].deadClasses").value(hasItem(DEFAULT_DEAD_CLASSES)));
     }
 
     @Test
@@ -186,7 +216,12 @@ class CodeStatsResourceIT {
             .andExpect(jsonPath("$.branches").value(DEFAULT_BRANCHES))
             .andExpect(jsonPath("$.lines").value(DEFAULT_LINES))
             .andExpect(jsonPath("$.methods").value(DEFAULT_METHODS))
-            .andExpect(jsonPath("$.classes").value(DEFAULT_CLASSES));
+            .andExpect(jsonPath("$.classes").value(DEFAULT_CLASSES))
+            .andExpect(jsonPath("$.deadInstructions").value(DEFAULT_DEAD_INSTRUCTIONS))
+            .andExpect(jsonPath("$.deadBranches").value(DEFAULT_DEAD_BRANCHES))
+            .andExpect(jsonPath("$.deadLines").value(DEFAULT_DEAD_LINES))
+            .andExpect(jsonPath("$.deadMethods").value(DEFAULT_DEAD_METHODS))
+            .andExpect(jsonPath("$.deadClasses").value(DEFAULT_DEAD_CLASSES));
     }
 
     @Test
@@ -213,7 +248,12 @@ class CodeStatsResourceIT {
             .branches(UPDATED_BRANCHES)
             .lines(UPDATED_LINES)
             .methods(UPDATED_METHODS)
-            .classes(UPDATED_CLASSES);
+            .classes(UPDATED_CLASSES)
+            .deadInstructions(UPDATED_DEAD_INSTRUCTIONS)
+            .deadBranches(UPDATED_DEAD_BRANCHES)
+            .deadLines(UPDATED_DEAD_LINES)
+            .deadMethods(UPDATED_DEAD_METHODS)
+            .deadClasses(UPDATED_DEAD_CLASSES);
 
         restCodeStatsMockMvc
             .perform(
@@ -291,7 +331,14 @@ class CodeStatsResourceIT {
         CodeStats partialUpdatedCodeStats = new CodeStats();
         partialUpdatedCodeStats.setId(codeStats.getId());
 
-        partialUpdatedCodeStats.instructions(UPDATED_INSTRUCTIONS).branches(UPDATED_BRANCHES).methods(UPDATED_METHODS);
+        partialUpdatedCodeStats
+            .instructions(UPDATED_INSTRUCTIONS)
+            .branches(UPDATED_BRANCHES)
+            .methods(UPDATED_METHODS)
+            .deadInstructions(UPDATED_DEAD_INSTRUCTIONS)
+            .deadBranches(UPDATED_DEAD_BRANCHES)
+            .deadLines(UPDATED_DEAD_LINES)
+            .deadClasses(UPDATED_DEAD_CLASSES);
 
         restCodeStatsMockMvc
             .perform(
@@ -327,7 +374,12 @@ class CodeStatsResourceIT {
             .branches(UPDATED_BRANCHES)
             .lines(UPDATED_LINES)
             .methods(UPDATED_METHODS)
-            .classes(UPDATED_CLASSES);
+            .classes(UPDATED_CLASSES)
+            .deadInstructions(UPDATED_DEAD_INSTRUCTIONS)
+            .deadBranches(UPDATED_DEAD_BRANCHES)
+            .deadLines(UPDATED_DEAD_LINES)
+            .deadMethods(UPDATED_DEAD_METHODS)
+            .deadClasses(UPDATED_DEAD_CLASSES);
 
         restCodeStatsMockMvc
             .perform(

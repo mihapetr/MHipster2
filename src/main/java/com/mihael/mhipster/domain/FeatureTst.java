@@ -5,9 +5,12 @@ import com.mihael.mhipster.MGenerated;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A FeatureTst.
@@ -196,5 +199,31 @@ public class FeatureTst implements Serializable {
      * Calculate the dead code percentage in the project based on two TestReports.
      */
     @MGenerated
-    void generateStats() {}
+    void generateStats() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        TestReport runtime = getTestReports().stream().filter(r -> r.getRuntimeRetention()).findFirst().orElse(null);
+        TestReport source = getTestReports().stream().filter(r -> !r.getRuntimeRetention()).findFirst().orElse(null);
+
+        List<String> dimensions = List.of("Instructions", "Branches", "Lines", "Methods", "Classes");
+
+        Integer _r1, _r2, _s1, _s2;
+        Double r1, r2, s1, s2;
+        for (String dimension : dimensions) {
+            // read report values for given dimension
+            _r1 = (Integer) TestReport.class.getMethod("getMissed" + dimension).invoke(runtime);
+            _r2 = (Integer) TestReport.class.getMethod("get" + dimension).invoke(runtime);
+            _s1 = (Integer) TestReport.class.getMethod("getMissed" + dimension).invoke(source);
+            _s2 = (Integer) TestReport.class.getMethod("get" + dimension).invoke(source);
+
+            r1 = _r1.doubleValue();
+            r2 = _r2.doubleValue();
+            s1 = _s1.doubleValue();
+            s2 = _s2.doubleValue();
+
+            // calculate jhipster contribution
+            CodeStats.class.getMethod("set" + dimension, Double.class).invoke(parent, (r2 - r1) / (s2 - s1));
+
+            // calculate dead code
+            CodeStats.class.getMethod("setDead" + dimension, Double.class).invoke(parent, r1 / r2);
+        }
+    }
 }

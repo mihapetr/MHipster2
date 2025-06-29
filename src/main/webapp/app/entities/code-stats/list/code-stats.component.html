@@ -75,6 +75,41 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="deadInstructions">
+              <div class="d-flex">
+                <span>Dead Instructions</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="deadBranches">
+              <div class="d-flex">
+                <span>Dead Branches</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="deadLines">
+              <div class="d-flex">
+                <span>Dead Lines</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="deadMethods">
+              <div class="d-flex">
+                <span>Dead Methods</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="deadClasses">
+              <div class="d-flex">
+                <span>Dead Classes</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -89,6 +124,11 @@
               <td>{{ codeStats.lines }}</td>
               <td>{{ codeStats.methods }}</td>
               <td>{{ codeStats.classes }}</td>
+              <td>{{ codeStats.deadInstructions }}</td>
+              <td>{{ codeStats.deadBranches }}</td>
+              <td>{{ codeStats.deadLines }}</td>
+              <td>{{ codeStats.deadMethods }}</td>
+              <td>{{ codeStats.deadClasses }}</td>
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/code-stats', codeStats.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

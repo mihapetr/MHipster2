@@ -25,20 +25,6 @@ class CodeStatsTest {
     }
 
     @Test
-    void overviewTest() {
-        CodeStats codeStats = getCodeStatsRandomSampleGenerator();
-        Overview overviewBack = getOverviewRandomSampleGenerator();
-
-        codeStats.setOverview(overviewBack);
-        assertThat(codeStats.getOverview()).isEqualTo(overviewBack);
-        assertThat(overviewBack.getParent()).isEqualTo(codeStats);
-
-        codeStats.overview(null);
-        assertThat(codeStats.getOverview()).isNull();
-        assertThat(overviewBack.getParent()).isNull();
-    }
-
-    @Test
     void featureTstTest() {
         CodeStats codeStats = getCodeStatsRandomSampleGenerator();
         FeatureTst featureTstBack = getFeatureTstRandomSampleGenerator();
@@ -50,5 +36,19 @@ class CodeStatsTest {
         codeStats.featureTst(null);
         assertThat(codeStats.getFeatureTst()).isNull();
         assertThat(featureTstBack.getParent()).isNull();
+    }
+
+    @Test
+    void overviewTest() {
+        CodeStats codeStats = getCodeStatsRandomSampleGenerator();
+        Overview overviewBack = getOverviewRandomSampleGenerator();
+
+        codeStats.setOverview(overviewBack);
+        assertThat(codeStats.getOverview()).isEqualTo(overviewBack);
+        assertThat(overviewBack.getParent()).isEqualTo(codeStats);
+
+        codeStats.overview(null);
+        assertThat(codeStats.getOverview()).isNull();
+        assertThat(overviewBack.getParent()).isNull();
     }
 }

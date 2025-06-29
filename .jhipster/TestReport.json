@@ -56,9 +56,6 @@
   "name": "TestReport",
   "relationships": [
     {
-      "options": {
-        "onDelete": "CASCADE"
-      },
       "otherEntityName": "featureTst",
       "otherEntityRelationshipName": "testReport",
       "relationshipName": "featureTst",

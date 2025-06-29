@@ -51,7 +51,12 @@ public class CodeStatsAsserts {
             .satisfies(e -> assertThat(e.getBranches()).as("check branches").isEqualTo(actual.getBranches()))
             .satisfies(e -> assertThat(e.getLines()).as("check lines").isEqualTo(actual.getLines()))
             .satisfies(e -> assertThat(e.getMethods()).as("check methods").isEqualTo(actual.getMethods()))
-            .satisfies(e -> assertThat(e.getClasses()).as("check classes").isEqualTo(actual.getClasses()));
+            .satisfies(e -> assertThat(e.getClasses()).as("check classes").isEqualTo(actual.getClasses()))
+            .satisfies(e -> assertThat(e.getDeadInstructions()).as("check deadInstructions").isEqualTo(actual.getDeadInstructions()))
+            .satisfies(e -> assertThat(e.getDeadBranches()).as("check deadBranches").isEqualTo(actual.getDeadBranches()))
+            .satisfies(e -> assertThat(e.getDeadLines()).as("check deadLines").isEqualTo(actual.getDeadLines()))
+            .satisfies(e -> assertThat(e.getDeadMethods()).as("check deadMethods").isEqualTo(actual.getDeadMethods()))
+            .satisfies(e -> assertThat(e.getDeadClasses()).as("check deadClasses").isEqualTo(actual.getDeadClasses()));
     }
 
     /**

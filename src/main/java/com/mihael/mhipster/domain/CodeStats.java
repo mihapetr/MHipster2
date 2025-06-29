@@ -35,13 +35,28 @@ public class CodeStats implements Serializable {
     @Column(name = "classes")
     private Double classes;
 
-    @JsonIgnoreProperties(value = { "parent", "user", "projects" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "parent")
-    private Overview overview;
+    @Column(name = "dead_instructions")
+    private Double deadInstructions;
+
+    @Column(name = "dead_branches")
+    private Double deadBranches;
+
+    @Column(name = "dead_lines")
+    private Double deadLines;
+
+    @Column(name = "dead_methods")
+    private Double deadMethods;
+
+    @Column(name = "dead_classes")
+    private Double deadClasses;
 
     @JsonIgnoreProperties(value = { "parent", "testReports", "features", "project" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "parent")
     private FeatureTst featureTst;
+
+    @JsonIgnoreProperties(value = { "parent", "user", "projects" }, allowSetters = true)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "parent")
+    private Overview overview;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -123,23 +138,69 @@ public class CodeStats implements Serializable {
         this.classes = classes;
     }
 
-    public Overview getOverview() {
-        return this.overview;
+    public Double getDeadInstructions() {
+        return this.deadInstructions;
     }
 
-    public void setOverview(Overview overview) {
-        if (this.overview != null) {
-            this.overview.setParent(null);
-        }
-        if (overview != null) {
-            overview.setParent(this);
-        }
-        this.overview = overview;
-    }
-
-    public CodeStats overview(Overview overview) {
-        this.setOverview(overview);
+    public CodeStats deadInstructions(Double deadInstructions) {
+        this.setDeadInstructions(deadInstructions);
         return this;
+    }
+
+    public void setDeadInstructions(Double deadInstructions) {
+        this.deadInstructions = deadInstructions;
+    }
+
+    public Double getDeadBranches() {
+        return this.deadBranches;
+    }
+
+    public CodeStats deadBranches(Double deadBranches) {
+        this.setDeadBranches(deadBranches);
+        return this;
+    }
+
+    public void setDeadBranches(Double deadBranches) {
+        this.deadBranches = deadBranches;
+    }
+
+    public Double getDeadLines() {
+        return this.deadLines;
+    }
+
+    public CodeStats deadLines(Double deadLines) {
+        this.setDeadLines(deadLines);
+        return this;
+    }
+
+    public void setDeadLines(Double deadLines) {
+        this.deadLines = deadLines;
+    }
+
+    public Double getDeadMethods() {
+        return this.deadMethods;
+    }
+
+    public CodeStats deadMethods(Double deadMethods) {
+        this.setDeadMethods(deadMethods);
+        return this;
+    }
+
+    public void setDeadMethods(Double deadMethods) {
+        this.deadMethods = deadMethods;
+    }
+
+    public Double getDeadClasses() {
+        return this.deadClasses;
+    }
+
+    public CodeStats deadClasses(Double deadClasses) {
+        this.setDeadClasses(deadClasses);
+        return this;
+    }
+
+    public void setDeadClasses(Double deadClasses) {
+        this.deadClasses = deadClasses;
     }
 
     public FeatureTst getFeatureTst() {
@@ -158,6 +219,25 @@ public class CodeStats implements Serializable {
 
     public CodeStats featureTst(FeatureTst featureTst) {
         this.setFeatureTst(featureTst);
+        return this;
+    }
+
+    public Overview getOverview() {
+        return this.overview;
+    }
+
+    public void setOverview(Overview overview) {
+        if (this.overview != null) {
+            this.overview.setParent(null);
+        }
+        if (overview != null) {
+            overview.setParent(this);
+        }
+        this.overview = overview;
+    }
+
+    public CodeStats overview(Overview overview) {
+        this.setOverview(overview);
         return this;
     }
 
@@ -184,12 +264,17 @@ public class CodeStats implements Serializable {
     @Override
     public String toString() {
         return "CodeStats{" +
-            "id=" + getId() +
-            ", instructions=" + getInstructions() +
-            ", branches=" + getBranches() +
-            ", lines=" + getLines() +
-            ", methods=" + getMethods() +
-            ", classes=" + getClasses() +
+            "\nid=" + getId() +
+            "\n, instructions=" + getInstructions() +
+            "\n, branches=" + getBranches() +
+            "\n, lines=" + getLines() +
+            "\n, methods=" + getMethods() +
+            "\n, classes=" + getClasses() +
+            "\n, deadInstructions=" + getDeadInstructions() +
+            "\n, deadBranches=" + getDeadBranches() +
+            "\n, deadLines=" + getDeadLines() +
+            "\n, deadMethods=" + getDeadMethods() +
+            "\n, deadClasses=" + getDeadClasses() +
             "}";
     }
 }

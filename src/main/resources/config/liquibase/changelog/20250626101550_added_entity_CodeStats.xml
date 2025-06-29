@@ -29,6 +29,21 @@
             <column name="classes" type="double">
                 <constraints nullable="true" />
             </column>
+            <column name="dead_instructions" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="dead_branches" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="dead_lines" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="dead_methods" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="dead_classes" type="double">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
@@ -55,6 +70,11 @@
             <column name="jhi_lines" type="numeric"/>
             <column name="methods" type="numeric"/>
             <column name="classes" type="numeric"/>
+            <column name="dead_instructions" type="numeric"/>
+            <column name="dead_branches" type="numeric"/>
+            <column name="dead_lines" type="numeric"/>
+            <column name="dead_methods" type="numeric"/>
+            <column name="dead_classes" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
