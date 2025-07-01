@@ -1,0 +1,12 @@
+{
+  "missedInstructions": 7006,
+  "instructions": 8163,
+  "missedBranches": 556,
+  "branches": 572,
+  "missedLines": 1777,
+  "lines": 2037,
+  "missedMethods": 579,
+  "methods": 673,
+  "missedClasses": 36,
+  "classes": 82
+}

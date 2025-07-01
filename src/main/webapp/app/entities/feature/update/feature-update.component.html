@@ -25,22 +25,23 @@
 
         <div class="mb-3">
           <label class="form-label" for="field_user">User</label>
-          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+          <div class="form-control" id="field_user" data-cy="user" name="user" formControlName="user">1</div>
+          <!--<select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
             @if (!editForm.get('user')!.value) {
               <option [ngValue]="null" selected></option>
             }
             @for (userOption of usersSharedCollection; track $index) {
               <option [ngValue]="userOption">{{ userOption.id }}</option>
             }
-          </select>
+          </select>-->
         </div>
-        @if (editForm.get(['user'])!.invalid && (editForm.get(['user'])!.dirty || editForm.get(['user'])!.touched)) {
+        <!--@if (editForm.get(['user'])!.invalid && (editForm.get(['user'])!.dirty || editForm.get(['user'])!.touched)) {
           <div>
             @if (editForm.get(['user'])?.errors?.required) {
               <small class="form-text text-danger">This field is required.</small>
             }
           </div>
-        }
+        }-->
 
         <div class="mb-3">
           <label for="field_projects">Project</label>

@@ -1,0 +1,8 @@
+package __package-name-needle__.cucumber;
+
+import com.mihael.mhipster.IntegrationTest;
+import io.cucumber.spring.CucumberContextConfiguration;
+
+@CucumberContextConfiguration
+@IntegrationTest
+public class CucumberTestContextConfiguration {}

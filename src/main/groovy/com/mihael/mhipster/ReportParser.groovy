@@ -1,32 +1,20 @@
+package com.mihael.mhipster
+
 import groovy.json.JsonOutput
-@Grab('org.jsoup:jsoup:1.17.2')
 import org.jsoup.Jsoup
 
-class TotalCoverageExtractorJsoup {
+@MGenerated
+class ReportParser {
 
-  static void main(String[] args) {
-    extractTotalsToJson("/home/mihael/Projects/MHipster2/target/site/jacoco-mit-runtime/index.html", "coverage-summary.json")
-  }
+  static void extractToJson(String htmlFilePath, String destinationPath) {
 
-  static void extractTotalsToJson(String htmlFilePath, String outputJsonPath) {
     def doc = Jsoup.parse(new File(htmlFilePath), "UTF-8")
     def totalRow = doc.select("tr").find { row ->
       def firstCell = row.selectFirst("td")
       firstCell && firstCell.text().trim() == "Total"
     }
 
-
-    if (!totalRow) {
-      println "❌ 'Total' row not found."
-      return
-    }
-
     def cells = totalRow.select("td").drop(1) // Skip "Total" cell
-
-    if (cells.size() < 12) {
-      println "❌ Not enough data cells in 'Total' row."
-      return
-    }
 
     def (missedInstr, totalInstr) = parseRatio(cells[0].text())
     def (missedBranches, totalBranches) = parseRatio(cells[2].text())
@@ -44,8 +32,7 @@ class TotalCoverageExtractorJsoup {
       classes           : toInt(cells[11].text())
     ]
 
-    new File(outputJsonPath).text = JsonOutput.prettyPrint(JsonOutput.toJson(result))
-    println "✅ Coverage extracted to ${outputJsonPath}"
+    new File("${destinationPath}/report.json").text = JsonOutput.prettyPrint(JsonOutput.toJson(result))
   }
 
   private static List<Integer> parseRatio(String text) {

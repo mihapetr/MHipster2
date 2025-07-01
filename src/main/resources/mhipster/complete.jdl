@@ -1,0 +1,123 @@
+application {
+	config {
+		applicationType monolith
+		authenticationType jwt
+		baseName appName
+		buildTool maven
+		cacheProvider no
+		clientFramework angular
+		clientTheme none
+		databaseType sql
+		devDatabaseType mariadb
+		enableTranslation false
+		jhipsterVersion "8.8.0"
+		microfrontends []
+		nativeLanguage en
+		packageName com.test.test
+		prodDatabaseType mariadb
+		reactive false
+		testFrameworks [cucumber, cypress]
+		withAdminUi true
+	}
+
+	entities *
+}
+
+entity MDLS {
+	baseConfig String
+	content TextBlob
+	/* methods
+	*/
+}
+entity Project {
+	name String
+	description String
+	creationTimeStamp ZonedDateTime
+	location String
+	/* methods
+	String generate()
+	*/
+}
+entity Feature {
+	name String
+	content TextBlob
+	/* methods
+	*/
+}
+entity FeatureTst{
+	date ZonedDateTime
+	/* methods
+	void generateStats()
+	*/
+}
+entity Overview {
+	dateGenerated ZonedDateTime
+	/* methods
+	void update()
+	*/
+}
+entity CodeStats {
+	instructions Double
+	branches Double
+	lines Double
+	methods Double
+	classes Double
+	deadInstructions Double
+	deadBranches Double
+	deadLines Double
+	deadMethods Double
+	deadClasses Double
+	/* methods
+	*/
+}
+entity TestReport {
+	html String //path to html
+	runtimeRetention Boolean
+	missedInstructions Integer
+	instructions Integer
+	missedBranches Integer
+	branches Integer
+	missedLines Integer
+	lines Integer
+	missedMethods Integer
+	methods Integer
+	missedClasses Integer
+	classes Integer
+	/* methods
+	*/
+}
+relationship OneToOne {
+	Project{mdls} to MDLS{project}
+}
+relationship ManyToMany {
+	Project{feature} to Feature{project}
+}
+relationship OneToMany {
+	@OnDelete("CASCADE") Project{featureTst} to FeatureTst{project required}
+}
+relationship ManyToMany {
+	Overview{project} to Project{overview}
+}
+relationship ManyToMany {
+	FeatureTst{feature} to Feature{featureTst}
+}
+relationship OneToMany {
+	@OnDelete("CASCADE") FeatureTst{testReport} to TestReport{featureTst required}
+}
+relationship OneToOne {
+	@OnDelete("CASCADE") /*@OnPersist("CASCADE")*/ Overview{parent required} to CodeStats{overview}
+}
+relationship OneToOne {
+	@OnDelete("CASCADE") /*@OnPersist("CASCADE")*/ FeatureTst{parent required} to CodeStats{featureTst}
+}
+
+
+relationship ManyToOne {
+MDLS{user required} to User with builtInEntity
+Project{user required} to User with builtInEntity
+Feature{user required} to User with builtInEntity
+FeatureTst{user required} to User with builtInEntity
+Overview{user required} to User with builtInEntity
+CodeStats{user required} to User with builtInEntity
+TestReport{user required} to User with builtInEntity
+}

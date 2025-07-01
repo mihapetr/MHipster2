@@ -121,5 +121,18 @@ module.exports = async (config, options, targetOptions) => {
     // jhipster-needle-add-webpack-config - JHipster will add custom config
   );
 
+  // Make sure devServer exists
+  if (!config.devServer) {
+    config.devServer = {};
+  }
+  // Disable live reload and set HMR as you want
+  config.devServer.liveReload = false;
+  config.devServer.hot = 'only';
+
+  if (!config.devServer) {
+    config.devServer = {};
+  }
+  config.devServer.liveReload = false; // disables auto reload
+
   return config;
 };

@@ -1,0 +1,48 @@
+* concatenate the base app config to the client's mdl
+	* scan for entities and add the
+	app { ...
+	entities <e1>,...,<en>
+	}
+	* add the user entity relationships
+	relationship ManyToOne {
+	<e1> {user required} to User with builtInEntity
+	...
+	* komentiraj izbor za app config
+	* definiraj sintaksu mdl jezika
+		* config {
+		  baseName <name>
+		  packageName <package_name>
+		}
+		* extended entities
+		* extended relationships
+	* comment how there should be a diagram builder instead of MDLS and a converter
+	UML -> JDL
+	* comment how there should be an MDL syntax checker and how lexers and parsers can be done more correctly
+* after creating the JDL file run 'jhipster jdl file.jdl'
+---------------------
+* after app generation modify the pom.xml
+	* add cucumber dependency
+	* add profile for cucumber IT
+* enrich the CucumberIT and CucumberContext classes
+* generate stepdefs from provided feature files
+-------------------
+* add the directory with mhipster scripts (test.sh)
+	* include the script for parsing jacoco reports and posting the result
+------------------------
+* zip the project and give to the user
+
+* comment that the user needs Java, node.js, groovy installed to make use of the received project
+* specify the version of all of those dependencies
+
+
+** I need to run these on the server:
+	* process-mdl.groovy
+	* extend-pom-with-integration-test-profile-and-dependencies.groovy
+	* modify-cucumber-config-classes.groovy
+	* generate-tests-from-features.groovy
+	* compress-project.groovy
+
+** I need to give these to the user
+	* feature-test.sh
+	* extract-from-report.java
+	* post-to-server.java

@@ -1,0 +1,30 @@
+application {
+	config {
+		applicationType monolith
+		authenticationType jwt
+		baseName __base-name-needle__
+		buildTool maven
+		cacheProvider no
+		clientFramework angular
+		clientTheme none
+		databaseType sql
+		devDatabaseType mariadb
+		enableTranslation false
+		jhipsterVersion "8.8.0"
+		microfrontends []
+		nativeLanguage en
+		packageName __package-name-needle__
+		prodDatabaseType mariadb
+		reactive false
+		testFrameworks [cucumber, cypress]
+		withAdminUi true
+	}
+
+	entities *
+}
+
+// mdls-needle
+
+relationship ManyToOne {
+// user-relationships-needle
+}
