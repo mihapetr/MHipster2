@@ -1,8 +1,9 @@
 #!/bin/bash
 
-PACKAGE_NAME="${1}"
-RETENTION_POLICY="${2}"
-DESTINATION="${3}"
+DESTINATION="${1}"
+PACKAGE_NAME="${2}"
+RETENTION_POLICY="${3}"
+
 OUTPUT_FILE="$DESTINATION/MGenerated.java"
 
 cat > "$OUTPUT_FILE" <<EOF
@@ -15,4 +16,3 @@ import java.lang.annotation.RetentionPolicy;
 public @interface MGenerated {
 }
 EOF
-

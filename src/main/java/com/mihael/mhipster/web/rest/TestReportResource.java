@@ -1,6 +1,7 @@
 package com.mihael.mhipster.web.rest;
 
 import com.mihael.mhipster.MGenerated;
+import com.mihael.mhipster.ReportParser;
 import com.mihael.mhipster.domain.*;
 import com.mihael.mhipster.repository.TestReportRepository;
 import com.mihael.mhipster.repository.UserRepository;
@@ -8,8 +9,10 @@ import com.mihael.mhipster.security.SecurityUtils;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -21,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -81,15 +85,14 @@ public class TestReportResource {
      * Create a new TestReport and attach it to the new FeatureTest.
      *
      * @param id id of the Project the FeatureTest belongs to
-     * @param testReport the report to create
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new testReport, or with status {@code 400 (Bad Request)} if the testReport has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @MGenerated
-    @PostMapping("/of-project/{id}")
+    @PostMapping(value = "/of-project/{id}", consumes = "text/html")
     public ResponseEntity<TestReport> createTestReportOfProject(
         @PathVariable(value = "id", required = true) final Long id,
-        @RequestBody TestReport testReport
+        @RequestBody String reportContent
     ) throws URISyntaxException {
         // get referenced project
         Project project = projectResource.getProject(id).getBody();
@@ -111,12 +114,15 @@ public class TestReportResource {
             .parent(codeStats)
             .project(project);
 
+        TestReport testReport = ReportParser.html2TestReport(reportContent);
+
         // link new report to new FeatureTst
         testReport.featureTst(featureTstResource.createFeatureTst(featureTst).getBody());
 
         return createTestReport(testReport);
     }
 
+    @MGenerated
     boolean currentUserIsOwner(Long userId) {
         // get user
         String login = SecurityUtils.getCurrentUserLogin().orElseThrow();

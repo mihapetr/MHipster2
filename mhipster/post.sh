@@ -1,6 +1,12 @@
 #!/bin/bash
 
-# todo : use JWT and test report html to make a request for the server
-# final verdict is that html will be parsed on the server
-# modify the service endpoint on the server to accept html and run the groovy report parser
+SERVER_URL="${1}"
+JWT="${2}"
+REPORT_PATH="${3}"
+
+RESPONSE=$(
+	curl -X POST "$SERVER_URL" \
+	-H "Authorization: Bearer $JWT" \
+	--data-binary "@$REPORT_PATH"
+)
 
