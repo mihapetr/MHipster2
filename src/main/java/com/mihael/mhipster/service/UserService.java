@@ -1,5 +1,6 @@
 package com.mihael.mhipster.service;
 
+import com.mihael.mhipster.MGenerated;
 import com.mihael.mhipster.config.Constants;
 import com.mihael.mhipster.domain.Authority;
 import com.mihael.mhipster.domain.User;
@@ -117,9 +118,18 @@ public class UserService {
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
+
+        newUser = activateUser(newUser);
+
         userRepository.save(newUser);
         LOG.debug("Created Information for User: {}", newUser);
         return newUser;
+    }
+
+    @MGenerated
+    User activateUser(User user) {
+        user.setActivated(true);
+        return user;
     }
 
     private boolean removeNonActivatedUser(User existingUser) {

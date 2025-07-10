@@ -54,6 +54,7 @@ public class ProjectResource {
             throw new BadRequestAlertException("A new project cannot already have an ID", ENTITY_NAME, "idexists");
         }
         project = projectRepository.save(project);
+        project.generate();
         return ResponseEntity.created(new URI("/api/projects/" + project.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, project.getId().toString()))
             .body(project);

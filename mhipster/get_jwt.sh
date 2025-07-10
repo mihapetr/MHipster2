@@ -8,7 +8,7 @@ read -r -d '' PAYLOAD <<EOF
 {
 	"username": "$LOGIN",
 	"password": "$PASSWORD",
-	"rememberMe: false
+	"rememberMe": false
 }
 EOF
 

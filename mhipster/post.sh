@@ -7,6 +7,8 @@ REPORT_PATH="${3}"
 RESPONSE=$(
 	curl -X POST "$SERVER_URL" \
 	-H "Authorization: Bearer $JWT" \
+	-H "Content-Type: text/html" \
 	--data-binary "@$REPORT_PATH"
 )
 
+echo "$RESPONSE"

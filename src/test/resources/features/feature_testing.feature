@@ -1,5 +1,7 @@
 Feature: Feature testing
 
+	# todo : remove this, this will be done on the server, add setup and teardown methods to the stepdef classes
+	# todo : add extends Common to stepdef class definitions when generating stepdef classses
   Scenario: Automatically generate step definition stubs for undefined steps
     Given user is positioned in root directory in local project files
     When user runs generate step definitions script

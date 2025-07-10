@@ -13,6 +13,6 @@ import java.lang.annotation.Target;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+@IntegrationTest // for testing with mock mvc
 @CucumberContextConfiguration
-@IntegrationTest
 public class CucumberTestContextConfiguration {}

@@ -1,5 +1,6 @@
 package com.mihael.mhipster.web.rest;
 
+import com.mihael.mhipster.MGenerated;
 import com.mihael.mhipster.domain.MDLS;
 import com.mihael.mhipster.repository.MDLSRepository;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
@@ -63,7 +64,7 @@ public class MDLSResource {
     /**
      * {@code PUT  /mdls/:id} : Updates an existing mDLS.
      *
-     * @param id the id of the mDLS to save.
+     * @param id   the id of the mDLS to save.
      * @param mDLS the mDLS to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated mDLS,
      * or with status {@code 400 (Bad Request)} if the mDLS is not valid,
@@ -94,7 +95,7 @@ public class MDLSResource {
     /**
      * {@code PATCH  /mdls/:id} : Partial updates given fields of an existing mDLS, field will ignore if it is null
      *
-     * @param id the id of the mDLS to save.
+     * @param id   the id of the mDLS to save.
      * @param mDLS the mDLS to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated mDLS,
      * or with status {@code 400 (Bad Request)} if the mDLS is not valid,
@@ -150,9 +151,17 @@ public class MDLSResource {
         if ("project-is-null".equals(filter)) {
             LOG.debug("REST request to get all MDLSs where project is null");
             return StreamSupport.stream(mDLSRepository.findAll().spliterator(), false).filter(mDLS -> mDLS.getProject() == null).toList();
+        } else if (filter != null) {
+            return filter(filter);
         }
         LOG.debug("REST request to get all MDLS");
         return mDLSRepository.findAll();
+    }
+
+    @MGenerated
+    List<MDLS> filter(String filter) {
+        if (filter.equals("current-user")) return mDLSRepository.findByUserIsCurrentUser();
+        else throw new BadRequestAlertException("Invalid filter", ENTITY_NAME, "invalidfilter");
     }
 
     /**

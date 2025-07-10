@@ -1,5 +1,6 @@
 package com.mihael.mhipster.web.rest;
 
+import com.mihael.mhipster.MGenerated;
 import com.mihael.mhipster.domain.Feature;
 import com.mihael.mhipster.repository.FeatureRepository;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
@@ -146,9 +147,17 @@ public class FeatureResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of features in body.
      */
     @GetMapping("")
-    public List<Feature> getAllFeatures() {
+    public List<Feature> getAllFeatures(@RequestParam(name = "filter", required = false) String filter) {
         LOG.debug("REST request to get all Features");
+        if (filter != null) return filter(filter);
         return featureRepository.findAll();
+    }
+
+    @MGenerated
+    List<Feature> filter(String filter) {
+        if (filter.equals("current-user")) {
+            return featureRepository.findByUserIsCurrentUser();
+        } else throw new BadRequestAlertException("Invalid filter", ENTITY_NAME, "invalidfilter");
     }
 
     /**

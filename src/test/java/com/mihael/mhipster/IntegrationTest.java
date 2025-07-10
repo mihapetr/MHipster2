@@ -17,10 +17,13 @@ import org.springframework.security.test.context.support.WithMockUser;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@SpringBootTest(classes = { MHipsterApp.class, JacksonConfiguration.class, AsyncSyncConfiguration.class })
+@SpringBootTest(
+    classes = { MHipsterApp.class, JacksonConfiguration.class, AsyncSyncConfiguration.class },
+    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+)
 @EmbeddedSQL
-@AutoConfigureMockMvc
-@AutoConfigureTestEntityManager
-@WithMockUser(username = "admin", roles = "ADMIN")
+//@AutoConfigureMockMvc
+//@AutoConfigureTestEntityManager
+//@WithMockUser(username = "admin", roles = "ADMIN")
 public @interface IntegrationTest {
 }

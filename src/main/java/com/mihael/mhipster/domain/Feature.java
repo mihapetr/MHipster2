@@ -184,6 +184,7 @@ public class Feature implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", content='" + getContent() + "'" +
+			", userId='" + getUser().getLogin() + "'" +
             "}";
     }
 }

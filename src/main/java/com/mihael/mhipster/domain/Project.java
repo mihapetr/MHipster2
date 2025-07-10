@@ -1,6 +1,7 @@
 package com.mihael.mhipster.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mihael.mhipster.MGenerated;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -273,7 +274,6 @@ public class Project implements Serializable {
             "}";
     }
 
-    String generate() {
-        return "";
-    }
+    @MGenerated
+    public void generate() {}
 }
