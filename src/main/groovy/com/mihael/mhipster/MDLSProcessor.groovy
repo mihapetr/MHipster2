@@ -157,8 +157,11 @@ class MDLSProcessor {
 
 		if (insertIndex > -1) {
 			def indent = "    "
-			def stubs = methodLines.collect { indent + it.replaceAll(/;$/, "") + " {}\n" }
-			lines.addAll(insertIndex, stubs + ["\n"])
+			def stubs = methodLines.collect {
+				def type = it.split(/\s/)[0]
+				return "\n" + indent + it + "{\n" + (type != "void" ? indent + indent + "return new ${type}();" : "")  + "\n" + indent + "}"
+			}
+			lines.addAll(insertIndex, stubs)
 			javaFile.text = lines.join("\n")
 			println "Updated $javaFile with ${methodLines.size()} method(s)."
 		}

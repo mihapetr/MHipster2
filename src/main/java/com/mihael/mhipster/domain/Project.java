@@ -3,6 +3,7 @@ package com.mihael.mhipster.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mihael.mhipster.MDLSProcessor;
 import com.mihael.mhipster.MGenerated;
+import com.mihael.mhipster.StepdefGenerator;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.*;
@@ -307,21 +308,45 @@ public class Project implements Serializable {
         String packageName = "com." + userLogin + "." + projectDirName;
         String projectDir = parentDir + "/" + userLogin + "/" + projectDirName;
         String specificationPath = projectDir + "/specification.jdl";
+        String testResourcesDir = projectDir + "/src/test/resources";
 
-        // make a directory dedicated to the user and their projects
-        execute(parentDir, "mkdir", "-p", userLogin);
-        execute(parentDir, "mkdir", "-p", userLogin + "/" + projectDirName);
-
-        // make changes to the specification user provided based on JDL extension
-        MDLSProcessor.transform(jdlTemplateContent, getMdls().getContent(), projectDirName, packageName, specificationPath);
-
-        // run basic jhipster project generation based on the jdl file
-        //execute(projectDir, "jhipster", "jdl", "specification.jdl");
-        execute("echo", "jhipster jdl spec.jdl");
-
-        MDLSProcessor.modifyDomain(specificationPath, "src/main/java/" + packageName.replace('.', '/') + "/domain");
-        //		execute("jhipster", "jdl",
-        //			getMdls().getContent()
+        //		System.out.println(
+        //			"specificationPath=" + specificationPath +
+        //				", packageName=" + packageName
         //		);
+        //
+        //        // make a directory dedicated to the user and their projects
+        //        execute(parentDir, "mkdir", "-p", userLogin);
+        //        execute(parentDir, "mkdir", "-p", userLogin + "/" + projectDirName);
+        //
+        //        // make changes to the specification user provided based on JDL extension
+        //        MDLSProcessor.transform(jdlTemplateContent, getMdls().getContent(), projectDirName, packageName, specificationPath);
+        //
+        //        // run basic jhipster project generation based on the jdl fisle
+        //        //execute(projectDir, "jhipster", "jdl", "specification.jdl", "--skip-install");
+        //        execute(projectDir, "echo", "jhipster jdl spec.jdl --skip-install ........ done");
+        //
+        //        MDLSProcessor.modifyDomain(
+        //			specificationPath,
+        //			projectDir + "/src/main/java/" + packageName.replace('.', '/') + "/domain"
+        //		);
+
+        // todo : modify pom : add cucumber dependency and mhipster-it profile
+
+        // todo : configure cucumber : add CucumberIT from template
+
+        // generate stepdefs from feature files
+        execute(testResourcesDir, "mkdir", "-p", "features");
+        for (Feature feature : getFeatures()) {
+            StepdefGenerator.generateStepdefs(feature.getContent(), projectDir, packageName);
+        }
+
+        // todo : configure the config file for the test scripts with project id and base url
+
+        // clone testing scripts to the new project
+        execute(projectDir, "mkdir", "-p", "mhipster");
+        execute(projectRoot, "cp", "test_features.sh", projectDir);
+        execute(projectRoot, "cp", "test_features_selection.txt", projectDir);
+        execute(projectRoot, "cp", "mhipster/get_jwt.sh", "mhipster/m_generate.sh", "mhipster/post.sh", projectDir + "/mhipster");
     }
 }

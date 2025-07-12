@@ -4,9 +4,7 @@ import com.mihael.mhipster.AnnotationUtil;
 import com.mihael.mhipster.MDLSProcessor;
 import com.mihael.mhipster.ReportParser;
 import com.mihael.mhipster.StepdefGenerator;
-import com.mihael.mhipster.domain.Project;
-import com.mihael.mhipster.domain.TestReport;
-import com.mihael.mhipster.domain.User;
+import com.mihael.mhipster.domain.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -45,11 +43,11 @@ public class GroovyTest {
 
     @Test
     void stepdefGeneratorTest() {
-        StepdefGenerator.generateStepdefs(
-            "/home/mihael/Projects/MHipster2/src/main/resources/mhipster/personal_projects_overview.feature",
-            "/home/mihael/Projects/MHipster2/src/main/resources/mhipster",
-            "my.pack.name"
-        );
+        //        StepdefGenerator.generateStepdefs(
+        //            "/home/mihael/Projects/MHipster2/src/main/resources/mhipster/personal_projects_overview.feature",
+        //            "/home/mihael/Projects/MHipster2/src/main/resources/mhipster",
+        //            "my.pack.name"
+        //        );
     }
 
     @Test
@@ -79,17 +77,27 @@ public class GroovyTest {
     String resources = "/home/mihael/Projects/MHipster2/src/main/resources/mhipster/";
 
     @Test
-    void testProjectGen() {
+    void testProjectGen() throws IOException {
         String projectRoot = System.getProperty("user.dir");
         String parentDir = new File(projectRoot).getParent();
         System.out.println(parentDir);
 
         User user = new User();
-        user.setLogin("mihael");
+        user.setLogin("mihajlo");
+
+        Feature feature = new Feature();
+        feature.setName("featureName");
+        feature.setContent(Files.readString(Path.of(resources + "personal_projects_overview.feature"), StandardCharsets.UTF_8));
+
+        MDLS mdls = new MDLS();
+        mdls.setContent(Files.readString(Path.of(resources + "mdls.jdl"), StandardCharsets.UTF_8));
 
         Project project = new Project();
         project.setName("testProjectName");
 
         project.setUser(user);
+        project.setMdls(mdls);
+        project.addFeature(feature);
+        project.generate(Files.readString(Path.of(resources + "jdl-template.jdl"), StandardCharsets.UTF_8));
     }
 }

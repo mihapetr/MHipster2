@@ -15,7 +15,10 @@ class StepdefGenerator {
 		return cleaned
 	}
 
-	static void generateStepdefs(String featurePath, String stepdefsPath, String packageName) {
+	static void generateStepdefs(String featureContent, String projectRoot, String packageName) {
+
+		def stepdefsPath = projectRoot + "/src/test/java/${packageName.replace(".","/")}/cucumber/stepdefs"
+		def featuresPath = projectRoot + "/src/test/resources/features"
 
 		def keywords = ['Given', 'When', 'Then', 'And']
 		def steps = []
@@ -23,7 +26,7 @@ class StepdefGenerator {
 		def featureName = "MISSING Feature keyword"
 		def methods = []
 
-		new File(featurePath).eachLine { line ->
+		featureContent.eachLine { line ->
 			keywords.each { keyword ->
 				if (line.trim().startsWith(keyword)) {
 					// Extract content after the keyword
@@ -43,14 +46,17 @@ class StepdefGenerator {
 			methods <<
 """
 	${annotation}
-	public void ${cleaned} {
+	public void ${cleaned}() {
 
 	}
 """
 		}
+		new File("${featuresPath}/${clean(featureName)}.feature").text = featureContent
 		new File("${stepdefsPath}/${clean(featureName)}.java").text =
 """
-package ${packageName}
+package ${packageName}.cucumber.stepdefs;
+
+import io.cucumber.java.en.*;
 
 class ${clean(featureName)} {
 

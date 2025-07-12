@@ -32,6 +32,7 @@
 * zip the project and give to the user
 
 * comment that the user needs Java, node.js, groovy installed to make use of the received project
+* user needs to run ./npmw install and ./mvnw install in order to fully initialize the project
 * specify the version of all of those dependencies
 
 

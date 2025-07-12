@@ -22,8 +22,5 @@ import org.springframework.security.test.context.support.WithMockUser;
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 @EmbeddedSQL
-//@AutoConfigureMockMvc
-//@AutoConfigureTestEntityManager
-//@WithMockUser(username = "admin", roles = "ADMIN")
 public @interface IntegrationTest {
 }
