@@ -4,7 +4,9 @@ import com.mihael.mhipster.AnnotationUtil;
 import com.mihael.mhipster.MDLSProcessor;
 import com.mihael.mhipster.ReportParser;
 import com.mihael.mhipster.StepdefGenerator;
+import com.mihael.mhipster.domain.Project;
 import com.mihael.mhipster.domain.TestReport;
+import com.mihael.mhipster.domain.User;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -17,12 +19,16 @@ import org.junit.jupiter.api.Test;
 public class GroovyTest {
 
     @Test
-    void MDLSProcessorTransformTest() {
+    void MDLSProcessorTransformTest() throws IOException {
         MDLSProcessor.transform(
-            "/home/mihael/Projects/MHipster2/src/main/resources/mhipster/jdl-template.jdl",
-            "/home/mihael/Projects/MHipster2/src/main/resources/mhipster/mdls.jdl",
+            Files.readString(
+                Path.of("/home/mihael/Projects/MHipster2/src/main/resources/mhipster/jdl-template.jdl"),
+                StandardCharsets.UTF_8
+            ),
+            Files.readString(Path.of("/home/mihael/Projects/MHipster2/src/main/resources/mhipster/mdls.jdl"), StandardCharsets.UTF_8),
             "appName",
-            "com.test.test"
+            "com.test.test",
+            "/home/mihael/Projects/unitTestDestination/specification.jdl"
         );
     }
 
@@ -68,5 +74,22 @@ public class GroovyTest {
         }
         int exitCode = process.waitFor();
         System.out.println("Exited with code: " + exitCode);
+    }
+
+    String resources = "/home/mihael/Projects/MHipster2/src/main/resources/mhipster/";
+
+    @Test
+    void testProjectGen() {
+        String projectRoot = System.getProperty("user.dir");
+        String parentDir = new File(projectRoot).getParent();
+        System.out.println(parentDir);
+
+        User user = new User();
+        user.setLogin("mihael");
+
+        Project project = new Project();
+        project.setName("testProjectName");
+
+        project.setUser(user);
     }
 }

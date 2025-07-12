@@ -22,6 +22,7 @@ Feature: Generating projects
   Scenario: Generate the project
     Given user navigates to projects view : generating
     And user selects new project option
+  	And user fills the project form
     And user selects JDL specification to use from the list he owns
     And user selects feature files to use from the list he owns
     When user clicks generate project

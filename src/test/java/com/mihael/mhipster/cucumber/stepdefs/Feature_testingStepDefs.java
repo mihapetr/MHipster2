@@ -34,7 +34,7 @@ public class Feature_testingStepDefs extends Common {
         pb.redirectErrorStream(true);
         Process process = pb.start();
 
-        // Optionally capture output
+        // capture output
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line;
         while ((line = reader.readLine()) != null) {

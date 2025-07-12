@@ -1,10 +1,11 @@
 package com.mihael.mhipster.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mihael.mhipster.MDLSProcessor;
 import com.mihael.mhipster.MGenerated;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import java.io.Serializable;
+import java.io.*;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -275,5 +276,52 @@ public class Project implements Serializable {
     }
 
     @MGenerated
-    public void generate() {}
+    static void execute(String directory, String... command) {
+        try {
+            ProcessBuilder pb = new ProcessBuilder(command);
+            pb.directory(new File(directory));
+            pb.redirectErrorStream(true);
+            Process process = pb.start();
+
+            // capture output
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+            //return process.waitFor();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // todo : make a config entity which will define where the new project is generated
+
+    @MGenerated
+    public void generate(String jdlTemplateContent) {
+        // calculate the directory positions relative to this project
+        String projectRoot = System.getProperty("user.dir");
+        String parentDir = new File(projectRoot).getParent();
+        String projectDirName = getName().trim().toLowerCase();
+        String userLogin = getUser().getLogin();
+        String packageName = "com." + userLogin + "." + projectDirName;
+        String projectDir = parentDir + "/" + userLogin + "/" + projectDirName;
+        String specificationPath = projectDir + "/specification.jdl";
+
+        // make a directory dedicated to the user and their projects
+        execute(parentDir, "mkdir", "-p", userLogin);
+        execute(parentDir, "mkdir", "-p", userLogin + "/" + projectDirName);
+
+        // make changes to the specification user provided based on JDL extension
+        MDLSProcessor.transform(jdlTemplateContent, getMdls().getContent(), projectDirName, packageName, specificationPath);
+
+        // run basic jhipster project generation based on the jdl file
+        //execute(projectDir, "jhipster", "jdl", "specification.jdl");
+        execute("echo", "jhipster jdl spec.jdl");
+
+        MDLSProcessor.modifyDomain(specificationPath, "src/main/java/" + packageName.replace('.', '/') + "/domain");
+        //		execute("jhipster", "jdl",
+        //			getMdls().getContent()
+        //		);
+    }
 }

@@ -7,17 +7,14 @@ import java.util.regex.Pattern
 @MGenerated
 class MDLSProcessor {
 
-	static void transform(String templatePath, String mdlsPath, String baseName, String packageName) {
+	static void transform(String templateContent, String mdlsContent, String baseName, String packageName, String destination) {
 
-		def mdlsFile = new File(mdlsPath)
-		def mdlsContent = mdlsFile.text
-		def templateContent = new File(templatePath).text
-		def output = new File("src/test/resources/mhipster/complete.jdl")
+		def output = new File(destination)
 
 		def relationship = "{user} to User with builtInEntity"
 
 		def entities = []
-		mdlsFile.eachLine { line ->
+		mdlsContent.eachLine { line ->
 			def matcher = (line =~ /^\s*entity\s+([^\s{]+)\s*\{/)
 			if (matcher.find()) entities << matcher.group(1)
 		}
@@ -30,7 +27,7 @@ class MDLSProcessor {
 			"// mdls-needle", mdlsContent
 		).replace(
 			"// user-relationships-needle",
-			entities.collect {it + relationship}.join("\n")
+			entities.collect {"\t" + it + relationship}.join("\n")
 		)
 	}
 
@@ -184,7 +181,7 @@ class MDLSProcessor {
 		def entityMethodMap = parseEntityMethods(jdlFile)
 		entityMethodMap.each { entity, methods ->
 			def javaFile = new File("${JAVA_BASE_PATH}/${entity}.java")
-			//insertMethodStubs(javaFile, methods)
+			insertMethodStubs(javaFile, methods)
 		}
 	}
 }

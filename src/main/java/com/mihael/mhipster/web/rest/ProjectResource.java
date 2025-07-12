@@ -1,18 +1,25 @@
 package com.mihael.mhipster.web.rest;
 
+import com.mihael.mhipster.MGenerated;
 import com.mihael.mhipster.domain.Project;
 import com.mihael.mhipster.repository.ProjectRepository;
+import com.mihael.mhipster.repository.UserRepository;
+import com.mihael.mhipster.security.SecurityUtils;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -30,14 +37,16 @@ public class ProjectResource {
     private static final Logger LOG = LoggerFactory.getLogger(ProjectResource.class);
 
     private static final String ENTITY_NAME = "project";
+    private final UserRepository userRepository;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final ProjectRepository projectRepository;
 
-    public ProjectResource(ProjectRepository projectRepository) {
+    public ProjectResource(ProjectRepository projectRepository, UserRepository userRepository) {
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -54,10 +63,28 @@ public class ProjectResource {
             throw new BadRequestAlertException("A new project cannot already have an ID", ENTITY_NAME, "idexists");
         }
         project = projectRepository.save(project);
-        project.generate();
+        project = createProjectCustom(project);
+
         return ResponseEntity.created(new URI("/api/projects/" + project.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, project.getId().toString()))
             .body(project);
+    }
+
+    @Value("classpath:/mhipster/jdl-template.jdl")
+    Resource templateResource;
+
+    @MGenerated
+    Project createProjectCustom(Project project) {
+        project.setUser(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()).orElseThrow());
+        //project.generate();
+        String jdlTemplateContent = null;
+        try {
+            jdlTemplateContent = new String(templateResource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        project.generate(jdlTemplateContent);
+        return project;
     }
 
     /**
@@ -154,13 +181,24 @@ public class ProjectResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of projects in body.
      */
     @GetMapping("")
-    public List<Project> getAllProjects(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
+    public List<Project> getAllProjects(
+        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload,
+        @RequestParam(name = "filter", required = false) String filter
+    ) {
         LOG.debug("REST request to get all Projects");
         if (eagerload) {
             return projectRepository.findAllWithEagerRelationships();
         } else {
+            if (filter != null) return filter(filter);
             return projectRepository.findAll();
         }
+    }
+
+    @MGenerated
+    List<Project> filter(String filter) {
+        if (filter.equals("current-user")) {
+            return projectRepository.findByUserIsCurrentUser();
+        } else return projectRepository.findAll();
     }
 
     /**
