@@ -80,7 +80,6 @@ public class GroovyTest {
     void testProjectGen() throws IOException {
         String projectRoot = System.getProperty("user.dir");
         String parentDir = new File(projectRoot).getParent();
-        System.out.println(parentDir);
 
         User user = new User();
         user.setLogin("mihajlo");
@@ -98,6 +97,10 @@ public class GroovyTest {
         project.setUser(user);
         project.setMdls(mdls);
         project.addFeature(feature);
-        project.generate(Files.readString(Path.of(resources + "jdl-template.jdl"), StandardCharsets.UTF_8));
+        project.generate(
+            Files.readString(Path.of(resources + "jdl-template.jdl"), StandardCharsets.UTF_8),
+            Files.readString(Path.of(resources + "CucumberIT.template"), StandardCharsets.UTF_8),
+            Files.readString(Path.of(resources + "mhipster-it-profile.xml"), StandardCharsets.UTF_8)
+        );
     }
 }

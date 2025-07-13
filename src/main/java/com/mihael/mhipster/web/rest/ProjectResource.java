@@ -73,17 +73,26 @@ public class ProjectResource {
     @Value("classpath:/mhipster/jdl-template.jdl")
     Resource templateResource;
 
+    @Value("classpath:/mhipster/CucumberIT.template")
+    Resource cucumberTemplate;
+
+    @Value("classpath:/mhipster/mhipster-it-profile.xml")
+    Resource pomProfileResource;
+
     @MGenerated
     Project createProjectCustom(Project project) {
         project.setUser(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()).orElseThrow());
-        //project.generate();
         String jdlTemplateContent = null;
+        String cucumberTemplateContent = null;
+        String pomProfileContent = null;
         try {
             jdlTemplateContent = new String(templateResource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+            cucumberTemplateContent = new String(cucumberTemplate.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+            pomProfileContent = new String(pomProfileResource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        project.generate(jdlTemplateContent);
+        project.generate(jdlTemplateContent, cucumberTemplateContent, pomProfileContent);
         return project;
     }
 

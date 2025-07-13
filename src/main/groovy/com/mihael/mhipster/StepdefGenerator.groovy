@@ -58,7 +58,7 @@ package ${packageName}.cucumber.stepdefs;
 
 import io.cucumber.java.en.*;
 
-class ${clean(featureName)} {
+public class ${clean(featureName)} {
 
 ${methods.join()}
 

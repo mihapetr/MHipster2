@@ -2,6 +2,18 @@
 
 ############################ SETUP ###################################
 
+input_file="test_features_selection.txt"
+
+while IFS= read -r line; do
+	[[ -z "$line" ]] && continue	# skip empty lines
+  if ! cp "src/test/resources/features/$line" "src/test/resources/selected_features/$line"; then
+  	echo -e "Please check the formatting of the feature selection file.\nEvery line has to be a valid feature name from the /src/test/resources/features.\nErorr in line $line"
+  	exit 1
+	fi
+done < "$input_file"
+
+exit
+
 # config file created for the user
 source	./mhipster/test_features.conf
 
@@ -53,15 +65,13 @@ if [ $? -ne 0 ]; then
 		exit
 fi
 
-echo "posting report at $TEST_REPORT_PATH to $BASE_URL/api/test-reports/of-project/$PROJECT_ID with token $JWT"
+echo "posting report to $BASE_URL/api/test-reports/of-project/$PROJECT_ID with token $JWT"
 RESPONSE=$(
-		./mhipster/post.sh  "$BASE_URL/api/test-reports/of-project/$PROJECT_ID" "$JWT" "$TEST_REPORT_PATH"
+		./mhipster/post.sh  "$BASE_URL/api/test-reports/of-project/$PROJECT_ID" "$JWT"
 )
 featureTstId=$(echo "$RESPONSE" | jq -r '.featureTst.id')
 
 ############################# RUNTIME RUN ###############################
-
-exit
 
 echo "changing the retention policy of @NotGenerated at $NOT_GENERATED_DIR to RUNTIME with packageName $packageName"
 ./mhipster/m_generate.sh "$NOT_GENERATED_DIR" "$packageName" RUNTIME
@@ -69,5 +79,5 @@ echo "changing the retention policy of @NotGenerated at $NOT_GENERATED_DIR to RU
 echo "performing integration testing"
 #./mvnw verify -Pmhipster-it
 
-echo "posting report at $TEST_REPORT_PATH to $BASE_URL/api/test-reports/of-project/$PROJECT_ID with token $JWT"
-./mhipster/post.sh  "$BASE_URL/api/test-reports/of-project/$PROJECT_ID" "$JWT" "$TEST_REPORT_PATH"
+echo "posting report to $BASE_URL/api/test-reports/of-project/$PROJECT_ID with token $JWT"
+./mhipster/post.sh  "$BASE_URL/api/test-reports/of-project/$PROJECT_ID" "$JWT"

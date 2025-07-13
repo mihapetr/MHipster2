@@ -1,10 +1,10 @@
 package __package-name-needle__.cucumber;
 
 import static io.cucumber.junit.platform.engine.Constants.*;
+import org.junit.platform.suite.api.*;
 
 @Suite
 @IncludeEngines("cucumber")
-// feature_selection
-// end_feature_selection
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "__package-name-needle__.cucumber, __package-name-needle__.cucumber.stepdefs")
-class CucumberIT {}
+// __feature-selection-needle__
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "__package-name-needle__.cucumber,__package-name-needle__.cucumber.stepdefs")
+class TemplateCucumberIT {}

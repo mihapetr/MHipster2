@@ -1,6 +1,1 @@
-# List of features to include in Cucumber test
-account.feature
 generating_projects.feature
-feature_testing.feature
-personal_projects_overview.feature
-platform_overview.feature

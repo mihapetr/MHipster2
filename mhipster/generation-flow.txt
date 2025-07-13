@@ -45,5 +45,4 @@
 
 ** I need to give these to the user
 	* feature-test.sh
-	* extract-from-report.java
-	* post-to-server.java
+	* post-to-server.sh
