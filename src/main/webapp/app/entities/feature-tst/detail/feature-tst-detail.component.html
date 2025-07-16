@@ -19,12 +19,15 @@
           <dd>
             <span>{{ featureTstRef.date | formatMediumDatetime }}</span>
           </dd>
-          <dt><span>Parent</span></dt>
+          <dt><span>Code Statistics</span></dt>
           <dd>
             @if (featureTst()!.parent) {
               <div>
-                <a [routerLink]="['/code-stats', featureTst()!.parent?.id, 'view']">{{ featureTstRef.parent?.id }}</a>
+                <a [routerLink]="['/code-stats', featureTst()!.parent?.id, 'view']">view</a>
               </div>
+              <dd style="display: none">
+                {{ featureTst()!.parent?.lines }}
+              </dd>
             }
           </dd>
           <dt><span>Feature</span></dt>

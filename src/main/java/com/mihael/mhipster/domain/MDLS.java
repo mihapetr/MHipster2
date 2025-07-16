@@ -134,8 +134,8 @@ public class MDLS implements Serializable {
         return "MDLS{" +
             "id=" + getId() +
             ", baseConfig='" + getBaseConfig() + "'" +
-            ", content='" + getContent() + "'" +
-			",userLogin" + getUser().getLogin() +
+            //", content='" + getContent() + "'" +
+			",userId=" + getUser().getId() +
             "}";
     }
 }

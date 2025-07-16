@@ -1,5 +1,6 @@
 package com.mihael.mhipster
 
+@MGenerated
 class FeatureTestingSetup {
 
 	static void configure(String projectDir, String baseUrl, String notGeneratedDir, Long projectId) {

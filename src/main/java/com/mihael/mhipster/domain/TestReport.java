@@ -282,7 +282,7 @@ public class TestReport implements Serializable {
             ", methods=" + getMethods() +
             ", missedClasses=" + getMissedClasses() +
             ", classes=" + getClasses() +
-            //", featureTst=" + getFeatureTst().getId() +
+            ", featureTstId=" + getFeatureTst().getId() +
             "}";
     }
 }

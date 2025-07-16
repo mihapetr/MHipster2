@@ -15,7 +15,7 @@ class StepdefGenerator {
 		return cleaned
 	}
 
-	static void generateStepdefs(String featureContent, String projectRoot, String packageName) {
+	static void generateStepdefs(Long featureId, String featureContent, String projectRoot, String packageName) {
 
 		def stepdefsPath = projectRoot + "/src/test/java/${packageName.replace(".","/")}/cucumber/stepdefs"
 		def featuresPath = projectRoot + "/src/test/resources/features"
@@ -51,7 +51,7 @@ class StepdefGenerator {
 	}
 """
 		}
-		new File("${featuresPath}/${clean(featureName)}.feature").text = featureContent
+		new File("${featuresPath}/__${featureId}__${clean(featureName)}.feature").text = featureContent
 		new File("${stepdefsPath}/${clean(featureName)}.java").text =
 """
 package ${packageName}.cucumber.stepdefs;

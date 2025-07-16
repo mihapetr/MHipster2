@@ -23,10 +23,11 @@
           <textarea class="form-control" name="content" id="field_content" data-cy="content" formControlName="content"></textarea>
         </div>
 
-        <div class="mb-3">
-          <label class="form-label" for="field_user">User</label>
-          <div class="form-control" id="field_user" data-cy="user" name="user" formControlName="user">1</div>
-          <!--<select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+        <div style="display: none">
+          <div class="mb-3">
+            <label class="form-label" for="field_user">User</label>
+            <div class="form-control" id="field_user" data-cy="user" name="user" formControlName="user">1</div>
+            <!--<select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
             @if (!editForm.get('user')!.value) {
               <option [ngValue]="null" selected></option>
             }
@@ -34,8 +35,8 @@
               <option [ngValue]="userOption">{{ userOption.id }}</option>
             }
           </select>-->
-        </div>
-        <!--@if (editForm.get(['user'])!.invalid && (editForm.get(['user'])!.dirty || editForm.get(['user'])!.touched)) {
+          </div>
+          <!--@if (editForm.get(['user'])!.invalid && (editForm.get(['user'])!.dirty || editForm.get(['user'])!.touched)) {
           <div>
             @if (editForm.get(['user'])?.errors?.required) {
               <small class="form-text text-danger">This field is required.</small>
@@ -43,38 +44,39 @@
           </div>
         }-->
 
-        <div class="mb-3">
-          <label for="field_projects">Project</label>
-          <select
-            class="form-control"
-            id="field_projects"
-            data-cy="project"
-            multiple
-            name="projects"
-            formControlName="projects"
-            [compareWith]="compareProject"
-          >
-            @for (projectOption of projectsSharedCollection; track $index) {
-              <option [ngValue]="projectOption">{{ projectOption.id }}</option>
-            }
-          </select>
-        </div>
+          <div class="mb-3">
+            <label for="field_projects">Project</label>
+            <select
+              class="form-control"
+              id="field_projects"
+              data-cy="project"
+              multiple
+              name="projects"
+              formControlName="projects"
+              [compareWith]="compareProject"
+            >
+              @for (projectOption of projectsSharedCollection; track $index) {
+                <option [ngValue]="projectOption">{{ projectOption.id }}</option>
+              }
+            </select>
+          </div>
 
-        <div class="mb-3">
-          <label for="field_featureTsts">Feature Tst</label>
-          <select
-            class="form-control"
-            id="field_featureTsts"
-            data-cy="featureTst"
-            multiple
-            name="featureTsts"
-            formControlName="featureTsts"
-            [compareWith]="compareFeatureTst"
-          >
-            @for (featureTstOption of featureTstsSharedCollection; track $index) {
-              <option [ngValue]="featureTstOption">{{ featureTstOption.id }}</option>
-            }
-          </select>
+          <div class="mb-3">
+            <label for="field_featureTsts">Feature Tst</label>
+            <select
+              class="form-control"
+              id="field_featureTsts"
+              data-cy="featureTst"
+              multiple
+              name="featureTsts"
+              formControlName="featureTsts"
+              [compareWith]="compareFeatureTst"
+            >
+              @for (featureTstOption of featureTstsSharedCollection; track $index) {
+                <option [ngValue]="featureTstOption">{{ featureTstOption.id }}</option>
+              }
+            </select>
+          </div>
         </div>
       </div>
 

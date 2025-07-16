@@ -3,6 +3,8 @@ package com.mihael.mhipster.web.rest;
 import com.mihael.mhipster.MGenerated;
 import com.mihael.mhipster.domain.MDLS;
 import com.mihael.mhipster.repository.MDLSRepository;
+import com.mihael.mhipster.repository.UserRepository;
+import com.mihael.mhipster.security.SecurityUtils;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -32,14 +34,16 @@ public class MDLSResource {
     private static final Logger LOG = LoggerFactory.getLogger(MDLSResource.class);
 
     private static final String ENTITY_NAME = "mDLS";
+    private final UserRepository userRepository;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final MDLSRepository mDLSRepository;
 
-    public MDLSResource(MDLSRepository mDLSRepository) {
+    public MDLSResource(MDLSRepository mDLSRepository, UserRepository userRepository) {
         this.mDLSRepository = mDLSRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -55,10 +59,16 @@ public class MDLSResource {
         if (mDLS.getId() != null) {
             throw new BadRequestAlertException("A new mDLS cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        createMDLSCustom(mDLS);
         mDLS = mDLSRepository.save(mDLS);
         return ResponseEntity.created(new URI("/api/mdls/" + mDLS.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, mDLS.getId().toString()))
             .body(mDLS);
+    }
+
+    @MGenerated
+    void createMDLSCustom(MDLS mDLS) {
+        mDLS.setUser(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()).orElseThrow());
     }
 
     /**

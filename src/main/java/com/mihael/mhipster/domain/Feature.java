@@ -30,7 +30,7 @@ public class Feature implements Serializable {
     @Column(name = "content")
     private String content;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @NotNull
     private User user;
 
@@ -183,8 +183,8 @@ public class Feature implements Serializable {
         return "Feature{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", content='" + getContent() + "'" +
-			", userId='" + getUser().getLogin() + "'" +
+           // ", content='" + getContent() + "'" +
+			", userId='" + getUser().getId() + "'" +
             "}";
     }
 }

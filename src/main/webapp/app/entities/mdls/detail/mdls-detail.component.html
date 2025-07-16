@@ -11,21 +11,15 @@
         <jhi-alert></jhi-alert>
 
         <dl class="row-md jh-entity-details">
-          <dt><span>ID</span></dt>
-          <dd>
-            <span>{{ mDLSRef.id }}</span>
-          </dd>
-          <dt><span>Base Config</span></dt>
+          <dt><span>Name</span></dt>
           <dd>
             <span>{{ mDLSRef.baseConfig }}</span>
           </dd>
           <dt><span>Content</span></dt>
           <dd>
-            <span>{{ mDLSRef.content }}</span>
-          </dd>
-          <dt><span>User</span></dt>
-          <dd>
-            <span>{{ mDLSRef.user?.id }}</span>
+            <span>
+              <pre>{{ mDLSRef.content }}</pre>
+            </span>
           </dd>
         </dl>
 

@@ -1,5 +1,6 @@
 package com.mihael.mhipster
 
+@MGenerated
 class PomEditor {
 
 	static void extend(String profileContent, String projectDir) {

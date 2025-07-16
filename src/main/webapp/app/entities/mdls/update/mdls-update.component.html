@@ -3,34 +3,27 @@
     <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-mdls-heading" data-cy="MDLSCreateUpdateHeading">Create or edit a MDLS</h2>
 
-      <div>
-        <jhi-alert-error></jhi-alert-error>
+      <jhi-alert-error></jhi-alert-error>
 
-        @if (editForm.controls.id.value !== null) {
-          <div class="mb-3">
-            <label class="form-label" for="field_id">ID</label>
-            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-          </div>
-        }
-
+      @if (editForm.controls.id.value !== null) {
         <div class="mb-3">
-          <label class="form-label" for="field_baseConfig">Base Config</label>
-          <input
-            type="text"
-            class="form-control"
-            name="baseConfig"
-            id="field_baseConfig"
-            data-cy="baseConfig"
-            formControlName="baseConfig"
-          />
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
+      }
 
-        <div class="mb-3">
-          <label class="form-label" for="field_content">Content</label>
-          <textarea class="form-control" name="content" id="field_content" data-cy="content" formControlName="content"></textarea>
-        </div>
+      <div class="mb-3">
+        <label class="form-label" for="field_baseConfig">Name</label>
+        <input type="text" class="form-control" name="baseConfig" id="field_baseConfig" data-cy="baseConfig" formControlName="baseConfig" />
+      </div>
 
-        <div class="mb-3">
+      <div class="mb-3">
+        <label class="form-label" for="field_content">Content</label>
+        <textarea class="form-control" name="content" id="field_content" data-cy="content" formControlName="content"></textarea>
+      </div>
+
+      <div style="display: none">
+        <div class="mb-3" style="display: none">
           <label class="form-label" for="field_user">User</label>
           <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
             @if (!editForm.get('user')!.value) {

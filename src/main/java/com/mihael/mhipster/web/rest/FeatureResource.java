@@ -3,6 +3,8 @@ package com.mihael.mhipster.web.rest;
 import com.mihael.mhipster.MGenerated;
 import com.mihael.mhipster.domain.Feature;
 import com.mihael.mhipster.repository.FeatureRepository;
+import com.mihael.mhipster.repository.UserRepository;
+import com.mihael.mhipster.security.SecurityUtils;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -31,14 +33,16 @@ public class FeatureResource {
     private static final Logger LOG = LoggerFactory.getLogger(FeatureResource.class);
 
     private static final String ENTITY_NAME = "feature";
+    private final UserRepository userRepository;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final FeatureRepository featureRepository;
 
-    public FeatureResource(FeatureRepository featureRepository) {
+    public FeatureResource(FeatureRepository featureRepository, UserRepository userRepository) {
         this.featureRepository = featureRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -54,10 +58,16 @@ public class FeatureResource {
         if (feature.getId() != null) {
             throw new BadRequestAlertException("A new feature cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        createFeatureCustom(feature);
         feature = featureRepository.save(feature);
         return ResponseEntity.created(new URI("/api/features/" + feature.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, feature.getId().toString()))
             .body(feature);
+    }
+
+    @MGenerated
+    void createFeatureCustom(Feature feature) {
+        feature.setUser(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()).orElseThrow());
     }
 
     /**

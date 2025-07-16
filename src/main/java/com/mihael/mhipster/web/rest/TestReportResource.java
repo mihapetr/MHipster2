@@ -10,6 +10,7 @@ import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -18,6 +19,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -118,6 +120,7 @@ public class TestReportResource {
 
         // link new report to new FeatureTst
         testReport.featureTst(featureTstResource.createFeatureTst(featureTst).getBody());
+        testReport.setRuntimeRetention(false); // in sync with test_features.sh
 
         return createTestReport(testReport);
     }
@@ -130,22 +133,48 @@ public class TestReportResource {
         return user.getId().equals(userId);
     }
 
-    /**
-     * Create a new TestReport. Attach it to the feature test with given id.
-     *
-     * @param id id of the FeatureTest this TestReport belongs to.
-     * @param testReport the report to create
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new testReport, or with status {@code 400 (Bad Request)} if the testReport has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    /*@MGenerated
-    @PostMapping("/of-feature-test/{id}")
-    public ResponseEntity<TestReport> createTestReportOfFeatureTest(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody TestReport testReport
+    @MGenerated
+    @PostMapping(value = "/of-feature-test/{id}", consumes = "text/html")
+    public ResponseEntity<TestReport> createTestReportOfFeatureTst(
+        @RequestParam(name = "features", required = false) List<String> features,
+        @PathVariable(value = "id", required = true) final Long id,
+        @RequestBody String reportContent
     ) throws URISyntaxException {
-        return createTestReport(testReport);
-    }*/
+        // get referenced project
+        FeatureTst featureTst = featureTstResource.getFeatureTst(id).getBody();
+        //System.out.println("fetched feature tst: " + featureTst);
+
+        if (!currentUserIsOwner(featureTst.getProject().getUser().getId())) throw new BadRequestAlertException(
+            "Unauthorized access.",
+            ENTITY_NAME,
+            "notowner"
+        );
+
+        TestReport testReport = ReportParser.html2TestReport(reportContent);
+
+        testReport.setFeatureTst(featureTst); // link new report to referenced FeatureTst before saving
+        testReport.setRuntimeRetention(true); // in sync with test_features.sh
+
+        ResponseEntity<TestReport> testReportResponseEntity = createTestReport(testReport);
+
+        // update feature test and generate stats
+        featureTst.addTestReport(testReportResponseEntity.getBody()); // add this new testReport to the FeatureTst before generating stats
+
+        try {
+            featureTst.generateStats();
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        featureTstResource.partialUpdateFeatureTst(featureTst.getId(), featureTst);
+        System.out.println("updated feature test: " + featureTst);
+
+        return testReportResponseEntity;
+    }
 
     /**
      * {@code PUT  /test-reports/:id} : Updates an existing testReport.

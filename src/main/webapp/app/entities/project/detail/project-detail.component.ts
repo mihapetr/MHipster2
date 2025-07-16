@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import SharedModule from 'app/shared/shared.module';
 import { FormatMediumDatetimePipe } from 'app/shared/date';
 import { IProject } from '../project.model';
+import { IMDLS } from '../../mdls/mdls.model';
 
 @Component({
   selector: 'jhi-project-detail',

@@ -102,6 +102,7 @@ export class FeatureComponent implements OnInit {
   protected queryBackend(): Observable<EntityArrayResponseType> {
     this.isLoading = true;
     const queryObject: any = {
+      filter: 'current-user',
       sort: this.sortService.buildSortParam(this.sortState()),
     };
     return this.featureService.query(queryObject).pipe(tap(() => (this.isLoading = false)));

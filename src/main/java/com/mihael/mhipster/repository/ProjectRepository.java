@@ -39,4 +39,6 @@ public interface ProjectRepository extends ProjectRepositoryWithBagRelationships
     default Page<Project> findAllWithEagerRelationships(Pageable pageable) {
         return this.fetchBagRelationships(this.findAll(pageable));
     }
+
+    Long id(Long id);
 }

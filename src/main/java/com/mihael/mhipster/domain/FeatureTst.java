@@ -188,9 +188,9 @@ public class FeatureTst implements Serializable {
         return "FeatureTst{" +
             "id=" + getId() +
             ", date='" + getDate() + "'" +
-            ", testReports=" + getTestReports() +
             ", project=" + getProject().getId() +
             ", codeStats=" + getParent() +
+			", testReports=" + getTestReports().stream().map(TestReport::getId).collect(Collectors.toSet()) +
             "}";
     }
 
@@ -199,9 +199,9 @@ public class FeatureTst implements Serializable {
      * Calculate the dead code percentage in the project based on two TestReports.
      */
     @MGenerated
-    void generateStats() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        TestReport runtime = getTestReports().stream().filter(r -> r.getRuntimeRetention()).findFirst().orElse(null);
-        TestReport source = getTestReports().stream().filter(r -> !r.getRuntimeRetention()).findFirst().orElse(null);
+    public void generateStats() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        TestReport runtime = getTestReports().stream().filter(r -> r.getRuntimeRetention()).findFirst().orElseThrow();
+        TestReport source = getTestReports().stream().filter(r -> !r.getRuntimeRetention()).findFirst().orElseThrow();
 
         List<String> dimensions = List.of("Instructions", "Branches", "Lines", "Methods", "Classes");
 

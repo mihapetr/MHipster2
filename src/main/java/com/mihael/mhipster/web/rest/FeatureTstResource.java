@@ -1,6 +1,8 @@
 package com.mihael.mhipster.web.rest;
 
+import com.mihael.mhipster.MGenerated;
 import com.mihael.mhipster.domain.FeatureTst;
+import com.mihael.mhipster.domain.Project;
 import com.mihael.mhipster.repository.FeatureTstRepository;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
@@ -145,14 +147,24 @@ public class FeatureTstResource {
      */
     @GetMapping("")
     public List<FeatureTst> getAllFeatureTsts(
-        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
+        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload,
+        @RequestParam(name = "filter", required = false) String filter
     ) {
         LOG.debug("REST request to get all FeatureTsts");
         if (eagerload) {
+            if (filter != null) return filter(filter);
             return featureTstRepository.findAllWithEagerRelationships();
         } else {
+            if (filter != null) return filter(filter);
             return featureTstRepository.findAll();
         }
+    }
+
+    @MGenerated
+    List<FeatureTst> filter(String filter) {
+        if (filter.equals("current-user")) {
+            return featureTstRepository.findAll(); // todo : implement this
+        } else return featureTstRepository.findAll();
     }
 
     /**

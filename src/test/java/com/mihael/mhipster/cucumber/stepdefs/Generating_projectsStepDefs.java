@@ -10,12 +10,23 @@ import com.mihael.mhipster.repository.MDLSRepository;
 import com.mihael.mhipster.repository.ProjectRepository;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
+import org.junit.jupiter.api.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClient;
 
 public class Generating_projectsStepDefs extends Common {
@@ -32,23 +43,46 @@ public class Generating_projectsStepDefs extends Common {
     @Autowired
     MDLSRepository mdlsRepository;
 
+    InputStream featureContentStream, mdlsContentStream;
+
     static boolean done = false;
 
     @MGenerated
     @Before
-    public void before() {
-        setup();
+    public void before() throws IOException {
         user = userRepository.findOneByLogin(existingLogin).orElseThrow();
         otherUser = userRepository.findOneByLogin("user").orElseThrow();
 
         if (!done) {
             done = true;
+            setup();
             Feature feature = new Feature().name("Other user's feature").content("Other Feature content").user(otherUser);
-
             MDLS mdls = new MDLS().content("Other user's MDLS content").user(otherUser);
 
             featureRepository.save(feature);
             mdlsRepository.save(mdls);
+
+            // for project generation scenario
+            featureContentStream = getClass().getClassLoader().getResourceAsStream("mhipster/personal_projects_overview.feature");
+            mdlsContentStream = getClass().getClassLoader().getResourceAsStream("mhipster/mdls.jdl");
+
+            Feature feature2 = new Feature();
+            feature2.setName("featureName");
+            feature2.setContent(
+                //Files.readString(Path.of("/home/mihael/Projects/MHipster2/src/main/resources/mhipster/personal_projects_overview.feature"), StandardCharsets.UTF_8)
+                new String(featureContentStream.readAllBytes(), StandardCharsets.UTF_8)
+            );
+            feature2.setUser(user);
+
+            MDLS mdls2 = new MDLS();
+            mdls2.setContent(
+                //Files.readString(Path.of("/home/mihael/Projects/MHipster2/src/main/resources/mhipster/mdls.jdl"), StandardCharsets.UTF_8)
+                new String(mdlsContentStream.readAllBytes(), StandardCharsets.UTF_8)
+            );
+            mdls2.setUser(user);
+
+            featureRepository.save(feature2);
+            mdlsRepository.save(mdls2);
         }
     }
 
@@ -164,7 +198,7 @@ public class Generating_projectsStepDefs extends Common {
             .retrieve()
             .body(new ParameterizedTypeReference<List<MDLS>>() {});
 
-        System.out.println(specs);
+        System.out.println("mdls returned: " + specs.get(0));
         newProject.setMdls(specs.get(0));
     }
 
@@ -177,12 +211,14 @@ public class Generating_projectsStepDefs extends Common {
             .retrieve()
             .body(new ParameterizedTypeReference<List<Feature>>() {});
 
-        System.out.println(specs);
+        System.out.println("feature returned: " + specs.get(0));
         newProject.addFeature(specs.get(0));
     }
 
     @When("user clicks generate project")
     public void user_clicks_generate_project() {
+        System.out.println(newProject);
+
         response3 = restClient
             .post()
             .uri("http://localhost:" + port + url)
@@ -190,17 +226,31 @@ public class Generating_projectsStepDefs extends Common {
             .header("Authorization", "Bearer " + token)
             .body(newProject)
             .retrieve();
+
+        System.out.println(response3.toEntity(Project.class));
     }
 
+    @MGenerated
     @Then("project is generated using JHipster")
-    public void project_is_generated_using_j_hipster() {
-        // todo : repository, status and response from jhipster / files in the destination directory
-        //Project.generate();
+    public void project_is_generated_using_j_hipster() throws InterruptedException {
+        int timeout = 20000;
+        int time = 0;
+        boolean generated = false;
+        while (!generated) {
+            if (time > timeout) {
+                System.out.println("Timeout expired");
+                break;
+            }
+            generated = projectRepository.findById(response3.toEntity(Project.class).getBody().getId()).orElseThrow().getLocation() != null;
+            Thread.sleep(1000);
+            time += 1000;
+        }
     }
 
     @Then("project is configured to use Cucumber and JaCoCo")
     public void project_is_configured_to_use_cucumber_and_ja_co_co() {
-        // todo : assert facts
+        // todo : assert facts : check if files are ok
+
     }
 
     @MGenerated
@@ -223,10 +273,12 @@ public class Generating_projectsStepDefs extends Common {
         System.out.println(response3.body(new ParameterizedTypeReference<List<Project>>() {}));
     }
 
+    Long chosenId;
+
     @Given("user selects project details")
     public void user_selects_project_details() {
         // get project by one of the ids
-        Long chosenId = response3.body(new ParameterizedTypeReference<List<Project>>() {}).get(0).getId();
+        chosenId = response3.body(new ParameterizedTypeReference<List<Project>>() {}).get(0).getId();
 
         response3 = restClient
             .get()
@@ -237,13 +289,20 @@ public class Generating_projectsStepDefs extends Common {
         System.out.println(response3.toEntity(Project.class));
     }
 
+    byte[] fileBytes;
+
     @When("user clicks the download button")
     public void user_clicks_the_download_button() {
-        // request files from the server : POST
+        fileBytes = restClient
+            .get()
+            .uri("http://localhost:" + port + "/api/projects/" + chosenId + "/download")
+            .header("Authorization", "Bearer " + token)
+            .retrieve()
+            .body(byte[].class);
     }
 
     @Then("user receives project files")
-    public void user_receives_project_files() {
-        // todo : after implementation : destination mock files assert
+    public void user_receives_project_files() throws IOException {
+        Files.write(Paths.get(generatedProjectDirectory + "/test-project.zip"), fileBytes, StandardOpenOption.CREATE);
     }
 }

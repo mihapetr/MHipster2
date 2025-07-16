@@ -46,3 +46,13 @@
 ** I need to give these to the user
 	* feature-test.sh
 	* post-to-server.sh
+
+--------------------
+once they get the files they need to run:
+
+chmod +x ./mvnw
+ ./mvnw install -DskipTests
+chmod +x test_features.sh
+./test_features.sh
+
+The report will be posted to the server and they can

@@ -269,8 +269,10 @@ public class Project implements Serializable {
             ", description='" + getDescription() + "'" +
             ", creationTimeStamp='" + getCreationTimeStamp() + "'" +
             ", location='" + getLocation() + "'" +
-            ", user= " + getUser() +
-            ", featureTsts= " + getFeatureTsts() +
+            //", user= " + getUser() +
+            //", featureTsts= " + getFeatureTsts() +
+			//", features= " + getFeatures() +
+			//", mdls= " + getMdls().getId() +
             "}";
     }
 
@@ -301,58 +303,61 @@ public class Project implements Serializable {
         // calculate the directory positions relative to this project
         String projectRoot = System.getProperty("user.dir");
         String parentDir = new File(projectRoot).getParent();
-        String projectDirName = getName().trim().toLowerCase();
+        String projectDirName = "" + getId();
         String userLogin = getUser().getLogin();
-        String packageName = "com." + userLogin + "." + projectDirName;
+        String cleanedName = getName().trim().toLowerCase().replace(" ", "");
+        String packageName = "com." + userLogin + "." + cleanedName;
         String projectDir = parentDir + "/" + userLogin + "/" + projectDirName;
         String specificationPath = projectDir + "/specification.jdl";
         String testResourcesDir = projectDir + "/src/test/resources";
 
         System.out.println(projectDir);
-        //		// make a directory opn the server dedicated to the user and their projects
-        //		execute(parentDir, "mkdir", "-p", userLogin);
-        //		execute(parentDir, "mkdir", "-p", userLogin + "/" + projectDirName);
-        //
-        //		// make changes to app specification user provided based on JDL extension
-        //		MDLSProcessor.transform(jdlTemplateContent, getMdls().getContent(), projectDirName, packageName, specificationPath);
-        //
-        //		// run basic jhipster project generation based on the jdl file
-        //		execute(projectDir, "jhipster", "jdl", "specification.jdl", "--skip-install");
-        //		//execute(projectDir, "echo", "jhipster jdl spec.jdl --skip-install ........ done");
-        //
-        //		// modify the domain package based on MDL specification
-        //		MDLSProcessor.modifyDomain(
-        //			specificationPath,
-        //			projectDir + "/src/main/java/" + packageName.replace('.', '/') + "/domain"
-        //		);
-        //
-        //        // modify pom : add cucumber dependency and mhipster-it profile
-        //		PomEditor.extend(pomProfileContent,projectDir);
-        //
-        //        // configure cucumber : add CucumberIT.java from template
-        //		CucumberSetup.configure(cucumberTemplateContent, projectDir, packageName);
-        //
-        //        // generate stepdefs from feature files
-        //        execute(testResourcesDir, "mkdir", "-p", "features");
-        //        for (Feature feature : getFeatures()) {
-        //            StepdefGenerator.generateStepdefs(feature.getContent(), projectDir, packageName);
-        //        }
-        //
-        //        // configure the variable source file for the test_features.sh
-        //		FeatureTestingSetup.configure(
-        //			projectDir,
-        //			"http://localhost:8080",	// there should be some kind of domain name service to give this dynamic information
-        //			"./src/main/java/" + packageName.replace(".", "/"),
-        //			getId()
-        //		);
-        //
-        //        // clone testing scripts to the new project
-        //        execute(projectDir, "mkdir", "-p", "mhipster");
-        //        execute(projectRoot, "cp", "test_features.sh", projectDir);
-        //        execute(projectRoot, "cp", "test_features_selection.txt", projectDir);
-        //		execute(projectDir, "mv", "pom.xml", "backup_pom.xml");
-        //        execute(projectRoot, "cp", "mhipster/get_jwt.sh", "mhipster/m_generate.sh", "mhipster/post.sh", projectDir + "/mhipster");
+        // make a directory on the server dedicated to the user and their projects
+        execute(parentDir, "mkdir", "-p", userLogin);
+        execute(parentDir, "mkdir", "-p", userLogin + "/" + projectDirName);
 
-        // todo : zip the file and give it to the user
+        // make changes to app specification user provided based on JDL extension
+        MDLSProcessor.transform(jdlTemplateContent, getMdls().getContent(), cleanedName, packageName, specificationPath);
+
+        // run basic jhipster project generation based on the jdl file
+        execute(projectDir, "jhipster", "jdl", "specification.jdl", "--skip-install");
+        //execute(projectDir, "echo", "jhipster jdl spec.jdl --skip-install ........ done");
+
+        // modify the domain package based on MDL specification
+        MDLSProcessor.modifyDomain(specificationPath, projectDir + "/src/main/java/" + packageName.replace('.', '/') + "/domain");
+
+        // modify pom : add cucumber dependency and mhipster-it profile
+        execute(projectDir, "mv", "pom.xml", "backup_pom.xml");
+        PomEditor.extend(pomProfileContent, projectDir);
+
+        // configure cucumber : add CucumberIT.java from template
+        CucumberSetup.configure(cucumberTemplateContent, projectDir, packageName);
+
+        // generate stepdefs from feature files
+        execute(testResourcesDir, "mkdir", "-p", "features");
+        execute(testResourcesDir, "mkdir", "-p", "selected_features");
+        for (Feature feature : getFeatures()) {
+            StepdefGenerator.generateStepdefs(feature.getId(), feature.getContent(), projectDir, packageName);
+        }
+
+        // clone testing scripts to the new project
+        execute(projectDir, "mkdir", "-p", "mhipster");
+        execute(projectRoot, "cp", "test_features.sh", projectDir);
+
+        execute(testResourcesDir + "/features", "sh", "-c", "ls -1 > " + projectDir + "/test_features_selection.txt");
+
+        execute(projectDir, "cp", "pom.xml", "backup_pom.xml");
+        execute(projectRoot, "cp", "mhipster/get_jwt.sh", "mhipster/m_generate.sh", "mhipster/post.sh", projectDir + "/mhipster");
+
+        // configure the variable source file for the test_features.sh
+        FeatureTestingSetup.configure(
+            projectDir,
+            "http://localhost:8080", // there should be some kind of domain name service to give this dynamic information
+            "./src/main/java/" + packageName.replace(".", "/"),
+            getId()
+        );
+
+        // compress the project and save the location
+        setLocation(Compressor.compress(projectDir));
     }
 }

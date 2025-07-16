@@ -1,9 +1,6 @@
 package com.mihael.mhipster.groovy;
 
-import com.mihael.mhipster.AnnotationUtil;
-import com.mihael.mhipster.MDLSProcessor;
-import com.mihael.mhipster.ReportParser;
-import com.mihael.mhipster.StepdefGenerator;
+import com.mihael.mhipster.*;
 import com.mihael.mhipster.domain.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 public class GroovyTest {
 
@@ -74,9 +72,16 @@ public class GroovyTest {
         System.out.println("Exited with code: " + exitCode);
     }
 
+    @Test
+    public void compressTest() {
+        String destination = Compressor.compress("/home/mihael/Projects/mihajlo/testprojectname");
+        System.out.println(destination);
+    }
+
     String resources = "/home/mihael/Projects/MHipster2/src/main/resources/mhipster/";
 
     @Test
+    @Timeout(30)
     void testProjectGen() throws IOException {
         String projectRoot = System.getProperty("user.dir");
         String parentDir = new File(projectRoot).getParent();
@@ -92,11 +97,13 @@ public class GroovyTest {
         mdls.setContent(Files.readString(Path.of(resources + "mdls.jdl"), StandardCharsets.UTF_8));
 
         Project project = new Project();
-        project.setName("testProjectName");
+        project.setName("testProjectName3");
 
+        project.setId(777L);
         project.setUser(user);
         project.setMdls(mdls);
         project.addFeature(feature);
+
         project.generate(
             Files.readString(Path.of(resources + "jdl-template.jdl"), StandardCharsets.UTF_8),
             Files.readString(Path.of(resources + "CucumberIT.template"), StandardCharsets.UTF_8),

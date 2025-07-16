@@ -61,37 +61,40 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="location">
-              <div class="d-flex">
-                <span>Location</span>
 
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="mdls.id">
-              <div class="d-flex">
-                <span>Mdls</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="user.id">
-              <div class="d-flex">
-                <span>User</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="feature.id">
-              <div class="d-flex">
-                <span>Feature</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="overview.id">
-              <div class="d-flex">
-                <span>Overview</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
+            <div style="display: none">
+              <th scope="col" jhiSortBy="location">
+                <div class="d-flex">
+                  <span>Location</span>
+
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                </div>
+              </th>
+              <th scope="col" jhiSortBy="mdls.id">
+                <div class="d-flex">
+                  <span>Mdls</span>
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                </div>
+              </th>
+              <th scope="col" jhiSortBy="user.id">
+                <div class="d-flex">
+                  <span>User</span>
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                </div>
+              </th>
+              <th scope="col" jhiSortBy="feature.id">
+                <div class="d-flex">
+                  <span>Feature</span>
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                </div>
+              </th>
+              <th scope="col" jhiSortBy="overview.id">
+                <div class="d-flex">
+                  <span>Overview</span>
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                </div>
+              </th>
+            </div>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -104,18 +107,18 @@
               <td>{{ project.name }}</td>
               <td>{{ project.description }}</td>
               <td>{{ project.creationTimeStamp | formatMediumDatetime }}</td>
-              <td>{{ project.location }}</td>
-              <td>
+              <td style="display: none">{{ project.location }}</td>
+              <td style="display: none">
                 @if (project.mdls) {
                   <div>
                     <a [routerLink]="['/mdls', project.mdls.id, 'view']">{{ project.mdls.id }}</a>
                   </div>
                 }
               </td>
-              <td>
+              <td style="display: none">
                 {{ project.user?.id }}
               </td>
-              <td>
+              <td style="display: none">
                 @for (feature of project.features; track $index; let last = $last) {
                   <span>
                     <a class="form-control-static" [routerLink]="['/feature', feature.id, 'view']">{{ feature.id }}</a
@@ -123,7 +126,7 @@
                   </span>
                 }
               </td>
-              <td>
+              <td style="display: none">
                 @for (overview of project.overviews; track $index; let last = $last) {
                   <span>
                     <a class="form-control-static" [routerLink]="['/overview', overview.id, 'view']">{{ overview.id }}</a
@@ -138,7 +141,12 @@
                     <span class="d-none d-md-inline">View</span>
                   </a>
 
-                  <a [routerLink]="['/project', project.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                  <a
+                    style="display: none"
+                    [routerLink]="['/project', project.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
                     <fa-icon icon="pencil-alt"></fa-icon>
                     <span class="d-none d-md-inline">Edit</span>
                   </a>

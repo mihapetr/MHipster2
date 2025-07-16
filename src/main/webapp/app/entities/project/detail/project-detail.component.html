@@ -11,8 +11,8 @@
         <jhi-alert></jhi-alert>
 
         <dl class="row-md jh-entity-details">
-          <dt><span>ID</span></dt>
-          <dd>
+          <dt style="display: none"><span>ID</span></dt>
+          <dd style="display: none">
             <span>{{ projectRef.id }}</span>
           </dd>
           <dt><span>Name</span></dt>
@@ -27,8 +27,8 @@
           <dd>
             <span>{{ projectRef.creationTimeStamp | formatMediumDatetime }}</span>
           </dd>
-          <dt><span>Location</span></dt>
-          <dd>
+          <dt style="display: none"><span>Location</span></dt>
+          <dd style="display: none">
             <span>{{ projectRef.location }}</span>
           </dd>
           <dt><span>Mdls</span></dt>
@@ -36,14 +36,15 @@
             @if (project()!.mdls) {
               <div>
                 <a [routerLink]="['/mdls', project()!.mdls?.id, 'view']">{{ projectRef.mdls?.id }}</a>
+                <pre>{{ projectRef.mdls?.id }}</pre>
               </div>
             }
           </dd>
-          <dt><span>User</span></dt>
-          <dd>
+          <dt style="display: none"><span>User</span></dt>
+          <dd style="display: none">
             <span>{{ projectRef.user?.id }}</span>
           </dd>
-          <dt><span>Feature</span></dt>
+          <dt><span>Features</span></dt>
           <dd>
             @for (feature of projectRef.features; track $index; let last = $last) {
               <span>
@@ -52,8 +53,8 @@
               </span>
             }
           </dd>
-          <dt><span>Overview</span></dt>
-          <dd>
+          <dt style="display: none"><span>Overview</span></dt>
+          <dd style="display: none">
             @for (overview of projectRef.overviews; track $index; let last = $last) {
               <span>
                 <a [routerLink]="['/overview', overview.id, 'view']">{{ overview?.id }}</a

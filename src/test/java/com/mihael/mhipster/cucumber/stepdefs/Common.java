@@ -26,6 +26,7 @@ public class Common {
     protected final String existingPassword = "existingpassword";
 
     protected String token;
+    RestClient.ResponseSpec res;
 
     @Autowired
     UserRepository userRepository;

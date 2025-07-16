@@ -30,7 +30,7 @@
           />
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3" style="display: none">
           <label class="form-label" for="field_creationTimeStamp">Creation Time Stamp</label>
           <div class="d-flex">
             <input
@@ -45,7 +45,7 @@
           </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3" style="display: none">
           <label class="form-label" for="field_location">Location</label>
           <input type="text" class="form-control" name="location" id="field_location" data-cy="location" formControlName="location" />
         </div>
@@ -55,7 +55,7 @@
           <select class="form-control" id="field_mdls" data-cy="mdls" name="mdls" formControlName="mdls" [compareWith]="compareMDLS">
             <option [ngValue]="null"></option>
             @for (mDLSOption of mdlsCollection; track $index) {
-              <option [ngValue]="mDLSOption">{{ mDLSOption.id }}</option>
+              <option [ngValue]="mDLSOption">{{ mDLSOption.baseConfig }}</option>
             }
           </select>
         </div>
@@ -64,7 +64,7 @@
           <label class="form-label" for="field_user">User</label>
           <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
             @if (!editForm.get('user')!.value) {
-              <option [ngValue]="null" selected></option>
+              <option [ngValue]="1" selected></option>
             }
             @for (userOption of usersSharedCollection; track $index) {
               <option [ngValue]="userOption">{{ userOption.id }}</option>
@@ -91,12 +91,12 @@
             [compareWith]="compareFeature"
           >
             @for (featureOption of featuresSharedCollection; track $index) {
-              <option [ngValue]="featureOption">{{ featureOption.id }}</option>
+              <option [ngValue]="featureOption">{{ featureOption.name }}</option>
             }
           </select>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3" style="display: none">
           <label for="field_overviews">Overview</label>
           <select
             class="form-control"

@@ -43,12 +43,15 @@ export class MDLSFormService {
       baseConfig: new FormControl(mDLSRawValue.baseConfig),
       content: new FormControl(mDLSRawValue.content),
       user: new FormControl(mDLSRawValue.user, {
-        validators: [Validators.required],
+        //validators: [Validators.required],
       }),
     });
   }
 
   getMDLS(form: MDLSFormGroup): IMDLS | NewMDLS {
+    form.patchValue({
+      user: { id: 1 },
+    });
     return form.getRawValue() as IMDLS | NewMDLS;
   }
 

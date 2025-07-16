@@ -45,7 +45,7 @@ export class FeatureFormService {
       name: new FormControl(featureRawValue.name),
       content: new FormControl(featureRawValue.content),
       user: new FormControl(featureRawValue.user, {
-        validators: [Validators.required],
+        //validators: [Validators.required],
       }),
       projects: new FormControl(featureRawValue.projects ?? []),
       featureTsts: new FormControl(featureRawValue.featureTsts ?? []),
@@ -53,6 +53,9 @@ export class FeatureFormService {
   }
 
   getFeature(form: FeatureFormGroup): IFeature | NewFeature {
+    form.patchValue({
+      user: { id: 1 },
+    });
     return form.getRawValue() as IFeature | NewFeature;
   }
 

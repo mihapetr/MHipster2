@@ -58,13 +58,17 @@ export class ProjectFormService {
           validators: [Validators.required],
         },
       ),
-      name: new FormControl(projectRawValue.name),
+      name: new FormControl(projectRawValue.name, {
+        validators: [Validators.required],
+      }),
       description: new FormControl(projectRawValue.description),
       creationTimeStamp: new FormControl(projectRawValue.creationTimeStamp),
       location: new FormControl(projectRawValue.location),
-      mdls: new FormControl(projectRawValue.mdls),
-      user: new FormControl(projectRawValue.user, {
+      mdls: new FormControl(projectRawValue.mdls, {
         validators: [Validators.required],
+      }),
+      user: new FormControl(projectRawValue.user, {
+        // validators: [Validators.required],
       }),
       features: new FormControl(projectRawValue.features ?? []),
       overviews: new FormControl(projectRawValue.overviews ?? []),
@@ -72,6 +76,9 @@ export class ProjectFormService {
   }
 
   getProject(form: ProjectFormGroup): IProject | NewProject {
+    form.patchValue({
+      user: { id: 1 },
+    });
     return this.convertProjectRawValueToProject(form.getRawValue() as ProjectFormRawValue | NewProjectFormRawValue);
   }
 

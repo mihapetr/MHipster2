@@ -1,26 +1,33 @@
 package com.mihael.mhipster.web.rest;
 
 import com.mihael.mhipster.MGenerated;
+import com.mihael.mhipster.domain.Feature;
 import com.mihael.mhipster.domain.Project;
+import com.mihael.mhipster.repository.FeatureRepository;
+import com.mihael.mhipster.repository.MDLSRepository;
 import com.mihael.mhipster.repository.ProjectRepository;
 import com.mihael.mhipster.repository.UserRepository;
 import com.mihael.mhipster.security.SecurityUtils;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -38,15 +45,25 @@ public class ProjectResource {
 
     private static final String ENTITY_NAME = "project";
     private final UserRepository userRepository;
+    private final FeatureRepository featureRepository;
+    private final MDLSRepository mdlsRepository;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final ProjectRepository projectRepository;
 
-    public ProjectResource(ProjectRepository projectRepository, UserRepository userRepository) {
+    @MGenerated
+    public ProjectResource(
+        ProjectRepository projectRepository,
+        UserRepository userRepository,
+        FeatureRepository featureRepository,
+        MDLSRepository mdlsRepository
+    ) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
+        this.featureRepository = featureRepository;
+        this.mdlsRepository = mdlsRepository;
     }
 
     /**
@@ -62,26 +79,52 @@ public class ProjectResource {
         if (project.getId() != null) {
             throw new BadRequestAlertException("A new project cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        project = projectRepository.save(project);
+
         project = createProjectCustom(project);
+        project.setId(projectRepository.save(project).getId());
+        generateFiles(project);
 
         return ResponseEntity.created(new URI("/api/projects/" + project.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, project.getId().toString()))
             .body(project);
     }
 
+    //	@PostMapping("/{id}/generate-files")
+    //	public ResponseEntity<Project> createProjectFiles(
+    //		@PathVariable(value = "id", required = false) final Long id
+    //	) throws URISyntaxException {
+    //
+    //		generateFiles(getProject(id).getBody());
+    //	}
+
+    @MGenerated
     @Value("classpath:/mhipster/jdl-template.jdl")
     Resource templateResource;
 
+    @MGenerated
     @Value("classpath:/mhipster/CucumberIT.template")
     Resource cucumberTemplate;
 
+    @MGenerated
     @Value("classpath:/mhipster/mhipster-it-profile.xml")
     Resource pomProfileResource;
 
     @MGenerated
     Project createProjectCustom(Project project) {
         project.setUser(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()).orElseThrow());
+        project.setFeatures(
+            project
+                .getFeatures()
+                .stream()
+                .map(feature -> featureRepository.findById(feature.getId()).orElseThrow())
+                .collect(Collectors.toSet())
+        );
+        project.setMdls(mdlsRepository.findById(project.getMdls().getId()).orElseThrow());
+        return project;
+    }
+
+    @Async
+    void generateFiles(Project project) {
         String jdlTemplateContent = null;
         String cucumberTemplateContent = null;
         String pomProfileContent = null;
@@ -93,7 +136,7 @@ public class ProjectResource {
             throw new RuntimeException(e);
         }
         project.generate(jdlTemplateContent, cucumberTemplateContent, pomProfileContent);
-        return project;
+        projectRepository.save(project);
     }
 
     /**
@@ -208,6 +251,28 @@ public class ProjectResource {
         if (filter.equals("current-user")) {
             return projectRepository.findByUserIsCurrentUser();
         } else return projectRepository.findAll();
+    }
+
+    @MGenerated
+    @GetMapping("/{id}/download")
+    public void downloadZip(@PathVariable("id") Long id, HttpServletResponse response) throws IOException {
+        Project project = projectRepository.findById(id).orElseThrow();
+        if (project.getLocation() == null) {
+            throw new BadRequestAlertException("Project files not available yet", ENTITY_NAME, "locationIsNull");
+        }
+
+        String location = project.getLocation();
+        File zipFile = new File(location);
+        response.setContentType("application/zip");
+        response.setHeader("Content-Disposition", "attachment; filename=files.zip");
+        try (InputStream is = new FileInputStream(zipFile); OutputStream os = response.getOutputStream()) {
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            while ((bytesRead = is.read(buffer)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
+            os.flush();
+        }
     }
 
     /**

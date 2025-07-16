@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import SharedModule from 'app/shared/shared.module';
 import { FormatMediumDatetimePipe } from 'app/shared/date';
 import { IFeatureTst } from '../feature-tst.model';
+import { CodeStatsDetailComponent } from '../../code-stats/detail/code-stats-detail.component';
 
 @Component({
   selector: 'jhi-feature-tst-detail',
@@ -13,6 +14,7 @@ import { IFeatureTst } from '../feature-tst.model';
 export class FeatureTstDetailComponent {
   featureTst = input<IFeatureTst | null>(null);
 
+  protected readonly parent = parent;
   previousState(): void {
     window.history.back();
   }

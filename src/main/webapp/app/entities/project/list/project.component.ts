@@ -93,7 +93,8 @@ export class ProjectComponent implements OnInit {
   protected queryBackend(): Observable<EntityArrayResponseType> {
     this.isLoading = true;
     const queryObject: any = {
-      eagerload: true,
+      eagerload: false,
+      filter: 'current-user',
       sort: this.sortService.buildSortParam(this.sortState()),
     };
     return this.projectService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
