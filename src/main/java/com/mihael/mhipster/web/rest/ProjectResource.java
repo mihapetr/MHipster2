@@ -81,21 +81,24 @@ public class ProjectResource {
         }
 
         project = createProjectCustom(project);
-        project.setId(projectRepository.save(project).getId());
-        generateFiles(project);
+        project = projectRepository.save(project);
+        //generateFiles(project);
 
         return ResponseEntity.created(new URI("/api/projects/" + project.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, project.getId().toString()))
             .body(project);
     }
 
-    //	@PostMapping("/{id}/generate-files")
-    //	public ResponseEntity<Project> createProjectFiles(
-    //		@PathVariable(value = "id", required = false) final Long id
-    //	) throws URISyntaxException {
-    //
-    //		generateFiles(getProject(id).getBody());
-    //	}
+    @PostMapping("/{id}/generate-files")
+    public ResponseEntity<Project> createProjectFiles(@PathVariable(value = "id", required = false) final Long id)
+        throws URISyntaxException {
+        Project project = projectRepository.findOneWithEagerRelationships(id).orElseThrow(EntityNotFoundException::new);
+        //		System.out.println("### writing from generate-files ###");
+        //		System.out.println("mdls: " + project.getMdls().getContent());
+        //		System.out.println("feature: " + project.getFeatures().stream().findFirst().orElseThrow().getContent());
+        generateFiles(project);
+        return ResponseEntity.accepted().headers(HeaderUtil.createAlert(applicationName, ENTITY_NAME, id.toString())).body(project);
+    }
 
     @MGenerated
     @Value("classpath:/mhipster/jdl-template.jdl")
@@ -136,7 +139,7 @@ public class ProjectResource {
             throw new RuntimeException(e);
         }
         project.generate(jdlTemplateContent, cucumberTemplateContent, pomProfileContent);
-        projectRepository.save(project);
+        //projectRepository.save(project);
     }
 
     /**

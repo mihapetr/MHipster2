@@ -3,6 +3,7 @@ package com.mihael.mhipster.web.rest;
 import com.mihael.mhipster.MGenerated;
 import com.mihael.mhipster.ReportParser;
 import com.mihael.mhipster.domain.*;
+import com.mihael.mhipster.repository.FeatureRepository;
 import com.mihael.mhipster.repository.TestReportRepository;
 import com.mihael.mhipster.repository.UserRepository;
 import com.mihael.mhipster.security.SecurityUtils;
@@ -41,6 +42,7 @@ public class TestReportResource {
     private static final Logger LOG = LoggerFactory.getLogger(TestReportResource.class);
 
     private static final String ENTITY_NAME = "testReport";
+    private final FeatureRepository featureRepository;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -55,12 +57,14 @@ public class TestReportResource {
         TestReportRepository testReportRepository,
         FeatureTstResource featureTstResource,
         ProjectResource projectResource,
-        UserRepository userRepository
+        UserRepository userRepository,
+        FeatureRepository featureRepository
     ) {
         this.testReportRepository = testReportRepository;
         this.featureTstResource = featureTstResource;
         this.projectResource = projectResource;
         this.userRepository = userRepository;
+        this.featureRepository = featureRepository;
     }
 
     /**
@@ -136,13 +140,14 @@ public class TestReportResource {
     @MGenerated
     @PostMapping(value = "/of-feature-test/{id}", consumes = "text/html")
     public ResponseEntity<TestReport> createTestReportOfFeatureTst(
-        @RequestParam(name = "features", required = false) List<String> features,
+        @RequestParam(name = "features", required = false) List<String> featureIds,
         @PathVariable(value = "id", required = true) final Long id,
         @RequestBody String reportContent
     ) throws URISyntaxException {
         // get referenced project
         FeatureTst featureTst = featureTstResource.getFeatureTst(id).getBody();
         //System.out.println("fetched feature tst: " + featureTst);
+        System.out.println("list of feature ids: " + featureIds);
 
         if (!currentUserIsOwner(featureTst.getProject().getUser().getId())) throw new BadRequestAlertException(
             "Unauthorized access.",
@@ -168,6 +173,14 @@ public class TestReportResource {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
+        }
+
+        featureTst.setDate(ZonedDateTime.now()); // time of creation
+
+        // associate features tested
+        for (String featureId : featureIds) {
+            Feature feature = featureRepository.findById(Long.valueOf(featureId)).orElseThrow();
+            featureTst.addFeature(feature);
         }
 
         featureTstResource.partialUpdateFeatureTst(featureTst.getId(), featureTst);

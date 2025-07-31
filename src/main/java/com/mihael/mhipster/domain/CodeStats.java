@@ -1,6 +1,8 @@
 package com.mihael.mhipster.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mihael.mhipster.MGenerated;
+import com.mihael.mhipster.service.dto.CodeStatsDBDTO;
 import jakarta.persistence.*;
 import java.io.Serializable;
 
@@ -276,5 +278,22 @@ public class CodeStats implements Serializable {
             "\n, deadMethods=" + getDeadMethods() +
             "\n, deadClasses=" + getDeadClasses() +
             "}";
+    }
+
+    // used for creating a CodeStats entity from data extracted from the database
+    @MGenerated
+    public static CodeStats fromDBDTO(CodeStatsDBDTO cs) {
+        CodeStats codeStats = new CodeStats();
+        codeStats.setInstructions(cs.instructions);
+        codeStats.setBranches(cs.branches);
+        codeStats.setLines(cs.lines);
+        codeStats.setMethods(cs.methods);
+        codeStats.setClasses(cs.classes);
+        codeStats.setDeadInstructions(cs.deadInstructions);
+        codeStats.setDeadBranches(cs.deadBranches);
+        codeStats.setDeadLines(cs.deadLines);
+        codeStats.setDeadMethods(cs.deadMethods);
+        codeStats.setDeadClasses(cs.deadClasses);
+        return codeStats;
     }
 }

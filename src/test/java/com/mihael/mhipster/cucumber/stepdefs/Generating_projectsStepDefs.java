@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +34,8 @@ public class Generating_projectsStepDefs extends Common {
 
     String url;
     User user, otherUser;
+    Project projectToGenerate, projectToDownload;
+    static Long projectToGenerateId, projectToDownloadId;
 
     @Autowired
     FeatureRepository featureRepository;
@@ -50,12 +53,13 @@ public class Generating_projectsStepDefs extends Common {
     @MGenerated
     @Before
     public void before() throws IOException {
-        user = userRepository.findOneByLogin(existingLogin).orElseThrow();
+        user = userRepository.findOneByLogin(existingLogin).orElse(null);
         otherUser = userRepository.findOneByLogin("user").orElseThrow();
 
         if (!done) {
             done = true;
             setup();
+            user = userRepository.findOneByLogin(existingLogin).orElseThrow();
             Feature feature = new Feature().name("Other user's feature").content("Other Feature content").user(otherUser);
             MDLS mdls = new MDLS().content("Other user's MDLS content").user(otherUser);
 
@@ -74,15 +78,37 @@ public class Generating_projectsStepDefs extends Common {
             );
             feature2.setUser(user);
 
+            String mdlsContent = new String(mdlsContentStream.readAllBytes(), StandardCharsets.UTF_8);
+
             MDLS mdls2 = new MDLS();
             mdls2.setContent(
                 //Files.readString(Path.of("/home/mihael/Projects/MHipster2/src/main/resources/mhipster/mdls.jdl"), StandardCharsets.UTF_8)
-                new String(mdlsContentStream.readAllBytes(), StandardCharsets.UTF_8)
+                mdlsContent
             );
             mdls2.setUser(user);
 
+            MDLS mdls3 = new MDLS();
+            mdls3.setContent(
+                //Files.readString(Path.of("/home/mihael/Projects/MHipster2/src/main/resources/mhipster/mdls.jdl"), StandardCharsets.UTF_8)
+                mdlsContent
+            );
+            mdls3.setUser(user);
+
             featureRepository.save(feature2);
             mdlsRepository.save(mdls2);
+            mdlsRepository.save(mdls3);
+
+            projectToGenerate = new Project().user(user).name("The one to generate").description("This one is for the gen files scenario");
+            projectToGenerate.setMdls(mdls3); // one to one!
+            projectToGenerate.addFeature(feature2);
+            projectToGenerateId = projectRepository.save(projectToGenerate).getId();
+
+            projectToDownload = new Project()
+                .user(user)
+                .name("The one to download")
+                .location(generatedProjectDirectory + "/for-download/1151.zip")
+                .description("This one is for the gen files scenario, too");
+            projectToDownloadId = projectRepository.save(projectToDownload).getId();
         }
     }
 
@@ -226,40 +252,41 @@ public class Generating_projectsStepDefs extends Common {
             .header("Authorization", "Bearer " + token)
             .body(newProject)
             .retrieve();
-
-        System.out.println(response3.toEntity(Project.class));
     }
+
+    Project generatedProject;
 
     @MGenerated
-    @Then("project is generated using JHipster")
-    public void project_is_generated_using_j_hipster() throws InterruptedException {
-        int timeout = 20000;
-        int time = 0;
-        boolean generated = false;
-        while (!generated) {
-            if (time > timeout) {
-                System.out.println("Timeout expired");
-                break;
-            }
-            generated = projectRepository.findById(response3.toEntity(Project.class).getBody().getId()).orElseThrow().getLocation() != null;
-            Thread.sleep(1000);
-            time += 1000;
-        }
-    }
-
-    @Then("project is configured to use Cucumber and JaCoCo")
-    public void project_is_configured_to_use_cucumber_and_ja_co_co() {
-        // todo : assert facts : check if files are ok
-
+    @Then("project is generated")
+    public void project_is_generated() throws InterruptedException {
+        generatedProject = response3.toEntity(Project.class).getBody();
+        System.out.println(generatedProject);
     }
 
     @MGenerated
     @Then("user is project owner")
     public void user_is_project_owner() {
-        Project project = projectRepository.findById(response3.toEntity(Project.class).getBody().getId()).orElseThrow();
+        Project project = projectRepository.findById(generatedProject.getId()).orElseThrow();
 
         assert project.getUser().getId().equals(user.getId()) : "current user is not project owner. owner = " +
         project.getUser().getLogin();
+    }
+
+    @When("user clicks generate files button")
+    public void user_clicks_generate_files_button() {
+        // url is "/api/projects/" + chosenId from below stepdef
+        response3 = restClient
+            .post()
+            .uri("http://localhost:" + port + url + "/generate-files")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token)
+            .retrieve();
+    }
+
+    @Then("file generation process is started")
+    public void file_generation_process_is_started() {
+        HttpStatusCode statusCode = response3.toBodilessEntity().getStatusCode();
+        assert statusCode == HttpStatus.ACCEPTED : "generate files was not accepted, got status: " + statusCode;
     }
 
     @Given("user navigates to their projects view")
@@ -277,14 +304,11 @@ public class Generating_projectsStepDefs extends Common {
 
     @Given("user selects project details")
     public void user_selects_project_details() {
-        // get project by one of the ids
-        chosenId = response3.body(new ParameterizedTypeReference<List<Project>>() {}).get(0).getId();
-
-        response3 = restClient
-            .get()
-            .uri("http://localhost:" + port + "/api/projects/" + chosenId)
-            .header("Authorization", "Bearer " + token)
-            .retrieve();
+        // get project from setup by id
+        List<Project> projects = response3.body(new ParameterizedTypeReference<List<Project>>() {});
+        chosenId = projects.stream().filter(project -> project.getId().equals(projectToGenerateId)).findFirst().orElseThrow().getId();
+        url = "/api/projects/" + chosenId;
+        response3 = restClient.get().uri("http://localhost:" + port + url).header("Authorization", "Bearer " + token).retrieve();
 
         System.out.println(response3.toEntity(Project.class));
     }
@@ -295,7 +319,7 @@ public class Generating_projectsStepDefs extends Common {
     public void user_clicks_the_download_button() {
         fileBytes = restClient
             .get()
-            .uri("http://localhost:" + port + "/api/projects/" + chosenId + "/download")
+            .uri("http://localhost:" + port + "/api/projects/" + projectToDownloadId + "/download")
             .header("Authorization", "Bearer " + token)
             .retrieve()
             .body(byte[].class);

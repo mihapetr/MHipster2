@@ -32,7 +32,7 @@ public class FeatureTst implements Serializable {
     private ZonedDateTime date;
 
     @JsonIgnoreProperties(value = { "overview", "featureTst" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+    @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
     @NotNull
     @JoinColumn(unique = true)
     private CodeStats parent;
@@ -190,7 +190,7 @@ public class FeatureTst implements Serializable {
             ", date='" + getDate() + "'" +
             ", project=" + getProject().getId() +
             ", codeStats=" + getParent() +
-			", testReports=" + getTestReports().stream().map(TestReport::getId).collect(Collectors.toSet()) +
+			//", testReports=" + getTestReports().stream().map(TestReport::getId).collect(Collectors.toSet()) +
             "}";
     }
 

@@ -79,4 +79,10 @@ echo "performing integration testing"
 ./mvnw verify -Pmhipster-it
 
 echo "posting report to $BASE_URL/api/test-reports/of-feature-test/$FEATURE_TEST_ID with token $JWT"
-./mhipster/post.sh  "$BASE_URL/api/test-reports/of-feature-test/$FEATURE_TEST_ID" "$JWT"
+
+# overriding for testing
+if [ "$#" -gt 0 ]; then
+		./mhipster/post_dev.sh  "$BASE_URL/api/test-reports/of-feature-test/$FEATURE_TEST_ID?features=${5}" "$JWT"
+else
+    ./mhipster/post.sh  "$BASE_URL/api/test-reports/of-feature-test/$FEATURE_TEST_ID" "$JWT"
+fi

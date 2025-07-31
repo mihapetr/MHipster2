@@ -1,12 +1,21 @@
 package com.mihael.mhipster.web.rest;
 
+import com.mihael.mhipster.MGenerated;
+import com.mihael.mhipster.domain.CodeStats;
 import com.mihael.mhipster.domain.Overview;
+import com.mihael.mhipster.domain.User;
+import com.mihael.mhipster.repository.CodeStatsRepository;
 import com.mihael.mhipster.repository.OverviewRepository;
+import com.mihael.mhipster.repository.ProjectRepository;
+import com.mihael.mhipster.repository.UserRepository;
+import com.mihael.mhipster.security.SecurityUtils;
+import com.mihael.mhipster.service.dto.CodeStatsDBDTO;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -30,14 +39,25 @@ public class OverviewResource {
     private static final Logger LOG = LoggerFactory.getLogger(OverviewResource.class);
 
     private static final String ENTITY_NAME = "overview";
+    private final UserRepository userRepository;
+    private final ProjectRepository projectRepository;
+    private final CodeStatsRepository codeStatsRepository;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final OverviewRepository overviewRepository;
 
-    public OverviewResource(OverviewRepository overviewRepository) {
+    public OverviewResource(
+        OverviewRepository overviewRepository,
+        UserRepository userRepository,
+        ProjectRepository projectRepository,
+        CodeStatsRepository codeStatsRepository
+    ) {
         this.overviewRepository = overviewRepository;
+        this.userRepository = userRepository;
+        this.projectRepository = projectRepository;
+        this.codeStatsRepository = codeStatsRepository;
     }
 
     /**
@@ -57,6 +77,25 @@ public class OverviewResource {
         return ResponseEntity.created(new URI("/api/overviews/" + overview.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, overview.getId().toString()))
             .body(overview);
+    }
+
+    @MGenerated
+    @PostMapping("/generate")
+    public ResponseEntity<Overview> createOverviewCustom() throws URISyntaxException {
+        currentUserIsAdmin();
+        Overview overview = new Overview();
+        overview.setUser(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()).orElseThrow());
+
+        CodeStatsDBDTO statsDBDTO = projectRepository.avgCodeStats();
+        System.out.println("statsDBDTO instructions in /generate: " + statsDBDTO.instructions);
+        CodeStats codeStats = CodeStats.fromDBDTO(statsDBDTO);
+        System.out.println("codeStats in /generate: " + codeStats);
+        //codeStats = codeStatsRepository.save(codeStats);
+        overview.setParent(codeStats);
+        overview.setDateGenerated(ZonedDateTime.now());
+
+        System.out.println("overview in /generate: " + overview);
+        return createOverview(overview);
     }
 
     /**
@@ -146,11 +185,21 @@ public class OverviewResource {
     @GetMapping("")
     public List<Overview> getAllOverviews(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
         LOG.debug("REST request to get all Overviews");
+        currentUserIsAdmin();
         if (eagerload) {
             return overviewRepository.findAllWithEagerRelationships();
         } else {
             return overviewRepository.findAll();
         }
+    }
+
+    @MGenerated
+    void currentUserIsAdmin() {
+        if (!SecurityUtils.hasCurrentUserThisAuthority("ROLE_ADMIN")) throw new BadRequestAlertException(
+            "Current user is not admin",
+            ENTITY_NAME,
+            "notadmin"
+        );
     }
 
     /**

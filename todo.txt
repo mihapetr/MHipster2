@@ -17,10 +17,7 @@
 
 --------------------
 
-
 * post the feature list after testing (request parameter)
-* prepare demo for tomorrow
-
 
 * reenable editing the project
 * feature tst details should show the parent stuff (stats)

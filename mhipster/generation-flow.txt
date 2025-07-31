@@ -56,3 +56,13 @@ chmod +x test_features.sh
 ./test_features.sh
 
 The report will be posted to the server and they can
+
+-----------------
+
+# restrictions in the UML formalization
+* only association can form reflexive relations
+* aggregation and composition must not form cycles
+* usage of class User (some other?) is prohibited
+* a class can extend only one other class
+* composition part can be a part of only one whole
+	* can a comp part be an aggregated part of another class?

@@ -282,16 +282,19 @@ public class Project implements Serializable {
             ProcessBuilder pb = new ProcessBuilder(command);
             pb.directory(new File(directory));
             pb.redirectErrorStream(true);
+            pb.redirectOutput(new File(System.getProperty("user.dir") + "/async_stdout.txt"));
             Process process = pb.start();
-
+            process.waitFor();
             // capture output
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
+            //            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            //            String line;
+            //            while ((line = reader.readLine()) != null) {
+            //                System.out.println(line);
+            //            }
             //return process.waitFor();
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
@@ -320,7 +323,7 @@ public class Project implements Serializable {
         MDLSProcessor.transform(jdlTemplateContent, getMdls().getContent(), cleanedName, packageName, specificationPath);
 
         // run basic jhipster project generation based on the jdl file
-        execute(projectDir, "jhipster", "jdl", "specification.jdl", "--skip-install");
+        execute(projectDir, "jhipster", "jdl", "specification.jdl", "--skip-install", "--force");
         //execute(projectDir, "echo", "jhipster jdl spec.jdl --skip-install ........ done");
 
         // modify the domain package based on MDL specification

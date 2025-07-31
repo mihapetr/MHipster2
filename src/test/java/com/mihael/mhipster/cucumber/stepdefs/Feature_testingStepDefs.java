@@ -2,20 +2,21 @@ package com.mihael.mhipster.cucumber.stepdefs;
 
 import com.mihael.mhipster.domain.*;
 import com.mihael.mhipster.repository.FeatureRepository;
+import com.mihael.mhipster.repository.FeatureTstRepository;
 import com.mihael.mhipster.repository.ProjectRepository;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.*;
 import jakarta.transaction.Transactional;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Iterator;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 
 public class Feature_testingStepDefs extends Common {
@@ -24,66 +25,94 @@ public class Feature_testingStepDefs extends Common {
 
     static boolean done = false;
     User user;
-    static Long projectId;
+    static String token;
 
     @Autowired
     FeatureRepository featureRepository;
 
     @Autowired
+    FeatureTstRepository featureTstRepository;
+
+    @Autowired
     ProjectRepository projectRepository;
 
-    InputStream featureContentStream;
+    static void execute(String directory, String... command) {
+        try {
+            ProcessBuilder pb = new ProcessBuilder(command);
+            pb.directory(new File(directory));
+            pb.redirectErrorStream(true);
+            Process process = pb.start();
 
+            // capture output
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+            //return process.waitFor();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    Long projectId, feature1Id, feature2Id;
+
+    /** Make sure that there is a Project with id specified in the
+     * $CWD/mhipster/test_features.conf file. The project should have all features
+     * from $CWD/feature_testing_selection.txt associated with it. Their id-s
+     * should be the same as given in the file names __[feature_id]__*.feature.
+     *
+     * add FeatureTst patching to the script (FeatureTst -- Feature)
+     * implement custom patching so that existing features are used for report (by ids)
+     *
+     */
     @Before
     public void before() throws IOException {
         user = userRepository.findOneByLogin(existingLogin).orElseThrow();
 
         if (!done) {
+            token = signIn(existingLogin, existingPassword);
+
             done = true;
             setup();
+            user = userRepository.findOneByLogin(existingLogin).orElseThrow();
 
-            // for project generation scenario
-            featureContentStream = getClass().getClassLoader().getResourceAsStream("mhipster/personal_projects_overview.feature");
+            Feature feature = new Feature().name("Some feature name").content("Feature: Some feature name").user(user);
 
-            Feature feature = new Feature();
-            feature.setName("featureName");
-            feature.setContent(
-                //Files.readString(Path.of("/home/mihael/Projects/MHipster2/src/main/resources/mhipster/personal_projects_overview.feature"), StandardCharsets.UTF_8)
-                new String(featureContentStream.readAllBytes(), StandardCharsets.UTF_8)
-            );
-            feature.setUser(user);
+            feature = featureRepository.save(feature);
 
-            featureRepository.save(feature);
+            Feature feature2 = new Feature().name("Some feature name 2").content("Feature: Some feature name 2").user(user);
 
-            Project project = new Project().user(user).name("Test project name");
-            project.addFeature(feature);
-            projectId = projectRepository.save(project).getId();
-            System.out.println("projectId: " + projectId);
+            feature2 = featureRepository.save(feature2);
+
+            Project project = new Project()
+                .name("Some project name")
+                .user(user)
+                .description("Some description")
+                .addFeature(feature)
+                .addFeature(feature2);
+
+            project = projectRepository.save(project);
+            projectId = project.getId();
+            feature1Id = feature.getId();
+            feature2Id = feature2.getId();
         }
     }
 
     @Given("user is positioned in root directory in local project files")
     public void user_is_positioned_in_m_hipster_directory_in_local_project_files() {
-        CWD = "/home/mihael/Projects/MHipster2/";
+        CWD = generatedProjectDirectory + "/downloaded/1151";
     }
 
     @Given("user specifies which features to test")
-    public void user_specifies_which_features_to_test() {}
+    public void user_specifies_which_features_to_test() {
+        String featuresDir = CWD + "/src/test/resources/features";
+        execute(featuresDir, "sh", "-c", "ls -1 > " + CWD + "/test_features_selection.txt");
+    }
 
     @When("user runs test script")
     public void user_runs_test_script() throws IOException, InterruptedException {
-        //        String[] command = { CWD + "test_features.sh", String.valueOf(port), "2", "user", "user" };
-        //        ProcessBuilder pb = new ProcessBuilder(command);
-        //        pb.redirectErrorStream(true);
-        //        Process process = pb.start();
-        //
-        //        // capture output
-        //        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        //        String line;
-        //        while ((line = reader.readLine()) != null) {
-        //            System.out.println(line);
-        //        }
-        //        int exitCode = process.waitFor();
+        execute(CWD, "./test_features.sh", port + "", projectId + "", existingLogin, existingPassword, feature1Id + "," + feature2Id);
     }
 
     @Then("integration testing based on feature files should start")
@@ -97,34 +126,17 @@ public class Feature_testingStepDefs extends Common {
 
     @Then("test result is posted to the platform")
     public void test_result_is_posted_to_the_platform() throws IOException {
-        token = signIn(existingLogin, existingPassword);
-
-        res = restClient
-            .post()
-            .uri("http://localhost:" + port + "/api/test-reports/of-project/" + projectId)
-            .contentType(MediaType.TEXT_HTML)
-            .header("Authorization", "Bearer " + token)
-            .body(Files.readAllBytes(Path.of("/home/mihael/Projects/MHipster2/src/main/resources/mhipster/index.html")))
-            .retrieve();
-        res.toEntity(FeatureTst.class);
-        Long featureTstId = res.toEntity(TestReport.class).getBody().getFeatureTst().getId();
-
-        res = restClient
-            .post()
-            .uri("http://localhost:" + port + "/api/test-reports/of-feature-test/" + featureTstId)
-            .contentType(MediaType.TEXT_HTML)
-            .header("Authorization", "Bearer " + token)
-            .body(Files.readAllBytes(Path.of("/home/mihael/Projects/MHipster2/src/main/resources/mhipster/index.html")))
-            .retrieve();
-
-        System.out.println(res.toEntity(TestReport.class));
-
-        res = restClient
+        List<FeatureTst> featureTsts = restClient
             .get()
-            .uri("http://localhost:" + port + "/api/feature-tsts/" + featureTstId)
+            .uri("http://localhost:" + port + "/api/feature-tsts?filter=current-user")
             .header("Authorization", "Bearer " + token)
-            .retrieve();
+            .retrieve()
+            .toEntity(new ParameterizedTypeReference<List<FeatureTst>>() {})
+            .getBody();
 
-        System.out.println(res.toEntity(FeatureTst.class));
+        System.out.println(featureTsts);
+        for (FeatureTst featureTst : featureTsts) {
+            System.out.println(featureTst.getFeatures());
+        }
     }
 }

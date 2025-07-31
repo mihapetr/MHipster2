@@ -1,11 +1,14 @@
 package com.mihael.mhipster.cucumber.stepdefs;
 
 import com.mihael.mhipster.MGenerated;
-import com.mihael.mhipster.domain.Feature;
-import com.mihael.mhipster.domain.Project;
+import com.mihael.mhipster.domain.*;
+import com.mihael.mhipster.repository.FeatureRepository;
+import com.mihael.mhipster.repository.FeatureTstRepository;
+import com.mihael.mhipster.repository.ProjectRepository;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.*;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 
 public class Overview_of_personal_projectsStepDefs extends Common {
@@ -13,14 +16,29 @@ public class Overview_of_personal_projectsStepDefs extends Common {
     @MGenerated
     static boolean done = false;
 
+    User user;
+
+    @Autowired
+    FeatureRepository featureRepository;
+
+    @Autowired
+    ProjectRepository projectRepository;
+
+    @Autowired
+    FeatureTstRepository featureTstRepository;
+
     String url;
 
     @MGenerated
     @Before
     public void beforeScenario() {
+        user = userRepository.findOneByLogin(existingLogin).orElse(null);
         if (!done) {
             done = true;
             setup();
+            user = userRepository.findOneByLogin(existingLogin).orElseThrow();
+
+            conjureFullFeatureTst(user, 0.0, null, 1);
         }
     }
 
@@ -31,7 +49,7 @@ public class Overview_of_personal_projectsStepDefs extends Common {
 
     @When("user navigates to projects view : personal")
     public void user_navigates_to_projects_view_personal() {
-        url = "http://localhost:8080/api/projects";
+        url = "http://localhost:" + port + "/api/projects?filter=current-user";
         res = restClient.get().uri(url).header("Authorization", "Bearer " + token).retrieve();
     }
 
@@ -46,12 +64,26 @@ public class Overview_of_personal_projectsStepDefs extends Common {
             });
     }
 
-    @Given("user selects a project they own")
-    public void user_selects_a_project_they_own() {}
+    List<FeatureTst> featureTsts;
+    Long selectedId;
 
-    @When("user selects project statistics of projects from list")
-    public void user_selects_project_statistics_of_projects_from_list() {}
+    @Given("user navigates to feature tests view")
+    public void user_navigates_to_feature_tests_view() {
+        url = "http://localhost:" + port + "/api/feature-tsts?filter=current-user";
+        res = restClient.get().uri(url).header("Authorization", "Bearer " + token).retrieve();
+        featureTsts = res.toEntity(new ParameterizedTypeReference<List<FeatureTst>>() {}).getBody();
+    }
 
-    @Then("user can see project code statistics")
-    public void user_can_see_project_code_statistics() {}
+    @When("user selects a feature test from list")
+    public void user_selects_a_feature_test_from_list() {
+        selectedId = featureTsts.stream().findFirst().orElseThrow().getId();
+    }
+
+    @Then("user can see code statistics of features from that test")
+    public void user_can_see_code_statistics_of_features_from_that_test() {
+        url = "http://localhost:" + port + "/api/feature-tsts/" + selectedId;
+        res = restClient.get().uri(url).header("Authorization", "Bearer " + token).retrieve();
+        CodeStats codeStats = res.toEntity(FeatureTst.class).getBody().getParent();
+        //System.out.println(codeStats.toString());
+    }
 }

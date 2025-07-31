@@ -3,7 +3,9 @@ package com.mihael.mhipster.web.rest;
 import com.mihael.mhipster.MGenerated;
 import com.mihael.mhipster.domain.FeatureTst;
 import com.mihael.mhipster.domain.Project;
+import com.mihael.mhipster.repository.FeatureRepository;
 import com.mihael.mhipster.repository.FeatureTstRepository;
+import com.mihael.mhipster.repository.ProjectRepository;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +14,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,14 +35,22 @@ public class FeatureTstResource {
     private static final Logger LOG = LoggerFactory.getLogger(FeatureTstResource.class);
 
     private static final String ENTITY_NAME = "featureTst";
+    private final FeatureRepository featureRepository;
+    private final ProjectRepository projectRepository;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final FeatureTstRepository featureTstRepository;
 
-    public FeatureTstResource(FeatureTstRepository featureTstRepository) {
+    public FeatureTstResource(
+        FeatureTstRepository featureTstRepository,
+        FeatureRepository featureRepository,
+        ProjectRepository projectRepository
+    ) {
         this.featureTstRepository = featureTstRepository;
+        this.featureRepository = featureRepository;
+        this.projectRepository = projectRepository;
     }
 
     /**
@@ -131,12 +142,30 @@ public class FeatureTstResource {
 
                 return existingFeatureTst;
             })
+            .map(this::customPatch)
+            .map(featureTst1 -> {
+                System.out.println("before saving feature Tst: " + featureTst1.getFeatures());
+                return featureTst1;
+            })
             .map(featureTstRepository::save);
 
         return ResponseUtil.wrapOrNotFound(
             result,
             HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, featureTst.getId().toString())
         );
+    }
+
+    @MGenerated
+    FeatureTst customPatch(FeatureTst featureTst) {
+        // fetch existing features and associate them with the feature test
+        featureTst.setFeatures(
+            featureTst
+                .getFeatures()
+                .stream()
+                .map(feature -> featureRepository.findById(feature.getId()).orElseThrow())
+                .collect(Collectors.toSet())
+        );
+        return featureTst;
     }
 
     /**
@@ -152,7 +181,13 @@ public class FeatureTstResource {
     ) {
         LOG.debug("REST request to get all FeatureTsts");
         if (eagerload) {
-            if (filter != null) return filter(filter);
+            if (filter != null) {
+                List<FeatureTst> L = filter(filter);
+                //				for (FeatureTst featureTst : L) {
+                //					//System.out.println(featureTst);
+                //					//System.out.println("and its features=" + featureTst.getFeatures());
+                //				}
+            }
             return featureTstRepository.findAllWithEagerRelationships();
         } else {
             if (filter != null) return filter(filter);
@@ -163,7 +198,8 @@ public class FeatureTstResource {
     @MGenerated
     List<FeatureTst> filter(String filter) {
         if (filter.equals("current-user")) {
-            return featureTstRepository.findAll(); // todo : implement this
+            return projectRepository.findByUserIsCurrentUser().stream().flatMap(p -> p.getFeatureTsts().stream()).toList();
+            //return featureTstRepository.findAllWithEagerRelationships();
         } else return featureTstRepository.findAll();
     }
 
@@ -177,6 +213,7 @@ public class FeatureTstResource {
     public ResponseEntity<FeatureTst> getFeatureTst(@PathVariable("id") Long id) {
         LOG.debug("REST request to get FeatureTst : {}", id);
         Optional<FeatureTst> featureTst = featureTstRepository.findOneWithEagerRelationships(id);
+        featureTst.orElseThrow().getFeatures();
         return ResponseUtil.wrapOrNotFound(featureTst);
     }
 
