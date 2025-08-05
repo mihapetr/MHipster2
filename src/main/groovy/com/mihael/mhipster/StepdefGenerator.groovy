@@ -39,17 +39,20 @@ class StepdefGenerator {
 		}
 		steps.each { keyword, step ->
 			def annotation = "@${keyword}(\"${step}\")"
-			annotations << annotation
+			if (!(annotation in annotations)) {
+				annotations << annotation
 
-			def cleaned = clean(step)
+				def cleaned = clean(step)
 
-			methods <<
+				methods <<
 """
 	${annotation}
 	public void ${cleaned}() {
 
 	}
 """
+			}
+
 		}
 		new File("${featuresPath}/__${featureId}__${clean(featureName)}.feature").text = featureContent
 		new File("${stepdefsPath}/${clean(featureName)}.java").text =

@@ -34,7 +34,7 @@ export class OverviewService {
   create(overview: NewOverview): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(overview);
     return this.http
-      .post<RestOverview>(this.resourceUrl, copy, { observe: 'response' })
+      .post<RestOverview>(this.resourceUrl + '/generate', copy, { observe: 'response' })
       .pipe(map(res => this.convertResponseFromServer(res)));
   }
 

@@ -37,11 +37,11 @@ public class FeatureTst implements Serializable {
     @JoinColumn(unique = true)
     private CodeStats parent;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "featureTst", cascade = { CascadeType.REMOVE })
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "featureTst", cascade = { CascadeType.REMOVE })
     @JsonIgnoreProperties(value = { "featureTst" }, allowSetters = true)
     private Set<TestReport> testReports = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "rel_feature_tst__feature",
         joinColumns = @JoinColumn(name = "feature_tst_id"),

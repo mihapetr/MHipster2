@@ -34,7 +34,7 @@ public class Feature implements Serializable {
     @NotNull
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "features")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "features")
     @JsonIgnoreProperties(value = { "mdls", "featureTsts", "user", "features", "overviews" }, allowSetters = true)
     private Set<Project> projects = new HashSet<>();
 

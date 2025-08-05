@@ -2,7 +2,13 @@
   <div class="col-8">
     @if (featureTst(); as featureTstRef) {
       <div>
-        <h2 data-cy="featureTstDetailsHeading"><span>Feature Tst</span></h2>
+        <h2 data-cy="featureTstDetailsHeading">
+          <span>Feature Test Report of Project </span>
+          @if (featureTst()!.project) {
+            "<a [routerLink]="['/project', featureTst()!.project?.id, 'view']">{{ featureTstRef.project?.name }}</a
+            >"
+          }
+        </h2>
 
         <hr />
 
@@ -11,41 +17,128 @@
         <jhi-alert></jhi-alert>
 
         <dl class="row-md jh-entity-details">
-          <dt><span>ID</span></dt>
-          <dd>
-            <span>{{ featureTstRef.id }}</span>
-          </dd>
-          <dt><span>Date</span></dt>
-          <dd>
-            <span>{{ featureTstRef.date | formatMediumDatetime }}</span>
-          </dd>
-          <dt><span>Code Statistics</span></dt>
-          <dd>
-            @if (featureTst()!.parent) {
-              <div>
-                <a [routerLink]="['/code-stats', featureTst()!.parent?.id, 'view']">view</a>
-              </div>
-              <dd style="display: none">
-                {{ featureTst()!.parent?.lines }}
-              </dd>
-            }
-          </dd>
-          <dt><span>Feature</span></dt>
-          <dd>
-            @for (feature of featureTstRef.features; track $index; let last = $last) {
-              <span>
-                <a [routerLink]="['/feature', feature.id, 'view']">{{ feature?.id }}</a
-                >{{ last ? '' : ', ' }}
-              </span>
-            }
-          </dd>
-          <dt><span>Project</span></dt>
-          <dd>
+          <dt style="display: none"><span>Of Project</span></dt>
+          <dd style="display: none">
             @if (featureTst()!.project) {
               <div>
                 <a [routerLink]="['/project', featureTst()!.project?.id, 'view']">{{ featureTstRef.project?.id }}</a>
               </div>
             }
+          </dd>
+
+          <dt><span>Date</span></dt>
+          <dd>
+            <span>{{ featureTstRef.date | formatMediumDatetime }}</span>
+          </dd>
+
+          <div style="display: none">
+            <dt><span>Code Statistics</span></dt>
+            <dd>
+              @if (featureTst()!.parent) {
+                <div>
+                  <a [routerLink]="['/code-stats', featureTst()!.parent?.id, 'view']">view</a>
+                </div>
+                <dd style="display: none">
+                  {{ featureTst()!.parent?.lines }}
+                </dd>
+              }
+            </dd>
+          </div>
+
+          <dt><span>Code Statistics</span></dt>
+          <dd>
+            @if (featureTst()!.parent) {
+              <dl class="row-md jh-entity-details">
+                <dt><span>Instructions</span></dt>
+                <dd class="row">
+                  <span class="col">{{ featureTstRef.parent?.instructions | percent: '1.2-2' }}</span>
+                  <span class="col">of</span>
+                  <span class="col">{{ getHitNumbers()?.instructions }}</span>
+                </dd>
+                <dt><span>Branches</span></dt>
+                <dd class="row">
+                  <span class="col">{{ featureTstRef.parent?.branches | percent: '1.2-2' }}</span>
+                  <span class="col">of</span>
+                  <span class="col">{{ getHitNumbers()?.branches }}</span>
+                </dd>
+                <dt><span>Lines</span></dt>
+                <dd class="row">
+                  <span class="col">{{ featureTstRef.parent?.lines | percent: '1.2-2' }}</span>
+                  <span class="col">of</span>
+                  <span class="col">{{ getHitNumbers()?.lines }}</span>
+                </dd>
+                <dt><span>Methods</span></dt>
+                <dd class="row">
+                  <span class="col">{{ featureTstRef.parent?.methods | percent: '1.2-2' }}</span>
+                  <span class="col">of</span>
+                  <span class="col">{{ getHitNumbers()?.methods }}</span>
+                </dd>
+                <dt><span>Classes</span></dt>
+                <dd class="row">
+                  <span class="col">{{ featureTstRef.parent?.classes | percent: '1.2-2' }}</span>
+                  <span class="col">of</span>
+                  <span class="col">{{ getHitNumbers()?.classes }}</span>
+                </dd>
+
+                <dt><span>Dead Instructions</span></dt>
+                <dd class="row">
+                  <span class="col">{{ featureTstRef.parent?.deadInstructions | percent: '1.2-2' }}</span>
+                  <span class="col">of</span>
+                  <span class="col">{{ getWholeNumbers()?.instructions }}</span>
+                </dd>
+                <dt><span>Dead Branches</span></dt>
+                <dd class="row">
+                  <span class="col">{{ featureTstRef.parent?.deadBranches | percent: '1.2-2' }}</span>
+                  <span class="col">of</span>
+                  <span class="col">{{ getWholeNumbers()?.branches }}</span>
+                </dd>
+                <dt><span>Dead Lines</span></dt>
+                <dd class="row">
+                  <span class="col">{{ featureTstRef.parent?.deadLines | percent: '1.2-2' }}</span>
+                  <span class="col">of</span>
+                  <span class="col">{{ getWholeNumbers()?.lines }}</span>
+                </dd>
+                <dt><span>Dead Methods</span></dt>
+                <dd class="row">
+                  <span class="col">{{ featureTstRef.parent?.deadMethods | percent: '1.2-2' }}</span>
+                  <span class="col">of</span>
+                  <span class="col">{{ getWholeNumbers()?.methods }}</span>
+                </dd>
+                <dt><span>Dead Classes</span></dt>
+                <dd class="row">
+                  <span class="col">{{ featureTstRef.parent?.deadClasses | percent: '1.2-2' }}</span>
+                  <span class="col">of</span>
+                  <span class="col">{{ getWholeNumbers()?.classes }}</span>
+                </dd>
+              </dl>
+            }
+          </dd>
+
+          <!-- this is temporary, I am experimenting with reusage of components -->
+          <div style="display: none">
+            <dt><span>Code Stats 2</span></dt>
+            <dd *ngIf="featureTstRef.parent">
+              <jhi-code-stats-detail [codeStats]="featureTstRef.parent"></jhi-code-stats-detail>
+            </dd>
+          </div>
+
+          <dt><span>Features Tested</span></dt>
+          <dd>
+            @for (feature of featureTstRef.features; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/feature', feature.id, 'view']">{{ feature?.name }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+
+          <dt><span>Test Reports</span></dt>
+          <dd style="display: none">
+            <span style="display: none">
+              digging data : {{ getWholeNumbers()?.lines }} <br />
+              <a [href]="featureTstRef.testReports ? featureTstRef.testReports[0].html : ''">JaCoCo Report</a>
+              <a href="/home/mihael/Projects/user/reports/index.html">JaCoCo Report dev</a>
+            </span>
           </dd>
         </dl>
 
@@ -53,7 +146,7 @@
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
         </button>
 
-        <button type="button" [routerLink]="['/feature-tst', featureTstRef.id, 'edit']" class="btn btn-primary">
+        <button style="display: none" type="button" [routerLink]="['/feature-tst', featureTstRef.id, 'edit']" class="btn btn-primary">
           <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
         </button>
       </div>

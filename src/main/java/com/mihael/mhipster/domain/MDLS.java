@@ -33,7 +33,7 @@ public class MDLS implements Serializable {
     private User user;
 
     @JsonIgnoreProperties(value = { "mdls", "featureTsts", "user", "features", "overviews" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "mdls")
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "mdls")
     private Project project;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

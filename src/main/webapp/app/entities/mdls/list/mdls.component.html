@@ -49,12 +49,12 @@
             </th>
             <th scope="col" jhiSortBy="content">
               <div class="d-flex">
-                <span>Content</span>
+                <span>Contains Entities</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="user.id">
+            <th scope="col" jhiSortBy="user.id" style="display: none">
               <div class="d-flex">
                 <span>User</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -70,8 +70,8 @@
                 <a style="display: none" [routerLink]="['/mdls', mDLS.id, 'view']">{{ mDLS.id }}</a>
               </td>
               <td>{{ mDLS.baseConfig }}</td>
-              <td>{{ mDLS.content }}</td>
-              <td>
+              <td>{{ summary(mDLS.content) }}</td>
+              <td style="display: none">
                 {{ mDLS.user?.id }}
               </td>
               <td class="text-end">

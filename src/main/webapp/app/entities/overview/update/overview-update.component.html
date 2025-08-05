@@ -1,8 +1,8 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-overview-heading" data-cy="OverviewCreateUpdateHeading">Create or edit a Overview</h2>
-
+      <h2 id="jhi-overview-heading" data-cy="OverviewCreateUpdateHeading">Generate Platform Overview</h2>
+      <br /><br />
       <div>
         <jhi-alert-error></jhi-alert-error>
 
@@ -13,7 +13,7 @@
           </div>
         }
 
-        <div class="mb-3">
+        <div class="mb-3" style="display: none">
           <label class="form-label" for="field_dateGenerated">Date Generated</label>
           <div class="d-flex">
             <input
@@ -28,7 +28,7 @@
           </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3" style="display: none">
           <label class="form-label" for="field_parent">Parent</label>
           <select
             class="form-control"
@@ -54,7 +54,7 @@
           </div>
         }
 
-        <div class="mb-3">
+        <div class="mb-3" style="display: none">
           <label class="form-label" for="field_user">User</label>
           <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
             @if (!editForm.get('user')!.value) {
@@ -73,7 +73,7 @@
           </div>
         }
 
-        <div class="mb-3">
+        <div class="mb-3" style="display: none">
           <label for="field_projects">Project</label>
           <select
             class="form-control"
@@ -103,7 +103,7 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Generate</span>
         </button>
       </div>
     </form>

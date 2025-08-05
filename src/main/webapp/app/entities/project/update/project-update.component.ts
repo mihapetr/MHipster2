@@ -18,6 +18,7 @@ import { OverviewService } from 'app/entities/overview/service/overview.service'
 import { ProjectService } from '../service/project.service';
 import { IProject } from '../project.model';
 import { ProjectFormGroup, ProjectFormService } from './project-form.service';
+import { FeatureComponent } from '../../feature/list/feature.component';
 
 @Component({
   selector: 'jhi-project-update',
@@ -75,6 +76,38 @@ export class ProjectUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.projectService.create(project));
     }
+  }
+
+  public summary(content: string | null | undefined): string {
+    const entityNames: string[] = [];
+    const lines = content!.split('\n');
+
+    const entityRegex = /^\s*Scenario:\s+([\w\s]+)/;
+
+    for (const line of lines) {
+      const match = line.match(entityRegex);
+      if (match) {
+        entityNames.push(match[1]);
+      }
+    }
+
+    return entityNames.join('\n');
+  }
+
+  public mdlsSummary(content: string | null | undefined): string {
+    const entityNames: string[] = [];
+    const lines = content!.split('\n');
+
+    const entityRegex = /^\s*entity\s+(\w+)/;
+
+    for (const line of lines) {
+      const match = line.match(entityRegex);
+      if (match) {
+        entityNames.push(match[1]);
+      }
+    }
+
+    return entityNames.join(', ');
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IProject>>): void {
@@ -135,14 +168,14 @@ export class ProjectUpdateComponent implements OnInit {
       )
       .subscribe((features: IFeature[]) => (this.featuresSharedCollection = features));
 
-    this.overviewService
-      .query()
-      .pipe(map((res: HttpResponse<IOverview[]>) => res.body ?? []))
-      .pipe(
-        map((overviews: IOverview[]) =>
-          this.overviewService.addOverviewToCollectionIfMissing<IOverview>(overviews, ...(this.project?.overviews ?? [])),
-        ),
-      )
-      .subscribe((overviews: IOverview[]) => (this.overviewsSharedCollection = overviews));
+    // this.overviewService
+    //   .query()
+    //   .pipe(map((res: HttpResponse<IOverview[]>) => res.body ?? []))
+    //   .pipe(
+    //     map((overviews: IOverview[]) =>
+    //       this.overviewService.addOverviewToCollectionIfMissing<IOverview>(overviews, ...(this.project?.overviews ?? [])),
+    //     ),
+    //   )
+    //   .subscribe((overviews: IOverview[]) => (this.overviewsSharedCollection = overviews));
   }
 }

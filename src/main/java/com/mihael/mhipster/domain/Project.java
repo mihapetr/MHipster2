@@ -38,11 +38,11 @@ public class Project implements Serializable {
     private String location;
 
     @JsonIgnoreProperties(value = { "user", "project" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(unique = true)
     private MDLS mdls;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project", cascade = { CascadeType.REMOVE })
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "project", cascade = { CascadeType.REMOVE })
     @JsonIgnoreProperties(value = { "parent", "testReports", "features", "project" }, allowSetters = true)
     private Set<FeatureTst> featureTsts = new HashSet<>();
 
@@ -50,7 +50,7 @@ public class Project implements Serializable {
     @NotNull
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "rel_project__feature",
         joinColumns = @JoinColumn(name = "project_id"),
@@ -350,7 +350,15 @@ public class Project implements Serializable {
         execute(testResourcesDir + "/features", "sh", "-c", "ls -1 > " + projectDir + "/test_features_selection.txt");
 
         execute(projectDir, "cp", "pom.xml", "backup_pom.xml");
-        execute(projectRoot, "cp", "mhipster/get_jwt.sh", "mhipster/m_generate.sh", "mhipster/post.sh", projectDir + "/mhipster");
+        execute(
+            projectRoot,
+            "cp",
+            "mhipster/get_jwt.sh",
+            "mhipster/m_generate.sh",
+            "mhipster/post.sh",
+            "mhipster/post_dev.sh",
+            projectDir + "/mhipster"
+        );
 
         // configure the variable source file for the test_features.sh
         FeatureTestingSetup.configure(

@@ -27,9 +27,56 @@
             </span>
           </a>
         </li>
+
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         @if (account() !== null) {
+          <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link" routerLink="/mdls" (click)="collapseNavbar()">
+              <span>
+                <fa-icon icon="project-diagram"></fa-icon>
+                <span>MDLS</span>
+              </span>
+            </a>
+          </li>
+
+          <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link" routerLink="/feature" (click)="collapseNavbar()">
+              <span>
+                <fa-icon icon="file-lines"></fa-icon>
+                <span>Features</span>
+              </span>
+            </a>
+          </li>
+
+          <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link" routerLink="/project" (click)="collapseNavbar()">
+              <span>
+                <fa-icon icon="screwdriver-wrench"></fa-icon>
+                <span>Projects</span>
+              </span>
+            </a>
+          </li>
+
+          <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link" routerLink="/feature-tst" (click)="collapseNavbar()">
+              <span>
+                <fa-icon icon="square-poll-horizontal"></fa-icon>
+                <span>Feature Tests</span>
+              </span>
+            </a>
+          </li>
+
+          <li *jhiHasAnyAuthority="'ROLE_ADMIN'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link" routerLink="/overview" (click)="collapseNavbar()">
+              <span>
+                <fa-icon icon="square-poll-horizontal"></fa-icon>
+                <span>Overview</span>
+              </span>
+            </a>
+          </li>
+
           <li
+            style="display: none"
             ngbDropdown
             class="nav-item dropdown pointer"
             display="dynamic"

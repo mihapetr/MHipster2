@@ -10,6 +10,8 @@ import com.mihael.mhipster.security.SecurityUtils;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
@@ -123,7 +125,20 @@ public class TestReportResource {
         TestReport testReport = ReportParser.html2TestReport(reportContent);
 
         // link new report to new FeatureTst
-        testReport.featureTst(featureTstResource.createFeatureTst(featureTst).getBody());
+        featureTst = featureTstResource.createFeatureTst(featureTst).getBody();
+        testReport.featureTst(featureTst);
+
+        // saving report on the server
+        String destination =
+            project.getLocation() + "/../project_" + project.getId() + "_featureTst_" + featureTst.getId() + "_sourceReport.html";
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(destination))) {
+            //writer.write(reportContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        testReport.setHtml(destination);
+
         testReport.setRuntimeRetention(false); // in sync with test_features.sh
 
         return createTestReport(testReport);
@@ -156,6 +171,18 @@ public class TestReportResource {
         );
 
         TestReport testReport = ReportParser.html2TestReport(reportContent);
+
+        // saving the report on the server
+        Project project = featureTst.getProject();
+        String destination =
+            project.getLocation() + "/../project_" + project.getId() + "_featureTst_" + featureTst.getId() + "_runtimeReport.html";
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(destination))) {
+            //writer.write(reportContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        testReport.setHtml(destination);
 
         testReport.setFeatureTst(featureTst); // link new report to referenced FeatureTst before saving
         testReport.setRuntimeRetention(true); // in sync with test_features.sh

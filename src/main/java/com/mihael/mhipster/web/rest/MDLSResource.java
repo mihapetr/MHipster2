@@ -158,9 +158,11 @@ public class MDLSResource {
      */
     @GetMapping("")
     public List<MDLS> getAllMDLS(@RequestParam(name = "filter", required = false) String filter) {
-        if ("project-is-null".equals(filter)) {
+        if (filter.contains("project-is-null")) {
             LOG.debug("REST request to get all MDLSs where project is null");
-            return StreamSupport.stream(mDLSRepository.findAll().spliterator(), false).filter(mDLS -> mDLS.getProject() == null).toList();
+            return StreamSupport.stream(mDLSRepository.findByUserIsCurrentUser().spliterator(), false)
+                .filter(mDLS -> mDLS.getProject() == null)
+                .toList();
         } else if (filter != null) {
             return filter(filter);
         }
@@ -170,7 +172,7 @@ public class MDLSResource {
 
     @MGenerated
     List<MDLS> filter(String filter) {
-        if (filter.equals("current-user")) return mDLSRepository.findByUserIsCurrentUser();
+        if (filter.contains("current-user")) return mDLSRepository.findByUserIsCurrentUser();
         else throw new BadRequestAlertException("Invalid filter", ENTITY_NAME, "invalidfilter");
     }
 

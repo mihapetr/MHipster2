@@ -81,6 +81,22 @@ export class FeatureComponent implements OnInit {
     this.handleNavigation(event);
   }
 
+  public summary(content: string | null | undefined): string {
+    const entityNames: string[] = [];
+    const lines = content!.split('\n');
+
+    const entityRegex = /^\s*Scenario:\s+([\w\s]+)/;
+
+    for (const line of lines) {
+      const match = line.match(entityRegex);
+      if (match) {
+        entityNames.push(match[1]);
+      }
+    }
+
+    return entityNames.join('\n');
+  }
+
   protected fillComponentAttributeFromRoute(params: ParamMap, data: Data): void {
     this.sortState.set(this.sortService.parseSortParam(params.get(SORT) ?? data[DEFAULT_SORT_DATA]));
   }

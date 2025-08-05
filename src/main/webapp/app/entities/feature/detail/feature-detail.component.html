@@ -2,7 +2,7 @@
   <div class="col-8">
     @if (feature(); as featureRef) {
       <div>
-        <h2 data-cy="featureDetailsHeading"><span>Feature</span></h2>
+        <h2 data-cy="featureDetailsHeading"><span>Feature Details</span></h2>
 
         <hr />
 
@@ -11,10 +11,12 @@
         <jhi-alert></jhi-alert>
 
         <dl class="row-md jh-entity-details">
-          <dt><span>ID</span></dt>
-          <dd>
-            <span>{{ featureRef.id }}</span>
-          </dd>
+          <div style="display: none">
+            <dt><span>ID</span></dt>
+            <dd>
+              <span>{{ featureRef.id }}</span>
+            </dd>
+          </div>
           <dt><span>Name</span></dt>
           <dd>
             <span>{{ featureRef.name }}</span>
@@ -23,28 +25,31 @@
           <dd>
             <pre>{{ featureRef.content }}</pre>
           </dd>
-          <dt><span>User</span></dt>
-          <dd>
-            <span>{{ featureRef.user?.id }}</span>
-          </dd>
-          <dt><span>Project</span></dt>
-          <dd>
-            @for (project of featureRef.projects; track $index; let last = $last) {
-              <span>
-                <a [routerLink]="['/project', project.id, 'view']">{{ project?.id }}</a
-                >{{ last ? '' : ', ' }}
-              </span>
-            }
-          </dd>
-          <dt><span>Feature Tst</span></dt>
-          <dd>
-            @for (featureTst of featureRef.featureTsts; track $index; let last = $last) {
-              <span>
-                <a [routerLink]="['/feature-tst', featureTst.id, 'view']">{{ featureTst?.id }}</a
-                >{{ last ? '' : ', ' }}
-              </span>
-            }
-          </dd>
+
+          <div style="display: none">
+            <dt><span>User</span></dt>
+            <dd>
+              <span>{{ featureRef.user?.id }}</span>
+            </dd>
+            <dt><span>Project</span></dt>
+            <dd>
+              @for (project of featureRef.projects; track $index; let last = $last) {
+                <span>
+                  <a [routerLink]="['/project', project.id, 'view']">{{ project?.id }}</a
+                  >{{ last ? '' : ', ' }}
+                </span>
+              }
+            </dd>
+            <dt><span>Feature Tst</span></dt>
+            <dd>
+              @for (featureTst of featureRef.featureTsts; track $index; let last = $last) {
+                <span>
+                  <a [routerLink]="['/feature-tst', featureTst.id, 'view']">{{ featureTst?.id }}</a
+                  >{{ last ? '' : ', ' }}
+                </span>
+              }
+            </dd>
+          </div>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

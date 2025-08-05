@@ -1,6 +1,6 @@
 <div>
   <h2 id="page-heading" data-cy="FeatureTstHeading">
-    <span>Feature Tsts</span>
+    <span>Feature Test Reports</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
@@ -9,6 +9,7 @@
       </button>
 
       <button
+        style="display: none"
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-feature-tst"
@@ -33,21 +34,29 @@
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
           <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-            <th scope="col" jhiSortBy="id">
+            <th scope="col" jhiSortBy="id" style="display: none">
               <div class="d-flex">
                 <span>ID</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+
+            <th scope="col" jhiSortBy="project.id">
+              <div class="d-flex">
+                <span>Project</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+
             <th scope="col" jhiSortBy="date">
               <div class="d-flex">
-                <span>Date</span>
+                <span>Time of Testing</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="parent.id">
+            <th scope="col" jhiSortBy="parent.id" style="display: none">
               <div class="d-flex">
                 <span>Parent</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -55,13 +64,7 @@
             </th>
             <th scope="col" jhiSortBy="feature.id">
               <div class="d-flex">
-                <span>Feature</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="project.id">
-              <div class="d-flex">
-                <span>Project</span>
+                <span>Features Tested</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -71,11 +74,20 @@
         <tbody>
           @for (featureTst of featureTsts(); track trackId(featureTst)) {
             <tr data-cy="entityTable">
-              <td>
+              <td style="display: none">
                 <a [routerLink]="['/feature-tst', featureTst.id, 'view']">{{ featureTst.id }}</a>
               </td>
-              <td>{{ featureTst.date | formatMediumDatetime }}</td>
+
               <td>
+                @if (featureTst.project) {
+                  <div>
+                    <a [routerLink]="['/project', featureTst.project.id, 'view']">{{ featureTst.project.name }}</a>
+                  </div>
+                }
+              </td>
+
+              <td>{{ featureTst.date | formatMediumDatetime }}</td>
+              <td style="display: none">
                 @if (featureTst.parent) {
                   <div>
                     <a [routerLink]="['/code-stats', featureTst.parent.id, 'view']">{{ featureTst.parent.id }}</a>
@@ -85,18 +97,12 @@
               <td>
                 @for (feature of featureTst.features; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/feature', feature.id, 'view']">{{ feature.id }}</a
+                    <a class="form-control-static" [routerLink]="['/feature', feature.id, 'view']">{{ feature.name }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }
               </td>
-              <td>
-                @if (featureTst.project) {
-                  <div>
-                    <a [routerLink]="['/project', featureTst.project.id, 'view']">{{ featureTst.project.id }}</a>
-                  </div>
-                }
-              </td>
+
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/feature-tst', featureTst.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
@@ -104,7 +110,12 @@
                     <span class="d-none d-md-inline">View</span>
                   </a>
 
-                  <a [routerLink]="['/feature-tst', featureTst.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                  <a
+                    style="display: none"
+                    [routerLink]="['/feature-tst', featureTst.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
                     <fa-icon icon="pencil-alt"></fa-icon>
                     <span class="d-none d-md-inline">Edit</span>
                   </a>

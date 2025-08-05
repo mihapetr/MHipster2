@@ -33,7 +33,7 @@
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
           <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-            <th scope="col" jhiSortBy="id">
+            <th scope="col" jhiSortBy="id" style="display: none">
               <div class="d-flex">
                 <span>ID</span>
 
@@ -49,12 +49,12 @@
             </th>
             <th scope="col" jhiSortBy="content">
               <div class="d-flex">
-                <span>Content</span>
+                <span>Contains Scenarios</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="user.id">
+            <th scope="col" jhiSortBy="user.id" style="display: none">
               <div class="d-flex">
                 <span>User</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -62,11 +62,11 @@
             </th>
             <th scope="col" jhiSortBy="project.id">
               <div class="d-flex">
-                <span>Project</span>
+                <span>Featured in Projects</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="featureTst.id">
+            <th scope="col" jhiSortBy="featureTst.id" style="display: none">
               <div class="d-flex">
                 <span>Feature Tst</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -78,23 +78,25 @@
         <tbody>
           @for (feature of features(); track trackId(feature)) {
             <tr data-cy="entityTable">
-              <td>
+              <td style="display: none">
                 <a [routerLink]="['/feature', feature.id, 'view']">{{ feature.id }}</a>
               </td>
               <td>{{ feature.name }}</td>
-              <td>{{ feature.content }}</td>
               <td>
+                <pre>{{ summary(feature.content) }}</pre>
+              </td>
+              <td style="display: none">
                 {{ feature.user?.id }}
               </td>
               <td>
                 @for (project of feature.projects; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/project', project.id, 'view']">{{ project.id }}</a
+                    <a class="form-control-static" [routerLink]="['/project', project.id, 'view']">{{ project.name }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }
               </td>
-              <td>
+              <td style="display: none">
                 @for (featureTst of feature.featureTsts; track $index; let last = $last) {
                   <span>
                     <a class="form-control-static" [routerLink]="['/feature-tst', featureTst.id, 'view']">{{ featureTst.id }}</a

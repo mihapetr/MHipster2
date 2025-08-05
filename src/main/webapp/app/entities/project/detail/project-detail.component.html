@@ -23,7 +23,7 @@
           <dd>
             <span>{{ projectRef.description }}</span>
           </dd>
-          <dt><span>Creation Time Stamp</span></dt>
+          <dt><span>Creation Time</span></dt>
           <dd>
             <span>{{ projectRef.creationTimeStamp | formatMediumDatetime }}</span>
           </dd>
@@ -31,15 +31,22 @@
           <dd style="display: none">
             <span>{{ projectRef.location }}</span>
           </dd>
-          <dt><span>Mdls</span></dt>
+          <dt><span>MDLS</span></dt>
           <dd>
             @if (project()!.mdls) {
-              <div>
-                <a [routerLink]="['/mdls', project()!.mdls?.id, 'view']">{{ projectRef.mdls?.id }}</a>
-                <pre>{{ projectRef.mdls?.id }}</pre>
+              <div style="overflow-y: scroll; height: 80vh">
+                <!-- <a [routerLink]="['/mdls', project()!.mdls?.id, 'view']">{{ projectRef.mdls?.id }}</a> -->
+                <pre>{{ projectRef.mdls?.content }}</pre>
               </div>
             }
           </dd>
+
+          <!-- this is temporary, I am experimenting with reusage of components -->
+          <dt style="display: none"><span>MDLS Specification</span></dt>
+          <dd *ngIf="projectRef.mdls" style="display: none">
+            <jhi-mdls-detail [mDLS]="projectRef.mdls"></jhi-mdls-detail>
+          </dd>
+
           <dt style="display: none"><span>User</span></dt>
           <dd style="display: none">
             <span>{{ projectRef.user?.id }}</span>
@@ -48,7 +55,7 @@
           <dd>
             @for (feature of projectRef.features; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/feature', feature.id, 'view']">{{ feature?.id }}</a
+                <a [routerLink]="['/feature', feature.id, 'view']">{{ feature?.name }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }
@@ -68,8 +75,16 @@
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
         </button>
 
-        <button type="button" [routerLink]="['/project', projectRef.id, 'edit']" class="btn btn-primary">
+        <button style="display: none" type="button" [routerLink]="['/project', projectRef.id, 'edit']" class="btn btn-primary">
           <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+
+        <button type="button" (click)="generateFiles(projectRef.id)" class="btn btn-primary">
+          <fa-icon icon="circle-play"></fa-icon>&nbsp;<span>Generate Files</span>
+        </button>
+
+        <button type="button" (click)="downloadFiles(projectRef.id)" class="btn btn-success">
+          <fa-icon icon="cloud-arrow-down"></fa-icon>&nbsp;<span>Download</span>
         </button>
       </div>
     }

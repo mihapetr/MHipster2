@@ -51,16 +51,26 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_mdls">Mdls</label>
+          <label class="form-label" for="field_mdls">Select MDL Specification</label>
           <select class="form-control" id="field_mdls" data-cy="mdls" name="mdls" formControlName="mdls" [compareWith]="compareMDLS">
-            <option [ngValue]="null"></option>
             @for (mDLSOption of mdlsCollection; track $index) {
-              <option [ngValue]="mDLSOption">{{ mDLSOption.baseConfig }}</option>
+              <option [ngValue]="mDLSOption">
+                <table>
+                  <tr>
+                    <td style="vertical-align: top; width: 15vw; text-emphasis: #0d5aa7">
+                      <b>{{ mDLSOption.baseConfig }}:</b>
+                    </td>
+                    <td>
+                      <pre>	{{ mdlsSummary(mDLSOption.content) }}</pre>
+                    </td>
+                  </tr>
+                </table>
+              </option>
             }
           </select>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3" style="display: none">
           <label class="form-label" for="field_user">User</label>
           <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
             @if (!editForm.get('user')!.value) {
@@ -80,7 +90,7 @@
         }
 
         <div class="mb-3">
-          <label for="field_features">Feature</label>
+          <label for="field_features">Select Features</label>
           <select
             class="form-control"
             id="field_features"
@@ -89,9 +99,21 @@
             name="features"
             formControlName="features"
             [compareWith]="compareFeature"
+            style="height: 50vh"
           >
             @for (featureOption of featuresSharedCollection; track $index) {
-              <option [ngValue]="featureOption">{{ featureOption.name }}</option>
+              <option [ngValue]="featureOption" style="border-bottom: 1px solid gray">
+                <table>
+                  <tr>
+                    <td style="vertical-align: top; width: 15vw">
+                      <b>{{ featureOption.name }}:</b>
+                    </td>
+                    <td>
+                      <pre>{{ summary(featureOption.content) }}</pre>
+                    </td>
+                  </tr>
+                </table>
+              </option>
             }
           </select>
         </div>

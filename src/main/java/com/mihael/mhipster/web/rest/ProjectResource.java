@@ -263,7 +263,6 @@ public class ProjectResource {
         if (project.getLocation() == null) {
             throw new BadRequestAlertException("Project files not available yet", ENTITY_NAME, "locationIsNull");
         }
-
         String location = project.getLocation();
         File zipFile = new File(location);
         response.setContentType("application/zip");

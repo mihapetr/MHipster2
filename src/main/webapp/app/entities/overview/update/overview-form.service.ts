@@ -56,16 +56,19 @@ export class OverviewFormService {
       ),
       dateGenerated: new FormControl(overviewRawValue.dateGenerated),
       parent: new FormControl(overviewRawValue.parent, {
-        validators: [Validators.required],
+        // validators: [Validators.required],
       }),
       user: new FormControl(overviewRawValue.user, {
-        validators: [Validators.required],
+        // validators: [Validators.required],
       }),
       projects: new FormControl(overviewRawValue.projects ?? []),
     });
   }
 
   getOverview(form: OverviewFormGroup): IOverview | NewOverview {
+    form.patchValue({
+      user: { id: 1 }, // irrelevant, assigned on server
+    });
     return this.convertOverviewRawValueToOverview(form.getRawValue() as OverviewFormRawValue | NewOverviewFormRawValue);
   }
 

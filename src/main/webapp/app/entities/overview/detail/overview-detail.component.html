@@ -11,28 +11,78 @@
         <jhi-alert></jhi-alert>
 
         <dl class="row-md jh-entity-details">
-          <dt><span>ID</span></dt>
-          <dd>
+          <dt style="display: none"><span>ID</span></dt>
+          <dd style="display: none">
             <span>{{ overviewRef.id }}</span>
           </dd>
           <dt><span>Date Generated</span></dt>
           <dd>
             <span>{{ overviewRef.dateGenerated | formatMediumDatetime }}</span>
           </dd>
-          <dt><span>Parent</span></dt>
-          <dd>
+
+          <dt style="display: none"><span>Code Statistics</span></dt>
+          <dd style="display: none">
             @if (overview()!.parent) {
               <div>
-                <a [routerLink]="['/code-stats', overview()!.parent?.id, 'view']">{{ overviewRef.parent?.id }}</a>
+                <a [routerLink]="['/code-stats', overview()!.parent?.id, 'view']">{{ overviewRef.parent?.lines }}</a>
               </div>
             }
           </dd>
-          <dt><span>User</span></dt>
+
+          <dt><span>Code Statistics</span></dt>
           <dd>
+            @if (overview()!.parent) {
+              <dl class="row-md jh-entity-details">
+                <dt><span>Instructions</span></dt>
+                <dd>
+                  <span>{{ overviewRef.parent?.instructions }}</span>
+                </dd>
+                <dt><span>Branches</span></dt>
+                <dd>
+                  <span>{{ overviewRef.parent?.branches }}</span>
+                </dd>
+                <dt><span>Lines</span></dt>
+                <dd>
+                  <span>{{ overviewRef.parent?.lines }}</span>
+                </dd>
+                <dt><span>Methods</span></dt>
+                <dd>
+                  <span>{{ overviewRef.parent?.methods }}</span>
+                </dd>
+                <dt><span>Classes</span></dt>
+                <dd>
+                  <span>{{ overviewRef.parent?.classes }}</span>
+                </dd>
+                <dt><span>Dead Instructions</span></dt>
+                <dd>
+                  <span>{{ overviewRef.parent?.deadInstructions }}</span>
+                </dd>
+                <dt><span>Dead Branches</span></dt>
+                <dd>
+                  <span>{{ overviewRef.parent?.deadBranches }}</span>
+                </dd>
+                <dt><span>Dead Lines</span></dt>
+                <dd>
+                  <span>{{ overviewRef.parent?.deadLines }}</span>
+                </dd>
+                <dt><span>Dead Methods</span></dt>
+                <dd>
+                  <span>{{ overviewRef.parent?.deadMethods }}</span>
+                </dd>
+                <dt><span>Dead Classes</span></dt>
+                <dd>
+                  <span>{{ overviewRef.parent?.deadClasses }}</span>
+                </dd>
+              </dl>
+            }
+          </dd>
+
+          <dt style="display: none"><span>User</span></dt>
+          <dd style="display: none">
             <span>{{ overviewRef.user?.id }}</span>
           </dd>
-          <dt><span>Project</span></dt>
-          <dd>
+          <dt style="display: none"><span>Project</span></dt>
+          <dd style="display: none">
             @for (project of overviewRef.projects; track $index; let last = $last) {
               <span>
                 <a [routerLink]="['/project', project.id, 'view']">{{ project?.id }}</a
@@ -46,7 +96,7 @@
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
         </button>
 
-        <button type="button" [routerLink]="['/overview', overviewRef.id, 'edit']" class="btn btn-primary">
+        <button style="display: none" type="button" [routerLink]="['/overview', overviewRef.id, 'edit']" class="btn btn-primary">
           <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
         </button>
       </div>

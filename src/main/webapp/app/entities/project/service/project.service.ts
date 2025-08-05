@@ -38,6 +38,18 @@ export class ProjectService {
       .pipe(map(res => this.convertResponseFromServer(res)));
   }
 
+  generateFiles(id: number): Observable<EntityResponseType> {
+    return this.http
+      .post<RestProject>(`${this.resourceUrl}/${id}/generate-files`, null, { observe: 'response' })
+      .pipe(map(res => this.convertResponseFromServer(res)));
+  }
+
+  downloadFiles(id: number): Observable<Blob> {
+    return this.http.get(`${this.resourceUrl}/${id}/download`, {
+      responseType: 'blob',
+    });
+  }
+
   update(project: IProject): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(project);
     return this.http
