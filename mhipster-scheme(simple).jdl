@@ -1,0 +1,76 @@
+entity MDLS {
+  baseConfig String
+  content TextBlob
+}
+entity Project {
+  name String
+  description String
+  creationTimeStamp ZonedDateTime
+  location String
+}
+entity Feature {
+  name String
+  content TextBlob
+}
+entity FeatureTst{
+  date ZonedDateTime
+}
+entity Overview {
+  dateGenerated ZonedDateTime
+}
+entity CodeStats {
+  instructions Double
+  branches Double
+  lines Double
+  methods Double
+  classes Double
+  deadInstructions Double
+  deadBranches Double
+  deadLines Double
+  deadMethods Double
+  deadClasses Double
+}
+entity TestReport {
+  html String //path to html
+  runtimeRetention Boolean
+  missedInstructions Integer
+  instructions Integer
+  missedBranches Integer
+  branches Integer
+  missedLines Integer
+  lines Integer
+  missedMethods Integer
+  methods Integer
+  missedClasses Integer
+  classes Integer
+}
+relationship OneToOne {
+  Project{mdls} to MDLS{project}
+}
+relationship ManyToMany {
+  Project{feature} to Feature{project}
+}
+relationship OneToMany {
+  Project{featureTst} to FeatureTst{project required}
+}
+relationship ManyToMany {
+  Overview{project} to Project{overview}
+}
+relationship ManyToMany {
+  FeatureTst{feature} to Feature{featureTst}
+}
+relationship OneToMany {
+  FeatureTst{testReport} to TestReport{featureTst required}
+}
+relationship OneToOne {
+  Overview{parent required} to CodeStats{overview}
+}
+relationship OneToOne {
+  FeatureTst{parent required} to CodeStats{featureTst}
+}
+relationship ManyToOne {
+  MDLS{user required} to User with builtInEntity
+  Project{user required} to User with builtInEntity
+  Feature{user required} to User with builtInEntity
+  Overview{user required} to User with builtInEntity
+}

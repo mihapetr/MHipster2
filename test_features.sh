@@ -3,7 +3,8 @@
 ############################ SETUP ###################################
 
 input_file="test_features_selection.txt"
-rm src/test/resources/selected_features/*
+mkdir -p src/test/resources/selected_features
+rm -f src/test/resources/selected_features/*
 
 while IFS= read -r line; do
 	[[ -z "$line" ]] && continue	# skip empty lines

@@ -53,9 +53,11 @@ export class FeatureFormService {
   }
 
   getFeature(form: FeatureFormGroup): IFeature | NewFeature {
-    form.patchValue({
-      user: { id: 1 },
-    });
+    if (!form.get('user')?.value) {
+      form.patchValue({
+        user: { id: 1 },
+      });
+    }
     return form.getRawValue() as IFeature | NewFeature;
   }
 

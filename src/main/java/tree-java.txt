@@ -1,0 +1,82 @@
+.
+├── com
+│   └── mihael
+│       └── mhipster
+│           ├── ApplicationWebXml.java
+│           ├── config
+│           │   ├── ApplicationProperties.java
+│           │   ├── AsyncConfiguration.java
+│           │   ├── Constants.java
+│           │   ├── CRLFLogConverter.java
+│           │   ├── DatabaseConfiguration.java
+│           │   ├── DateTimeFormatConfiguration.java
+│           │   ├── JacksonConfiguration.java
+│           │   ├── LiquibaseConfiguration.java
+│           │   ├── LoggingAspectConfiguration.java
+│           │   ├── LoggingConfiguration.java
+│           │   ├── package-info.java
+│           │   ├── SecurityConfiguration.java
+│           │   ├── SecurityJwtConfiguration.java
+│           │   ├── StaticResourcesWebConfiguration.java
+│           │   └── WebConfigurer.java
+│           ├── domain
+│           │   ├── AbstractAuditingEntity.java
+│           │   ├── Authority.java
+│           │   ├── CodeStats.java
+│           │   ├── Feature.java
+│           │   ├── FeatureTst.java
+│           │   ├── MDLS.java
+│           │   ├── Overview.java
+│           │   ├── package-info.java
+│           │   ├── Project.java
+│           │   ├── TestReport.java
+│           │   └── User.java
+│           ├── GeneratedByJHipster.java
+│           ├── MGenerated.java
+│           ├── MHipsterApp.java
+│           ├── package-info.java
+│           ├── repository
+│           │   ├── AuthorityRepository.java
+│           │   ├── CodeStatsRepository.java
+│           │   ├── FeatureRepository.java
+│           │   ├── FeatureTstRepository.java
+│           │   ├── FeatureTstRepositoryWithBagRelationshipsImpl.java
+│           │   ├── FeatureTstRepositoryWithBagRelationships.java
+│           │   ├── MDLSRepository.java
+│           │   ├── OverviewRepository.java
+│           │   ├── OverviewRepositoryWithBagRelationshipsImpl.java
+│           │   ├── OverviewRepositoryWithBagRelationships.java
+│           │   ├── package-info.java
+│           │   ├── ProjectRepository.java
+│           │   ├── ProjectRepositoryWithBagRelationshipsImpl.java
+│           │   ├── ProjectRepositoryWithBagRelationships.java
+│           │   ├── TestReportRepository.java
+│           │   └── UserRepository.java
+│           ├── security
+│           │   ├── AuthoritiesConstants.java
+│           │   ├── DomainUserDetailsService.java
+│           │   ├── package-info.java
+│           │   ├── SecurityUtils.java
+│           │   ├── SpringSecurityAuditorAware.java
+│           │   └── UserNotActivatedException.java
+│           ├── SelectFeatures.java
+│           └── web
+│               └── rest
+│                   ├── AccountResource.java
+│                   ├── AuthenticateController.java
+│                   ├── AuthorityResource.java
+│                   ├── CodeStatsResource.java
+│                   ├── errors
+│                   ├── FeatureResource.java
+│                   ├── FeatureTstResource.java
+│                   ├── MDLSResource.java
+│                   ├── OverviewResource.java
+│                   ├── package-info.java
+│                   ├── ProjectResource.java
+│                   ├── PublicUserResource.java
+│                   ├── TestReportResource.java
+│                   ├── UserResource.java
+│                   └── vm
+└── tree-java.txt
+
+12 directories, 68 files

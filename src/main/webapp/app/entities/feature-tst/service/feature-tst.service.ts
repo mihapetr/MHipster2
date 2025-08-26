@@ -61,7 +61,7 @@ export class FeatureTstService {
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
-      .get<RestFeatureTst[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .get<RestFeatureTst[]>(`${this.resourceUrl}?filter=current-user`, { params: options, observe: 'response' })
       .pipe(map(res => this.convertResponseArrayFromServer(res)));
   }
 

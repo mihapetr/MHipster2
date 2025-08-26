@@ -1,6 +1,3 @@
-/*
- * DO NOT MODIFY THIS CODE
- * */
 package com.mihael.mhipster;
 
 import java.lang.annotation.Retention;

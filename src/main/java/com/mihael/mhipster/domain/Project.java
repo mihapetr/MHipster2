@@ -281,17 +281,17 @@ public class Project implements Serializable {
         try {
             ProcessBuilder pb = new ProcessBuilder(command);
             pb.directory(new File(directory));
-            pb.redirectErrorStream(true);
-            pb.redirectOutput(new File(System.getProperty("user.dir") + "/async_stdout.txt"));
+            //pb.redirectErrorStream(true);
+            //pb.redirectOutput(new File(System.getProperty("user.dir") + "/async_stdout.txt"));
             Process process = pb.start();
-            process.waitFor();
+            //process.waitFor();
             // capture output
-            //            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            //            String line;
-            //            while ((line = reader.readLine()) != null) {
-            //                System.out.println(line);
-            //            }
-            //return process.waitFor();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+            process.waitFor();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {

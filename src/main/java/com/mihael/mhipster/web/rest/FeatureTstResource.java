@@ -6,6 +6,7 @@ import com.mihael.mhipster.domain.Project;
 import com.mihael.mhipster.repository.FeatureRepository;
 import com.mihael.mhipster.repository.FeatureTstRepository;
 import com.mihael.mhipster.repository.ProjectRepository;
+import com.mihael.mhipster.security.SecurityUtils;
 import com.mihael.mhipster.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -181,13 +182,7 @@ public class FeatureTstResource {
     ) {
         LOG.debug("REST request to get all FeatureTsts");
         if (eagerload) {
-            if (filter != null) {
-                List<FeatureTst> L = filter(filter);
-                //				for (FeatureTst featureTst : L) {
-                //					//System.out.println(featureTst);
-                //					//System.out.println("and its features=" + featureTst.getFeatures());
-                //				}
-            }
+            if (filter != null) return filter(filter);
             return featureTstRepository.findAllWithEagerRelationships();
         } else {
             if (filter != null) return filter(filter);
@@ -197,9 +192,13 @@ public class FeatureTstResource {
 
     @MGenerated
     List<FeatureTst> filter(String filter) {
+        String currentUserLogin = SecurityUtils.getCurrentUserLogin().orElseThrow();
         if (filter.equals("current-user")) {
-            return projectRepository.findByUserIsCurrentUser().stream().flatMap(p -> p.getFeatureTsts().stream()).toList();
-            //return featureTstRepository.findAllWithEagerRelationships();
+            return featureTstRepository
+                .findAll()
+                .stream()
+                .filter(featureTst -> featureTst.getProject().getUser().getLogin().equals(currentUserLogin))
+                .toList();
         } else return featureTstRepository.findAll();
     }
 

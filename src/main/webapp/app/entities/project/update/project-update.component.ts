@@ -159,7 +159,7 @@ export class ProjectUpdateComponent implements OnInit {
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
 
     this.featureService
-      .query()
+      .query({ filter: 'current-user' })
       .pipe(map((res: HttpResponse<IFeature[]>) => res.body ?? []))
       .pipe(
         map((features: IFeature[]) =>

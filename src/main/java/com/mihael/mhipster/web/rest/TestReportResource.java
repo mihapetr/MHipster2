@@ -132,11 +132,6 @@ public class TestReportResource {
         String destination =
             project.getLocation() + "/../project_" + project.getId() + "_featureTst_" + featureTst.getId() + "_sourceReport.html";
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(destination))) {
-            //writer.write(reportContent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         testReport.setHtml(destination);
 
         testReport.setRuntimeRetention(false); // in sync with test_features.sh
@@ -177,11 +172,6 @@ public class TestReportResource {
         String destination =
             project.getLocation() + "/../project_" + project.getId() + "_featureTst_" + featureTst.getId() + "_runtimeReport.html";
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(destination))) {
-            //writer.write(reportContent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         testReport.setHtml(destination);
 
         testReport.setFeatureTst(featureTst); // link new report to referenced FeatureTst before saving
