@@ -198,6 +198,9 @@ public class MDLSResource {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMDLS(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete MDLS : {}", id);
+        MDLS mdls = mDLSRepository.findById(id).orElseThrow();
+        mdls.setUser(null);
+        mdls.setProject(null);
         mDLSRepository.deleteById(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))

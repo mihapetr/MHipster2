@@ -33,7 +33,7 @@
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
           <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-            <th scope="col" jhiSortBy="id">
+            <th style="display: none" scope="col" jhiSortBy="id">
               <div class="d-flex">
                 <span>ID</span>
 
@@ -47,19 +47,19 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="parent.id">
+            <th style="display: none" scope="col" jhiSortBy="parent.id">
               <div class="d-flex">
                 <span>Parent</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="user.id">
+            <th style="display: none" scope="col" jhiSortBy="user.id">
               <div class="d-flex">
                 <span>User</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="project.id">
+            <th style="display: none" scope="col" jhiSortBy="project.id">
               <div class="d-flex">
                 <span>Project</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -71,21 +71,21 @@
         <tbody>
           @for (overview of overviews(); track trackId(overview)) {
             <tr data-cy="entityTable">
-              <td>
+              <td style="display: none">
                 <a [routerLink]="['/overview', overview.id, 'view']">{{ overview.id }}</a>
               </td>
               <td>{{ overview.dateGenerated | formatMediumDatetime }}</td>
-              <td>
+              <td style="display: none">
                 @if (overview.parent) {
                   <div>
                     <a [routerLink]="['/code-stats', overview.parent.id, 'view']">{{ overview.parent.id }}</a>
                   </div>
                 }
               </td>
-              <td>
+              <td style="display: none">
                 {{ overview.user?.id }}
               </td>
-              <td>
+              <td style="display: none">
                 @for (project of overview.projects; track $index; let last = $last) {
                   <span>
                     <a class="form-control-static" [routerLink]="['/project', project.id, 'view']">{{ project.id }}</a
