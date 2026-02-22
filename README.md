@@ -1,7 +1,7 @@
 # MHipster
 
 This project was developed as part of a master's thesis in Mathematics and Computer Science at the
-Faculty of Science, University of Zagreb. The thesis, titled "JHipster," was completed by Mihael Petrinjak
+Faculty of Science, University of Zagreb. The thesis, titled "[JHipster](https://repozitorij.pmf.unizg.hr/object/pmf:14752)," was completed by Mihael Petrinjak
 under the supervision of doc. dr. sc. Matej Mihelčić.
 
 ## Summary
@@ -20,6 +20,6 @@ Of course, the design of MHipster assumes that choosing alternative tools that J
 
 ## Documentation
 
-Documentation can be found in the thesis.
+Documentation can be found in the [Thesis](https://repozitorij.pmf.unizg.hr/object/pmf:14752).
 
 Related app: [SocialNetwork](https://github.com/mihapetr/SocialNetwork).
